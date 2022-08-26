@@ -1,6 +1,6 @@
 import React from "react";
 
-const Login = () => {
+const LoginIcon = () => {
   return (
     <svg
       xmlns="http://www.w3.org/2000/svg"
@@ -20,4 +20,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginIcon;

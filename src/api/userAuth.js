@@ -23,4 +23,4 @@ export const authApi = createApi({
 });
 
 export default authApi;
-export const { useSignInUserQuery, useSignOutUserQuery } = authApi;
+export const { useSignInUserMutation, useSignOutUserMutation } = authApi;

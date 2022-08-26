@@ -26,13 +26,13 @@ const Roadmap = () => {
         <h3 className="font-bold text-[18px] text-blue-800">Roadmap</h3>
         <Link
           to="/roadmap"
-          className="ml-auto text-blue-600 text-[13px] font-semibold underline"
+          className="ml-auto text-blue-500 text-[13px] font-semibold underline"
         >
           View
         </Link>
       </div>
 
-      <ul className="space-y-1 mt-6 text-4">
+      <ul className="space-y-1 mt-6 text-[1rem]">
         {roadmap.map((card, index) => (
           <li key={index} className="flex text-blue-400 items-center">
             <span

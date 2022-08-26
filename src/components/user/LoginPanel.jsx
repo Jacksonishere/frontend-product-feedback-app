@@ -3,7 +3,7 @@ import React, { useCallback } from "react";
 import { Link } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
 
-import LoginIcon from "../../Icons/Login";
+import LoginIcon from "../../icons/Login";
 
 const LoginPanel = ({ hamOpen, setHamOpen }) => {
   const user = useAuth();
@@ -20,7 +20,7 @@ const LoginPanel = ({ hamOpen, setHamOpen }) => {
       </div>
 
       <div className="text-[16px] ml-auto md:order-1 md:ml-0">
-        <Link className="flex" to="/login">
+        <Link className="flex" to="/auth/login">
           <LoginIcon />
           <span className="ml-[6px] font-light">Login</span>
         </Link>

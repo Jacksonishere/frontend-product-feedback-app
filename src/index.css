@@ -7,9 +7,8 @@
 @layer base {
   html,
   body {
-    height: 100%;
-    font-family: "Jost";
-    @apply bg-slate-100;
+    font-family: "Jost", sans-serif, Helvetica, Arial, sans-serif;
+    @apply h-full bg-slate-100  font-normal antialiased;
   }
 
   h1 {
@@ -24,13 +23,50 @@
   h4 {
     letter-spacing: -0.2px;
   }
+
+  [type="text"],
+  [type="email"],
+  [type="password"],
+  [type="number"],
+  textarea,
+  select {
+    @apply border-none outline-none focus:ring-1 focus-visible:ring-1 focus:ring-blue-500;
+  }
 }
 
 @layer components {
   .ham-bar {
     @apply w-5 h-[3px] bg-white duration-150;
   }
+
+  .auth-link {
+    @apply py-5 w-1/2 text-[15px] text-center text-blue-800;
+  }
+
+  .active-auth-link {
+    @apply font-semibold;
+  }
+
+  .label-wrapper {
+    @apply text-[14px];
+  }
+
+  .input-label {
+    @apply block py-4 font-semibold text-blue-800;
+  }
+
+  .input-text {
+    @apply w-full rounded-md py-3 px-4 bg-blue-100 text-blue-900;
+  }
+
+  .form {
+    @apply flex flex-col gap-2 mt-5;
+  }
+  .form-submit {
+    @apply block w-full mt-7 h-[50px] bg-purple-700 font-semibold text-white rounded-lg text-[14px];
+  }
 }
+
 :root {
   --radial-gradient-steps: ellipse at right top, rgba(232, 77, 112, 1) 0%,
     rgba(163, 55, 246, 1) 60%, rgba(40, 167, 237, 1) 100%;
