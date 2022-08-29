@@ -1,111 +1,100 @@
 import React, { useEffect, useCallback, useRef } from "react";
+import { useLocation } from "react-router-dom";
 
 import { motion, AnimatePresence } from "framer-motion";
 
-import { useSelector } from "react-redux";
-import { hideFlash } from "../../features/modals/flashSlice";
+import { useSelector, useDispatch } from "react-redux";
 import useFlash from "../../hooks/useFlash";
+
+import FlashContent from "./FlashContent";
 
 const flashContainerVariant = {
   initial: {
-    top: -40,
+    top: -20,
     scale: 0,
     left: "50%",
     x: "-50%",
   },
   animate: {
-    top: 40,
+    top: 20,
     scale: 1,
     transition: {
       duration: 0.2,
-      delayChildren: 0.075,
+      delayChildren: 0.1,
+      type: "tween",
     },
   },
   exit: {
-    top: -40,
+    top: -20,
     scale: 0,
-    left: "50%",
-    x: "-50%",
+    opacity: 0,
   },
-};
-
-const iconVariant = {
-  initial: {
-    scale: 0,
-  },
-  animate: {
-    scale: 1,
-    transition: {
-      duration: 0.4,
-      type: "spring",
-    },
-  },
-};
-
-const xBarVariant = {
-  initial: { origin: 0.5, scale: 0, rotate: 0 },
-  animate: (top) => ({
-    scale: 1,
-    rotate: top ? 45 : -45,
-    transition: { type: "tween" },
-  }),
-};
-
-const ErrorFlash = ({ msg }) => {
-  return (
-    <>
-      <motion.div
-        variants={iconVariant}
-        className="relative grid place-items-center w-[17px] h-[17px] bg-red-700 rounded-full"
-      >
-        <motion.span
-          className="absolute w-[11px] h-[2px] rounded-full bg-white"
-          variants={xBarVariant}
-          custom={true}
-        ></motion.span>
-        <motion.span
-          className="absolute w-[11px] h-[2px] rounded-full bg-white"
-          variants={xBarVariant}
-        ></motion.span>
-      </motion.div>
-      <p className="text-blue-900">{msg}</p>
-    </>
-  );
 };
 
 const Flash = () => {
-  const { show, type, msg } = useSelector((state) => state.flash);
+  const { show, type, msg, id } = useSelector((state) => state.flash);
+  const location = useLocation();
+
   const timeOutId = useRef();
 
-  const { dispatchHideFlash } = useFlash();
+  const { dispatchHideFlash, dispatchTimedHideFlash, dispatchShowFlash } =
+    useFlash();
 
+  /**
+   * For the case where flash is showing, but we do something to trigger it to reset the time to hide.
+   * Like retrying to login with invalid credentials before the flash msg disappeared the first time.
+   * Using dummy id to trigger effect but also works out because initial id is 0.
+   */
   useEffect(() => {
-    if (show) {
-      timeOutId.current = setTimeout(() => {
-        dispatchHideFlash();
-      }, 1000);
+    if (id) {
+      clearTimeout(timeOutId.current);
+      timeOutId.current = dispatchTimedHideFlash(2000);
     }
+  }, [id]);
+
+  /**
+   * Set timeout to hide flash
+   */
+  useEffect(() => {
+    if (show) timeOutId.current = dispatchTimedHideFlash(2000);
   }, [show]);
 
+  /**
+   * When rerouting - detected by location path, hide the flash and clear the timeout if it exists.
+   */
+  useEffect(() => {
+    dispatchHideFlash();
+    clearTimeout(timeOutId.current);
+  }, [location.pathname]);
+
+  /**
+   * Listen for nav state changes
+   */
+  useEffect(() => {
+    console.log(location.state);
+    if (location.state?.redirect === "login success") {
+      console.log("Redirect");
+      dispatchShowFlash({
+        show: true,
+        type: "SUCCESS",
+        msg: "welcome",
+      });
+      window.history.replaceState({}, "");
+    }
+  }, [location.state]);
+
   return (
-    <AnimatePresence>
+    <AnimatePresence mode="exit">
       {show && (
         <motion.div
+          key={location.pathname}
           className="absolute z-50 w-max bg-white rounded-lg drop-shadow-xl text-blue-900"
           variants={flashContainerVariant}
           initial="initial"
           animate="animate"
-          exit={{
-            opacity: 0,
-            transition: {
-              duration: 1,
-            },
-          }}
-          key="modal"
+          exit="exit"
         >
-          <div className="flex items-center p-2 gap-2">
-            <ErrorFlash msg={msg} />
-          </div>
+          <FlashContent type={type} msg={msg} />
         </motion.div>
       )}
     </AnimatePresence>

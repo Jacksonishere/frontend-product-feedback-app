@@ -1,10 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  show: true,
+  show: false,
   type: "",
   msg: "",
-  // id: 0,
+  id: 0,
   // action: null,
 };
 
@@ -13,8 +13,12 @@ const flashSlice = createSlice({
   name: "flash",
   initialState,
   reducers: {
-    showFlash: (_, action) => action.payload,
-    hideFlash: () => initialState,
+    showFlash: (_, action) => {
+      return action.payload;
+    },
+    hideFlash: () => {
+      return { show: false, type: "", msg: "" };
+    },
   },
 });
 

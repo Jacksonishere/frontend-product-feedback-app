@@ -4,12 +4,13 @@ import useAuth from "../../hooks/useAuth";
 
 const ProtectedRoutes = () => {
   const currLocation = useLocation();
+  console.log(currLocation);
   const currentUser = useAuth();
 
   return currentUser ? (
     <Outlet />
   ) : (
-    <Navigate to="/login" replace state={{ from: currLocation }} />
+    <Navigate to="/auth/login" replace state={{ from: currLocation }} />
   );
 };
 

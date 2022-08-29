@@ -11,6 +11,9 @@ module.exports = {
       },
       colors: {
         backdrop: "#00000080",
+        success: {
+          green: "#4BB543",
+        },
         purple: {
           300: "#C75AF6",
           700: "#AD1FEA",

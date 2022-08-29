@@ -21,7 +21,6 @@ const imgFadeOutIn = {
 
 const Auth = () => {
   const { pathname } = useLocation();
-  const navigate = useNavigate();
 
   const loginPath = useMemo(
     () => pathname === "/auth" || pathname === "/auth/login",
@@ -30,14 +29,14 @@ const Auth = () => {
   const avatarUrl = useAvatar({ seed: pathname });
 
   return (
-    <div className="px-6 py-8">
-      <button className="flex items-center mb-8" onClick={() => navigate(-1)}>
+    <div className="mx-auto px-6 py-8 max-w-[480px]">
+      <Link to="/" className="flex items-center mb-8 w-max">
         <ArrowLeft />
         <span className="ml-[6px] text-blue-400 text-[14px] font-semibold ">
           Go Back
         </span>
-      </button>
-      <div className="mx-auto px-6 pt-6 pb-8 max-w-[480px] bg-white rounded-xl">
+      </Link>
+      <div className="px-6 pt-6 pb-8 bg-white rounded-xl">
         <figure className="mx-auto my-6 h-[80px] max-w-[80px] rounded-full overflow-hidden">
           <AnimatePresence initial={false} mode="wait">
             <motion.img
@@ -74,7 +73,7 @@ const Auth = () => {
             className="absolute bottom-0 left-0 w-full h-[.5px] bg-blue-300 opacity-50"
           ></div>
         </div>
-        <Outlet />
+        <Outlet context={[avatarUrl]} />
       </div>
     </div>
   );

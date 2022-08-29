@@ -1,12 +1,15 @@
 import React, { useCallback } from "react";
+import { useSelector } from "react-redux";
 
 import { Link } from "react-router-dom";
+import { loadedSelector } from "../../features/users/userSlice";
 import useAuth from "../../hooks/useAuth";
 
 import LoginIcon from "../../icons/Login";
 
 const LoginPanel = ({ hamOpen, setHamOpen }) => {
   const user = useAuth();
+  const loaded = useSelector(loadedSelector);
 
   const toggleHam = useCallback(() => setHamOpen((curr) => !curr), []);
 
@@ -20,10 +23,29 @@ const LoginPanel = ({ hamOpen, setHamOpen }) => {
       </div>
 
       <div className="text-[16px] ml-auto md:order-1 md:ml-0">
-        <Link className="flex" to="/auth/login">
-          <LoginIcon />
-          <span className="ml-[6px] font-light">Login</span>
-        </Link>
+        {loaded && (
+          <>
+            {user ? (
+              <div className="flex justify-start items-center">
+                <figure>
+                  <img
+                    className="w-10 h-10 rounded-full"
+                    src={user.avatar_url}
+                    alt=""
+                  />
+                </figure>
+                <p className="hidden md:block">
+                  <b>{user.username}</b>
+                </p>
+              </div>
+            ) : (
+              <Link className="flex" to="/auth/login">
+                <LoginIcon />
+                <span className="ml-[3px]">Login</span>
+              </Link>
+            )}
+          </>
+        )}
       </div>
 
       <div

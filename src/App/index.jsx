@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 
@@ -13,9 +13,29 @@ import Flash from "../components/flash/Flash";
 import LoginForm from "../components/auth/LoginForm";
 import SignUpForm from "../components/auth/SignUpForm";
 
+import { useIsLoggedInQuery } from "../api/userAuth";
 import ProtectedRoutes from "../components/utils/ProtectedRoutes";
+import { setLoaded, setUser } from "../features/users/userSlice";
+
+import { useDispatch, batch } from "react-redux";
 
 const App = () => {
+  const dispatch = useDispatch();
+  const { data: user, isSuccess } = useIsLoggedInQuery();
+
+  useEffect(() => {
+    if (isSuccess) {
+      if (user) {
+        batch(() => {
+          dispatch(setUser(user.data.attributes));
+          dispatch(setLoaded());
+        });
+      } else {
+        dispatch(setLoaded());
+      }
+    }
+  }, [isSuccess, user]);
+
   return (
     <div className="App h-full overflow-hidden">
       {/* <button
