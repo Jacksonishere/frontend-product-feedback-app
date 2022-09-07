@@ -13,55 +13,25 @@ import Flash from "../components/flash/Flash";
 import LoginForm from "../components/auth/LoginForm";
 import SignUpForm from "../components/auth/SignUpForm";
 
-import { useIsLoggedInQuery } from "../api/userAuth";
 import ProtectedRoutes from "../components/utils/ProtectedRoutes";
-import { setLoaded, setUser } from "../features/users/userSlice";
-
-import { useDispatch, batch } from "react-redux";
+import useLoginCheck from "../hooks/useLoginCheck";
+import PublicRoutes from "../components/utils/PublicRoutes";
 
 const App = () => {
-  const dispatch = useDispatch();
-  const { data: user, isSuccess } = useIsLoggedInQuery();
-
-  useEffect(() => {
-    if (isSuccess) {
-      if (user) {
-        batch(() => {
-          dispatch(setUser(user.data.attributes));
-          dispatch(setLoaded());
-        });
-      } else {
-        dispatch(setLoaded());
-      }
-    }
-  }, [isSuccess, user]);
+  useLoginCheck();
 
   return (
-    <div className="App h-full overflow-hidden">
-      {/* <button
-        type="button"
-        onClick={() => {
-          setUser(1);
-          if (location.state?.from) {
-            navigate(location.state.from);
-          }
-        }}
-      >
-        Login
-      </button>
-      <button type="button" onClick={() => setUser(null)}>
-        Logout
-      </button> */}
+    <div className="max-w-7xl min-h-screen overflow-hidden mx-auto md:pt-14 md:px-10">
       <Flash />
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route element={<ProtectedRoutes />}>
-          <Route path="/feedback/new" element={<NewFeedback />} />
-        </Route>
+        <Route index={true} path="/" element={<Home />} />
         <Route path="/auth" element={<Auth />}>
-          {/* <Route path="/auth" element={<Login />} /> */}
+          <Route path="/auth" element={<LoginForm />} />
           <Route path="login" element={<LoginForm />} />
           <Route path="signup" element={<SignUpForm />} />
+        </Route>
+        <Route element={<ProtectedRoutes />}>
+          <Route path="/feedback/new" element={<NewFeedback />} />
         </Route>
         <Route path="*" element={<NotFound404 />} />
       </Routes>

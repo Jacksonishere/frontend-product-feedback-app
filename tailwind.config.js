@@ -1,4 +1,5 @@
-/** @type {import('tailwindcss').Config} */
+const plugin = require("tailwindcss/plugin");
+
 module.exports = {
   content: ["./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
@@ -19,6 +20,7 @@ module.exports = {
           700: "#AD1FEA",
         },
         blue: {
+          25: "#F2F4FE",
           50: "#F7F8FD",
           100: "#F2F4FF",
           300: "#7C91F9",
@@ -41,8 +43,14 @@ module.exports = {
       },
       backgroundImage: {
         gradient: "radial-gradient(var(--radial-gradient-steps))",
+        "new-icon": "url('/public/assets/shared/icon-new-feedback.svg')",
+        "edit-icon": "url('/public/assets/shared/icon-edit-feedback.svg')",
       },
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addVariant }) {
+      addVariant("not-last", "&:not(:last-child)");
+    }),
+  ],
 };

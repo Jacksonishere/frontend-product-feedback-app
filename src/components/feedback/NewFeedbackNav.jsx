@@ -1,0 +1,77 @@
+import React, { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import { Link } from "react-router-dom";
+
+import Suggestion from "../../icons/Suggestion";
+import ArrowDown from "../../icons/ArrowDown";
+import DropdownSelect from "../utils/DropdownSelect";
+
+const sortOptions = [
+  "Most Upvotes",
+  "Least Upvotes",
+  "Most Comments",
+  "Least Comments",
+];
+
+const NewFeedbackNav = () => {
+  const [selectedOption, setSelectedOption] = useState(0);
+  const [showSortOptions, setShowOptions] = useState(false);
+
+  return (
+    <div className="flex items-center mt-[72px] pl-5 pr-3 py-[10px] bg-blue-800 md:mt-7 md:rounded-[10px] lg:mt-0">
+      <p className="hidden text-[18px] text-blue-25 font-bold md:flex md:items-center">
+        <Suggestion />
+        <span className="ml-3 font-bold">X Suggestions</span>
+      </p>
+
+      <div className="relative text-blue-25 text-[14px] md:ml-10">
+        <button
+          className="flex items-center opacity-80"
+          onClick={(e) => {
+            e.stopPropagation();
+            setShowOptions((shown) => !shown);
+          }}
+        >
+          <span>Sort by:</span>
+          <b className="ml-1">{sortOptions[selectedOption]}</b>
+          <motion.span
+            className="ml-2 mt-[1px]"
+            animate={{ rotate: showSortOptions ? 180 : 0 }}
+          >
+            <ArrowDown arrowStroke="#F2F4FE" />
+          </motion.span>
+        </button>
+
+        <AnimatePresence>
+          {showSortOptions && (
+            <motion.div
+              initial={{ y: -20, opacity: 0 }}
+              animate={{ y: 0, opacity: 1 }}
+              exit={{
+                y: -20,
+                opacity: 0,
+                transition: { type: "tween", duration: 0.1 },
+              }}
+              className="absolute top-[calc(100%_+_20px)] w-[255px]"
+            >
+              <DropdownSelect
+                options={sortOptions}
+                selected={selectedOption}
+                selectedHandler={(option) => setSelectedOption(option)}
+                closeHandler={() => setShowOptions(false)}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+      <Link
+        className="ml-auto px-6 py-3 bg-purple-700 text-white font-bold text-[14px] rounded-[9px]"
+        to="/feedback/new"
+      >
+        + Add Feedback
+      </Link>
+    </div>
+  );
+};
+
+export default NewFeedbackNav;

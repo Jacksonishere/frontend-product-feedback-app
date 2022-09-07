@@ -1,6 +1,7 @@
 import React, { useEffect, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { uniqueId } from "lodash";
 
 import Spinner from "../utils/Spinner";
 
@@ -13,52 +14,64 @@ const LoginForm = () => {
   const dispatch = useDispatch();
   const { dispatchHideFlash, dispatchShowFlash } = useFlash();
 
-  const dummyId = useRef(0);
   const navigate = useNavigate();
+  const location = useLocation();
 
   const [signIn, { data: user, isLoading, error, isSuccess }] =
     useSignInUserMutation();
 
-  useEffect(() => {
-    if (error)
-      dispatchShowFlash({
-        show: true,
-        type: "ERROR",
-        msg: "Invalid Credentials. Try again.",
-        id: dummyId.current++,
-      });
-  }, [error]);
+  // useEffect(() => {
+  //   if (error)
+  //     dispatchShowFlash({
+  //       show: true,
+  //       type: "ERROR",
+  //       msg: "Invalid Credentials. Try again.",
+  //       id: uniqueId(),
+  //     });
+  // }, [error]);
 
-  useEffect(() => {
-    if (isSuccess && user) {
-      dispatch(setUser(user.data.attributes));
-      dispatchHideFlash();
-      navigate("/", {
-        state: { redirect: "login success" },
-      });
-    }
-  }, [isSuccess, user]);
+  // useEffect(() => {
+  //   if (isSuccess && user) {
+  //     dispatch(setUser(user.data.attributes));
+  //     dispatchHideFlash();
+  //     // Temporary workaround. During rerender, navigate from AuthPanel is
+  //     setTimeout(() => {
+  //       navigate("/", {
+  //         state: { redirect: "login success" },
+  //       });
+  //     }, 50);
+  //   }
+  // }, [isSuccess, user]);
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const formBody = Object.fromEntries(formData);
 
-    signIn(formBody);
+    const { data: user, error } = await signIn(formBody);
+    if (user) {
+      dispatch(setUser(user.data.attributes));
+      dispatchHideFlash();
+      if (location.state?.from?.pathname) {
+        navigate(location.state.from.pathname);
+      } else {
+        navigate("/", { state: { redirect: "login success" } });
+      }
+      // setTimeout(() => {
+
+      // }, 50)
+    } else if (error) {
+      dispatchShowFlash({
+        show: true,
+        type: "ERROR",
+        msg: "Invalid Credentials. Try again.",
+        id: uniqueId(),
+      });
+    }
   };
 
   return (
     <form className="form" action="#" onSubmit={handleLogin}>
-      <button
-        onClick={() => {
-          dispatchHideFlash();
-          navigate("/", {
-            state: { redirect: "login success" },
-          });
-        }}
-      >
-        click dur
-      </button>
       <label className="label-wrapper">
         <span className="input-label">Email</span>
         <input

@@ -10,6 +10,9 @@ import useOutsideClick from "../../hooks/useOutsideClick";
 
 import LoginIcon from "../../icons/Login";
 import Logout from "../../icons/Logout";
+import { showFlash } from "../../features/modals/flashSlice";
+
+import { uniqueId } from "lodash";
 
 const signoutBtnVariant = {
   initial: {
@@ -36,6 +39,7 @@ const signoutBtnVariant = {
 const LoginPanel = ({ hamOpen, setHamOpen }) => {
   const dispatch = useDispatch();
   const user = useAuth();
+
   const loaded = useSelector(loadedSelector);
   const [signOutUser, { isSuccess }] = useSignOutUserMutation();
 
@@ -46,15 +50,25 @@ const LoginPanel = ({ hamOpen, setHamOpen }) => {
 
   const signOutUserHandler = useCallback(() => {
     signOutUser();
-    setShowSignout(false);
   }, []);
 
   useEffect(() => {
-    if (isSuccess) dispatch(resetUser());
+    if (isSuccess) {
+      setShowSignout(false);
+      dispatch(resetUser());
+      dispatch(
+        showFlash({
+          show: true,
+          type: "SUCCESS",
+          msg: "You have successfully logged out.",
+          id: uniqueId(),
+        })
+      );
+    }
   }, [isSuccess]);
 
   return (
-    <div className="fixed inset-x-0 top-0 flex items-center px-6 h-[72px] bg-gradient text-white md:static md:flex-col md:h-auto md:w-1/3 md:rounded-lg md:items-start md:p-6">
+    <div className="fixed inset-x-0 top-0 z-10 flex items-center px-6 h-[72px] bg-gradient text-white md:static md:flex-col md:h-auto md:w-1/3 md:rounded-lg md:items-start md:p-6 lg:w-full lg:h-[170px]">
       <div className="flex flex-col capitalize md:order-2 md:mt-auto">
         <h2 className="font-bold text-[15px] md:text-[20px]">
           Frontend Mentor
@@ -80,14 +94,14 @@ const LoginPanel = ({ hamOpen, setHamOpen }) => {
                     alt=""
                   />
                 </figure>
-                <p className="hidden md:block">
+                <p className="hidden md:block md:ml-2">
                   <b>{user.username}</b>
                 </p>
 
                 <AnimatePresence>
                   {showSignout && (
                     <motion.button
-                      className="absolute top-[calc(100%_+_10px)] right-[20px] z-[100] flex items-center justify-start px-[16px] py-[10px] w-max text-red-700 text-[14px] bg-white rounded-lg shadow-sm origin-top-right"
+                      className="absolute top-[calc(100%_+_10px)] right-[20px] z-[100] flex items-center justify-start px-[16px] py-[10px] w-max text-red-700 text-[14px] bg-white rounded-lg shadow-sm origin-top-right md:left-0 md:origin-top-left"
                       onClick={signOutUserHandler}
                       variants={signoutBtnVariant}
                       initial="initial"

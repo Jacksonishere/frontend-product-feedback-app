@@ -7,7 +7,7 @@ const NavBoxes = () => {
   const [hamOpen, setHamOpen] = useState(false);
 
   return (
-    <div className="md:flex md:items-stretch md:gap-2">
+    <div className="md:flex md:items-stretch md:gap-2 lg:flex-col lg:max-w-[255px] lg:gap-5">
       {/* For more reusability, use a top-level background component that takes in a callback and create a slice that would control show/hidden. */}
       <div
         onClick={() => setHamOpen(false)}
@@ -20,7 +20,7 @@ const NavBoxes = () => {
       <div
         className={`fixed top-[72px] bottom-0 right-0 p-6 flex flex-col gap-6 w-[72%] transition-transform duration-150 ${
           hamOpen ? "translate-x-0" : "translate-x-full"
-        } bg-blue-100 md:static md:flex-row md:gap-2 md:p-0 md:w-2/3 md:translate-x-0`}
+        } bg-blue-100 md:static md:flex-row md:gap-2 md:p-0 md:w-2/3 md:translate-x-0 lg:flex-col lg:w-full lg:gap-5`}
       >
         <FeedbackTags />
         <Roadmap />

@@ -1,13 +1,14 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
-import useAuth from "../../hooks/useAuth";
 
 const ProtectedRoutes = () => {
+  const { loaded, user } = useSelector((state) => state.userSlice);
   const currLocation = useLocation();
-  console.log(currLocation);
-  const currentUser = useAuth();
 
-  return currentUser ? (
+  if (!loaded) return <></>;
+
+  return user ? (
     <Outlet />
   ) : (
     <Navigate to="/auth/login" replace state={{ from: currLocation }} />

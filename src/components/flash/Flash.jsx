@@ -48,7 +48,7 @@ const Flash = () => {
   useEffect(() => {
     if (id) {
       clearTimeout(timeOutId.current);
-      timeOutId.current = dispatchTimedHideFlash(2000);
+      timeOutId.current = dispatchTimedHideFlash(1500);
     }
   }, [id]);
 
@@ -56,7 +56,7 @@ const Flash = () => {
    * Set timeout to hide flash
    */
   useEffect(() => {
-    if (show) timeOutId.current = dispatchTimedHideFlash(2000);
+    if (show) timeOutId.current = dispatchTimedHideFlash(1500);
   }, [show]);
 
   /**
@@ -71,7 +71,6 @@ const Flash = () => {
    * Listen for nav state changes
    */
   useEffect(() => {
-    console.log(location.state);
     if (location.state?.redirect === "login success") {
       console.log("Redirect");
       dispatchShowFlash({
@@ -84,7 +83,7 @@ const Flash = () => {
   }, [location.state]);
 
   return (
-    <AnimatePresence mode="exit">
+    <AnimatePresence>
       {show && (
         <motion.div
           key={location.pathname}

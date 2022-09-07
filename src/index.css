@@ -62,8 +62,21 @@
   .form {
     @apply flex flex-col gap-2 mt-5;
   }
+
   .form-submit {
     @apply block w-full mt-7 h-[50px] bg-purple-700 font-semibold text-white rounded-lg text-[14px];
+  }
+
+  .form-label {
+    @apply flex flex-col gap-[2px];
+  }
+
+  .form-input {
+    @apply inline-block px-4 py-[10px] mt-2 w-full text-blue-900 text-[13px] bg-blue-100 rounded-[4px];
+  }
+
+  .dropdown-select-focus {
+    @apply border-none outline-none focus:ring-1 focus-visible:ring-1 focus:ring-blue-500;
   }
 }
 

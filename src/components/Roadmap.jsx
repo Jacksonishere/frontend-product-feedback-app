@@ -21,7 +21,7 @@ const Roadmap = () => {
   ];
 
   return (
-    <div className="p-6 rounded-lg bg-white md:basis-1/2">
+    <div className="p-6 rounded-lg bg-white md:basis-1/2 lg:basis-full">
       <div className="flex items-center">
         <h3 className="font-bold text-[18px] text-blue-800">Roadmap</h3>
         <Link
