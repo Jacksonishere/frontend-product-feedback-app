@@ -35,13 +35,15 @@ const FeedbackForm = () => {
         {post ? "Create New Feedback" : "Edit Feedback"}
       </h2>
       <form className="relative space-y-4" onSubmit={formSubmitHandler}>
-        <label className="form-label">
-          <b>Feedback Title</b>
-          <span className="text-blue-400">
-            Add a short, descriptive headline
-          </span>
+        <div>
+          <label className="form-label">
+            <b>Feedback Title</b>
+            <span className="text-blue-400">
+              Add a short, descriptive headline
+            </span>
+          </label>
           <input className="form-input" type="text" />
-        </label>
+        </div>
 
         <div className="form-label relative">
           <b>Category</b>
@@ -50,7 +52,7 @@ const FeedbackForm = () => {
           </span>
           <button
             ref={categoryBtnRef}
-            className="dropdown-select-focus form-input flex justify-between items-center text-left"
+            className="form-input flex justify-between items-center text-left"
             onClick={toggleOptions}
           >
             {feedbackTypes[selectedOption]}

@@ -47,20 +47,20 @@
     @apply font-semibold;
   }
 
-  .label-wrapper {
+  .form {
+    @apply flex flex-col gap-2 mt-5;
+  }
+
+  .form-group {
     @apply text-[14px];
   }
 
   .input-label {
-    @apply block py-4 font-semibold text-blue-800;
+    @apply block py-4 font-bold text-blue-800;
   }
 
   .input-text {
     @apply w-full rounded-md py-3 px-4 bg-blue-100 text-blue-900;
-  }
-
-  .form {
-    @apply flex flex-col gap-2 mt-5;
   }
 
   .form-submit {
@@ -77,6 +77,13 @@
 
   .dropdown-select-focus {
     @apply border-none outline-none focus:ring-1 focus-visible:ring-1 focus:ring-blue-500;
+  }
+
+  .error-input {
+    @apply ring-1 ring-red-700 focus:ring-red-700;
+  }
+  .error-p {
+    @apply mt-1 flex items-center text-red-700 text-[13px];
   }
 }
 

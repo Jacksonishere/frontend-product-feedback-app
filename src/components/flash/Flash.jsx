@@ -71,12 +71,12 @@ const Flash = () => {
    * Listen for nav state changes
    */
   useEffect(() => {
-    if (location.state?.redirect === "login success") {
+    if (location.state?.redirect === "LOGIN") {
       console.log("Redirect");
       dispatchShowFlash({
         show: true,
         type: "SUCCESS",
-        msg: "welcome",
+        msg: `Welcome back ${location.state.username}!`,
       });
       window.history.replaceState({}, "");
     }
@@ -87,7 +87,7 @@ const Flash = () => {
       {show && (
         <motion.div
           key={location.pathname}
-          className="absolute z-50 w-max bg-white rounded-lg drop-shadow-xl text-blue-900"
+          className="absolute z-50 w-max bg-white rounded-lg drop-shadow-xl text-[14px] text-blue-900"
           variants={flashContainerVariant}
           initial="initial"
           animate="animate"

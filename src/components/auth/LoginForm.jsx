@@ -1,9 +1,11 @@
-import React, { useEffect, useRef } from "react";
+import React, { useState, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { uniqueId } from "lodash";
 
 import Spinner from "../utils/Spinner";
+import InputErrorMsg from "../utils/InputErrorMsg";
+import { ValidateEmail } from "../../utils/Utils";
 
 import useFlash from "../../hooks/useFlash";
 
@@ -14,39 +16,25 @@ const LoginForm = () => {
   const dispatch = useDispatch();
   const { dispatchHideFlash, dispatchShowFlash } = useFlash();
 
+  const [emailErrorMsg, setEmailErrorMsg] = useState();
+  const [passwordErrorMsg, setPasswordErrorMsg] = useState();
+
   const navigate = useNavigate();
   const location = useLocation();
 
-  const [signIn, { data: user, isLoading, error, isSuccess }] =
-    useSignInUserMutation();
+  const [signIn, { isLoading }] = useSignInUserMutation();
 
-  // useEffect(() => {
-  //   if (error)
-  //     dispatchShowFlash({
-  //       show: true,
-  //       type: "ERROR",
-  //       msg: "Invalid Credentials. Try again.",
-  //       id: uniqueId(),
-  //     });
-  // }, [error]);
-
-  // useEffect(() => {
-  //   if (isSuccess && user) {
-  //     dispatch(setUser(user.data.attributes));
-  //     dispatchHideFlash();
-  //     // Temporary workaround. During rerender, navigate from AuthPanel is
-  //     setTimeout(() => {
-  //       navigate("/", {
-  //         state: { redirect: "login success" },
-  //       });
-  //     }, 50);
-  //   }
-  // }, [isSuccess, user]);
+  const isInvalidForm = useMemo(
+    () => emailErrorMsg !== null || passwordErrorMsg !== null,
+    [emailErrorMsg, passwordErrorMsg]
+  );
 
   const handleLogin = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const formBody = Object.fromEntries(formData);
+
+    if (isInvalidForm) return;
 
     const { data: user, error } = await signIn(formBody);
     if (user) {
@@ -55,11 +43,10 @@ const LoginForm = () => {
       if (location.state?.from?.pathname) {
         navigate(location.state.from.pathname);
       } else {
-        navigate("/", { state: { redirect: "login success" } });
+        navigate("/", {
+          state: { redirect: "LOGIN", username: user.data.attributes.username },
+        });
       }
-      // setTimeout(() => {
-
-      // }, 50)
     } else if (error) {
       dispatchShowFlash({
         show: true,
@@ -70,28 +57,46 @@ const LoginForm = () => {
     }
   };
 
+  const handleEmail = (e) => {
+    if (!ValidateEmail(e.target.value)) {
+      setEmailErrorMsg("Invalid email address.");
+    } else {
+      setEmailErrorMsg(null);
+    }
+  };
+
   return (
     <form className="form" action="#" onSubmit={handleLogin}>
-      <label className="label-wrapper">
-        <span className="input-label">Email</span>
+      <div className="form-group">
+        <label className="input-label" htmlFor="email">
+          Email
+        </label>
         <input
-          // required
-          // ref={(node) => node?.focus()}
-          className="input-text"
+          className={`input-text ${emailErrorMsg ? "error-input" : ""}`}
           name="email"
           type="email"
+          onChange={handleEmail}
           placeholder="johndoe@email.com"
         />
-      </label>
-      <label className="label-wrapper">
-        <span className="input-label">Password</span>
+        <InputErrorMsg msg={emailErrorMsg} />
+      </div>
+
+      <div className="form-group">
+        <label className="input-label" htmlFor="password">
+          Password
+        </label>
         <input
-          // required
-          className="input-text"
+          className={`input-text ${passwordErrorMsg ? "error-input" : ""}`}
           name="password"
           type="password"
+          onChange={(e) =>
+            e.target.value === ""
+              ? setPasswordErrorMsg("Password cannot be blank")
+              : setPasswordErrorMsg(null)
+          }
         />
-      </label>
+        <InputErrorMsg msg={passwordErrorMsg} />
+      </div>
       <button
         className={`form-submit ${isLoading ? "opacity-80" : ""}`}
         disabled={isLoading}
