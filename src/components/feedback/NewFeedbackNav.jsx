@@ -64,10 +64,7 @@ const NewFeedbackNav = () => {
           )}
         </AnimatePresence>
       </div>
-      <Link
-        className="ml-auto px-6 py-3 bg-purple-700 text-white font-bold text-[14px] rounded-[9px]"
-        to="/feedback/new"
-      >
+      <Link className="ml-auto btn bg-purple-700" to="/feedback/new">
         + Add Feedback
       </Link>
     </div>

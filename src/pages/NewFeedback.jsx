@@ -5,9 +5,16 @@ import FeedbackForm from "../components/feedback/FeedbackForm";
 
 const NewFeedback = () => {
   return (
-    <div className="px-6">
+    <div className="mx-auto px-6 max-w-[592px]">
       <NavigateBack />
-      <FeedbackForm />
+      <FeedbackForm
+      // post={{
+      //   title: "bawb",
+      //   detail: "gay",
+      //   category: "Enhancement",
+      //   status: "Planned",
+      // }}
+      />
     </div>
   );
 };
