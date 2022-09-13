@@ -14,7 +14,7 @@ const DropdownSelect = (props) => {
   };
 
   return (
-    <ul ref={nodeRef} className="flex flex-col bg-white rounded-lg shadow-xl">
+    <ul ref={nodeRef} className="flex flex-col bg-white rounded-lg shadow-xl ">
       {options.map((option, i) => (
         <li
           onClick={() => {

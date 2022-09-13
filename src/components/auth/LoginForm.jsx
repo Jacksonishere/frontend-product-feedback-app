@@ -10,7 +10,7 @@ import { ValidateEmail } from "../../utils/Utils";
 import useFlash from "../../hooks/useFlash";
 
 import { setUser } from "../../features/users/userSlice";
-import { useSignInUserMutation } from "../../api/userAuth";
+import { useSignInUserMutation } from "../../api/userApiSlice";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -38,13 +38,13 @@ const LoginForm = () => {
 
     const { data: user, error } = await signIn(formBody);
     if (user) {
-      dispatch(setUser(user.data.attributes));
+      dispatch(setUser(user));
       dispatchHideFlash();
       if (location.state?.from?.pathname) {
         navigate(location.state.from.pathname);
       } else {
         navigate("/", {
-          state: { redirect: "LOGIN", username: user.data.attributes.username },
+          state: { redirect: "LOGIN", username: user.username },
         });
       }
     } else if (error) {

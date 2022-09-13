@@ -18,8 +18,8 @@ const NewFeedbackNav = () => {
   const [showSortOptions, setShowOptions] = useState(false);
 
   return (
-    <div className="flex items-center mt-[72px] pl-5 pr-3 py-[10px] bg-blue-800 md:mt-7 md:rounded-[10px] lg:mt-0">
-      <p className="hidden text-[18px] text-blue-25 font-bold md:flex md:items-center">
+    <div className="flex items-center mt-[72px] pl-5 pr-3 py-[10px] bg-blue-800 md:mt-10 md:rounded-[10px] md:px-[24px] lg:mt-0 lg:ml-[275px]">
+      <p className="hidden text-[18px] text-blue-25 font-bold md:flex md:items-center md:py-[10px]">
         <Suggestion />
         <span className="ml-3 font-bold">X Suggestions</span>
       </p>

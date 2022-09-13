@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Jost:wght@300;400;600;700&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Jost:wght@300;400;500;600;700&display=swap");
 
 @tailwind base;
 @tailwind components;
@@ -93,7 +93,11 @@
   }
 
   .btn {
-    @apply px-5 py-[10px] text-white font-bold text-[13px] rounded-[9px];
+    @apply px-5 py-[10px] text-white font-bold text-[13px] rounded-[9px] md:py-[12px];
+  }
+
+  .feedback-tag {
+    @apply px-4 py-[7px] md:px-4 md:py-2 w-max bg-blue-100 text-blue-500 text-[13px] font-semibold rounded-[10px] capitalize;
   }
 }
 

@@ -4,7 +4,7 @@ import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
 import { loadedSelector, resetUser } from "../../features/users/userSlice";
-import { useSignOutUserMutation } from "../../api/userAuth";
+import { useSignOutUserMutation } from "../../api/userApiSlice";
 import useAuth from "../../hooks/useAuth";
 import useOutsideClick from "../../hooks/useOutsideClick";
 

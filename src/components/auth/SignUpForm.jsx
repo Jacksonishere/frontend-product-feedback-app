@@ -2,7 +2,7 @@ import React, { useState, useMemo } from "react";
 import { useDispatch } from "react-redux";
 import { useOutletContext, useNavigate, useLocation } from "react-router-dom";
 
-import { useSignUpUserMutation } from "../../api/userAuth";
+import { useSignUpUserMutation } from "../../api/userApiSlice";
 import { setUser } from "../../features/users/userSlice";
 import useFlash from "../../hooks/useFlash";
 
@@ -51,7 +51,7 @@ const SignUpForm = () => {
 
     const { data: user, error } = await signUp(formBody);
     if (user) {
-      dispatch(setUser(user.data.attributes));
+      dispatch(setUser(user));
       dispatchHideFlash();
       if (location.state?.from?.pathname) {
         navigate(location.state.from.pathname);

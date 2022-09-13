@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, batch } from "react-redux";
 
-import { useIsLoggedInQuery } from "../api/userAuth";
+import { useIsLoggedInQuery } from "../api/userApiSlice";
 import { setUser, setLoaded } from "../features/users/userSlice";
 
 const useLoginCheck = () => {
@@ -12,7 +12,7 @@ const useLoginCheck = () => {
     if (isSuccess) {
       if (user) {
         batch(() => {
-          dispatch(setUser(user.data.attributes));
+          dispatch(setUser(user));
           dispatch(setLoaded());
         });
       } else {

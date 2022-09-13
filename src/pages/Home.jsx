@@ -2,6 +2,7 @@ import React from "react";
 
 import NavBoxes from "../components/NavBoxes";
 import NewFeedbackNav from "../components/feedback/NewFeedbackNav";
+import Feedbacks from "../components/feedback/Feedbacks";
 
 const Home = () => {
   return (
@@ -9,6 +10,7 @@ const Home = () => {
       <NavBoxes />
       <div className="w-full">
         <NewFeedbackNav />
+        <Feedbacks />
       </div>
     </div>
   );
