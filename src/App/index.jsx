@@ -3,7 +3,7 @@ import { Routes, Route, useLocation, useNavigate } from "react-router-dom";
 import { AnimatePresence } from "framer-motion";
 
 // Pages
-import Home from "../pages/Home";
+import HomePage from "../pages/HomePage";
 import NewFeedback from "../pages/NewFeedback";
 import Auth from "../pages/Auth";
 import NotFound404 from "../pages/NotFound404";
@@ -24,8 +24,8 @@ const App = () => {
     <div className="max-w-7xl min-h-screen overflow-hidden mx-auto md:pt-14 md:px-10">
       <Flash />
       <Routes>
-        <Route index={true} path="/" element={<Home />} />
-        <Route path="/auth" element={<Auth />}>
+        <Route index={true} path="/" element={<HomePage />} />
+        <Route path="auth" element={<Auth />}>
           <Route path="/auth" element={<LoginForm />} />
           <Route path="login" element={<LoginForm />} />
           <Route path="signup" element={<SignUpForm />} />

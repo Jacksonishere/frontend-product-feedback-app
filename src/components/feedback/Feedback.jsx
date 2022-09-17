@@ -12,30 +12,18 @@ import Comment from "../../icons/Comment";
 
 const Feedback = ({ feedback }) => {
   const user = useAuth();
-  const [likeFeedback, { isLoading: likeProcessing, isSuccess: likeSuccess }] =
-    useCreateLikeMutation();
-  const [
-    unlikeFeedback,
-    { isLoading: unlikeProcessing, isSuccess: unlikeSuccess },
-  ] = useDestroyLikeMutation();
+  const [likeFeedback] = useCreateLikeMutation();
+  const [unlikeFeedback] = useDestroyLikeMutation();
 
-  const likeBtnHandler = async () => {
-    console.log(feedback);
+  const likeBtnHandler = () => {
+    const likeParams = { likeable_type: "Feedback", likeable_id: feedback.id };
+
     if (feedback.user_liked) {
-      const { data, error } = await unlikeFeedback(feedback.id);
+      unlikeFeedback(likeParams);
     } else {
-      const { data, error } = await likeFeedback(feedback.id);
+      likeFeedback(likeParams);
     }
   };
-  // const likeBtnHandler = useCallback(async () => {
-  //   if (feedback.user_liked) {
-  //     const { data, error } = await likeFeedback("Feedback", feedback.id);
-  //     console.log(data);
-  //   } else {
-  //     const { data, error } = await unlikeFeedback("Feedback", feedback.id);
-  //     console.log(data);
-  //   }
-  // }, [feedback]);
 
   return (
     <div className="grid auto-col grid-rows-[repeat(4,_auto)] grid-cols-[1fr_1fr] gap-y-4 p-6 bg-white text-blue-900 rounded-md text-[13px] hover:opacity-100">
@@ -69,10 +57,10 @@ const Feedback = ({ feedback }) => {
       <button
         onClick={likeBtnHandler}
         className={`feedback-tag flex justify-center items-center md:flex-col text-black ${
-          feedback.user_liked ? "bg-blue-500 text-white" : ""
+          user && feedback.user_liked ? "bg-blue-500 text-white" : ""
         }`}
       >
-        <ArrowUp color={feedback.user_liked ? "white" : "#4661E6"} />
+        <ArrowUp color={user && feedback.user_liked ? "white" : "#4661E6"} />
         <b className="ml-2 md:mt-[2px]">{feedback.num_likes ?? 0}</b>
       </button>
 

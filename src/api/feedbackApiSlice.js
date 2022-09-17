@@ -1,5 +1,7 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { current } from "@reduxjs/toolkit";
 
+window.current = current;
 export const feedbackApi = createApi({
   reducerPath: "feedbackApi",
   tagTypes: ["Feedbacks", "Likes"],
@@ -16,37 +18,120 @@ export const feedbackApi = createApi({
         method: "GET",
         params: { offset, limit },
       }),
+      // If there are results, then the tags are the individual Feedback's with their id, and then a general tag, which is a List of Feedbacks
       providesTags: (result) =>
         result
           ? [
               ...result.map((feedback) => ({
-                type: "Feedbacks",
+                type: "Feedback",
                 id: feedback.id,
               })),
-              { type: "Feedbacks" },
+              { type: "Feedback", id: "LIST" },
             ]
-          : ["Feedbacks"],
+          : [{ type: "Feedback", id: "LIST" }],
+    }),
+    getFeedback: builder.query({
+      query: (id) => ({
+        url: `/feedbacks/${id}`,
+        method: "GET",
+      }),
+      // If there are results, then the tags are the individual Feedback's with their id, and then a general tag, which is a List of Feedbacks
+      providesTags: (result, error, id) => [{ type: "Feedback", id }],
     }),
     createLike: builder.mutation({
-      query: (id) => ({
+      query: ({ likeable_type, likeable_id }) => ({
         url: "/likes",
         method: "POST",
-        params: { likeable_type: "feedback", likeable_id: id },
+        params: { likeable_type, likeable_id },
       }),
-      // invalidatesTags:
+      async onQueryStarted(
+        { likeable_type, likeable_id },
+        { dispatch, queryFulfilled }
+      ) {
+        const patchResult = dispatch(
+          feedbackApi.util.updateQueryData(
+            `get${likeable_type}s`,
+            undefined,
+            (draft) => {
+              let updateLikeable = draft.find(
+                (likeable) => likeable.id === likeable_id
+              );
+              updateLikeable.num_likes = updateLikeable.num_likes + 1;
+              updateLikeable.user_liked = true;
+            }
+          )
+        );
+        const patchResult2 = dispatch(
+          feedbackApi.util.updateQueryData(
+            `get${likeable_type}`,
+            likeable_id,
+            (draft) => {
+              let updateLikeable = draft;
+              updateLikeable.num_likes = updateLikeable.num_likes + 1;
+              updateLikeable.user_liked = true;
+            }
+          )
+        );
+        queryFulfilled.catch(() => {
+          patchResult.undo();
+          patchResult2.undo();
+        });
+      },
+      // Invalidate a specific feedback.
+      invalidatesTags: (result, error, { likeable_type, likeable_id }) => {
+        return [{ type: "Feedbacks", id: likeable_id }];
+      },
     }),
     destroyLike: builder.mutation({
-      query: (id) => ({
+      query: ({ likeable_type, likeable_id }) => ({
         url: "/likes",
-        method: "DESTROY",
-        params: { likeable_type: "feedback", likeable_id: id },
+        method: "DELETE",
+        params: { likeable_type, likeable_id },
       }),
+      async onQueryStarted(
+        { likeable_type, likeable_id },
+        { dispatch, queryFulfilled }
+      ) {
+        const patchResult = dispatch(
+          feedbackApi.util.updateQueryData(
+            `get${likeable_type}s`,
+            undefined,
+            (draft) => {
+              let updateLikeable = draft.find(
+                (likeable) => likeable.id === likeable_id
+              );
+              updateLikeable.num_likes = updateLikeable.num_likes - 1;
+              updateLikeable.user_liked = false;
+            }
+          )
+        );
+        const patchResult2 = dispatch(
+          feedbackApi.util.updateQueryData(
+            `get${likeable_type}`,
+            likeable_id,
+            (draft) => {
+              let updateLikeable = draft;
+              updateLikeable.num_likes = updateLikeable.num_likes - 1;
+              updateLikeable.user_liked = false;
+            }
+          )
+        );
+        queryFulfilled.catch(() => {
+          patchResult.undo();
+          patchResult2.undo();
+        });
+      },
+      // Invalidate a specific feedback.
+      invalidatesTags: (result, error, { likeable_type, likeable_id }) => {
+        return [{ type: "Feedbacks", id: likeable_id }];
+      },
     }),
   }),
 });
 
 export default feedbackApi;
 export const {
+  useGetFeedbackQuery,
   useGetFeedbacksQuery,
   useCreateLikeMutation,
   useDestroyLikeMutation,

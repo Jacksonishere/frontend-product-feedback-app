@@ -12,7 +12,7 @@ const Feedbacks = () => {
   }, [feedbacks]);
 
   return (
-    <div className="px-6 my-8">
+    <div className="px-6 my-8 md:px-0 md:my-6">
       {isLoading ? (
         <div className="grid place-items-center">
           <Spinner />
