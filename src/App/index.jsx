@@ -5,6 +5,7 @@ import { AnimatePresence } from "framer-motion";
 // Pages
 import HomePage from "../pages/HomePage";
 import NewFeedback from "../pages/NewFeedback";
+import FeedbackPage from "../pages/FeedbackPage";
 import Auth from "../pages/Auth";
 import NotFound404 from "../pages/NotFound404";
 
@@ -32,6 +33,9 @@ const App = () => {
         </Route>
         <Route element={<ProtectedRoutes />}>
           <Route path="/feedback/new" element={<NewFeedback />} />
+        </Route>
+        <Route path="feedbacks">
+          <Route path=":id" element={<FeedbackPage />} />
         </Route>
         <Route path="*" element={<NotFound404 />} />
       </Routes>
