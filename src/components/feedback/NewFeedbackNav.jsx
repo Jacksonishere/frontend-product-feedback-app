@@ -18,7 +18,7 @@ const NewFeedbackNav = () => {
   const [showSortOptions, setShowOptions] = useState(false);
 
   return (
-    <div className="flex items-center mt-[72px] pl-5 pr-3 py-[10px] bg-blue-800 md:mt-10 md:rounded-[10px] md:px-[24px] lg:mt-0">
+    <div className="sticky z-50 top-0 flex items-center pl-5 pr-3 py-[10px] bg-blue-800 md:static md:mt-10 md md:rounded-[10px] md:px-[24px] lg:mt-0">
       <p className="hidden text-[18px] text-blue-25 font-bold md:flex md:items-center md:py-[10px]">
         <Suggestion />
         <span className="ml-3 font-bold">X Suggestions</span>

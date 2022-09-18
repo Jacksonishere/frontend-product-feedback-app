@@ -1,16 +1,21 @@
 import React from "react";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 import ArrowLeft from "../../icons/ArrowLeft";
 
-const NavigateBack = () => {
+const NavigateBack = ({ mt = 50, mb = 8 }) => {
+  const navigate = useNavigate();
+
   return (
-    <Link to="/" className="flex items-center mt-8 w-max">
+    <button
+      onClick={() => navigate(-1)}
+      className={`flex items-center mt-[${mt}px] mb-${mb} w-max`}
+    >
       <ArrowLeft />
-      <span className="ml-[6px] text-blue-400 text-[14px] font-semibold ">
+      <span className="ml-2 text-blue-400 text-[13px] font-semibold md:text-[14px]">
         Go Back
       </span>
-    </Link>
+    </button>
   );
 };
 

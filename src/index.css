@@ -81,7 +81,7 @@
   }
 
   .dropdown-select-focus {
-    @apply border-none outline-none focus:ring-1 focus-visible:ring-1 focus:ring-blue-500;
+    @apply h-[39.5px] border-none outline-none focus:ring-1 focus-visible:ring-1 focus:ring-blue-500;
   }
 
   .error-input {

@@ -1,8 +1,8 @@
 import React from "react";
 
-const Spinner = () => {
+const Spinner = ({ mt }) => {
   return (
-    <div role="status" className="block mx-auto w-max">
+    <div role="status" className={`block mt-${mt ?? 0} mx-auto w-max`}>
       <svg
         aria-hidden="true"
         className="mr-2 w-7 h-7 text-gray-200 animate-spin dark:text-[#0000004d] fill-white"

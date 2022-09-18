@@ -68,7 +68,7 @@ const LoginPanel = ({ hamOpen, setHamOpen }) => {
   }, [isSuccess]);
 
   return (
-    <div className="fixed inset-x-0 top-0 z-10 flex items-center px-6 h-[72px] bg-gradient text-white md:static md:flex-col md:h-auto md:w-1/3 md:rounded-lg md:items-start md:p-6 lg:w-full lg:h-[170px]">
+    <div className="inset-x-0 top-0 z-10 flex items-center px-6 h-[72px] bg-gradient text-white md:static md:flex-col md:h-auto md:w-1/3 md:rounded-lg md:items-start md:p-6 lg:w-full lg:h-[170px]">
       <div className="flex flex-col capitalize md:order-2 md:mt-auto">
         <h2 className="font-bold text-[15px] md:text-[20px]">
           Frontend Mentor

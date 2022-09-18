@@ -14,15 +14,18 @@ import Flash from "../components/flash/Flash";
 import LoginForm from "../components/auth/LoginForm";
 import SignUpForm from "../components/auth/SignUpForm";
 
+// Utils
 import ProtectedRoutes from "../components/utils/ProtectedRoutes";
 import useLoginCheck from "../hooks/useLoginCheck";
+import ScrollToTop from "../components/utils/ScrollToTop";
 import PublicRoutes from "../components/utils/PublicRoutes";
 
 const App = () => {
   useLoginCheck();
 
   return (
-    <div className="max-w-7xl min-h-screen overflow-hidden mx-auto md:pt-14 md:px-10">
+    <div className="max-w-7xl min-h-screen mx-auto md:px-10">
+      <ScrollToTop />
       <Flash />
       <Routes>
         <Route index={true} path="/" element={<HomePage />} />

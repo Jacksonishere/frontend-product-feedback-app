@@ -54,9 +54,12 @@ const SignUpForm = () => {
       dispatch(setUser(user));
       dispatchHideFlash();
       if (location.state?.from?.pathname) {
-        navigate(location.state.from.pathname);
+        navigate(location.state.from.pathname, { replace: true });
       } else {
-        navigate("/", { state: { redirect: "LOGIN" } });
+        navigate("/", {
+          state: { redirect: "SIGNUP", username: user.username },
+          replace: true,
+        });
       }
     } else if (error) {
       const errorMsgs = error.data.msg.split("and");

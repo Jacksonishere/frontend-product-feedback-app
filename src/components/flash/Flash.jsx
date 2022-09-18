@@ -28,6 +28,9 @@ const flashContainerVariant = {
     top: -20,
     scale: 0,
     opacity: 0,
+    transition: {
+      duration: 0.3,
+    },
   },
 };
 
@@ -48,7 +51,7 @@ const Flash = () => {
   useEffect(() => {
     if (id) {
       clearTimeout(timeOutId.current);
-      timeOutId.current = dispatchTimedHideFlash(1500);
+      timeOutId.current = dispatchTimedHideFlash(2500);
     }
   }, [id]);
 
@@ -56,7 +59,7 @@ const Flash = () => {
    * Set timeout to hide flash
    */
   useEffect(() => {
-    if (show) timeOutId.current = dispatchTimedHideFlash(1500);
+    if (show) timeOutId.current = dispatchTimedHideFlash(2500);
   }, [show]);
 
   /**
@@ -71,12 +74,24 @@ const Flash = () => {
    * Listen for nav state changes
    */
   useEffect(() => {
-    if (location.state?.redirect === "LOGIN") {
-      console.log("Redirect");
+    let msg,
+      redirected = location.state?.redirect;
+
+    if (redirected) {
+      switch (redirected) {
+        case "LOGIN":
+          msg = `Welcome back ${location.state.username}!`;
+          break;
+        case "SIGNUP":
+          msg = `Welcome ${location.state.username}!`;
+          break;
+        default:
+          break;
+      }
       dispatchShowFlash({
         show: true,
         type: "SUCCESS",
-        msg: `Welcome back ${location.state.username}!`,
+        msg,
       });
       window.history.replaceState({}, "");
     }

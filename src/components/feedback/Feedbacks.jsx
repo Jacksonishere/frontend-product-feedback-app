@@ -8,7 +8,7 @@ const Feedbacks = () => {
   const { data: feedbacks, isLoading, error } = useGetFeedbacksQuery();
 
   useEffect(() => {
-    if (feedbacks) console.log(feedbacks);
+    // if (feedbacks) console.log(feedbacks);
   }, [feedbacks]);
 
   return (

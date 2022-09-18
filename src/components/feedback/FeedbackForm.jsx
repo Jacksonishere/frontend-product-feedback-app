@@ -91,7 +91,7 @@ const FeedbackForm = ({ post }) => {
   };
 
   return (
-    <div className="relative my-[56px] p-7 bg-white text-blue-900 text-[14px] rounded-lg space-y-5">
+    <div className="relative mb-[56px] p-7 bg-white text-blue-900 text-[14px] rounded-lg space-y-5">
       <div
         className={`absolute top-0 w-10 h-10 -translate-y-[50%] rounded-full bg-cover ${
           post ? "bg-edit-icon" : "bg-new-icon"
@@ -131,7 +131,7 @@ const FeedbackForm = ({ post }) => {
             className="dropdown-select-focus form-input flex justify-between items-center text-left"
             onClick={toggleFeedbackOptions}
           >
-            {feedbackTypes[category]}
+            <span>{feedbackTypes[category]}</span>
             <ArrowDown arrowStroke="#4661E6" />
           </button>
 
@@ -155,7 +155,7 @@ const FeedbackForm = ({ post }) => {
             className="dropdown-select-focus form-input flex justify-between items-center text-left"
             onClick={toggleEditStatus}
           >
-            {statuses[status]}
+            <span>{statuses[status]}</span>
             <ArrowDown arrowStroke="#4661E6" />
           </button>
 
