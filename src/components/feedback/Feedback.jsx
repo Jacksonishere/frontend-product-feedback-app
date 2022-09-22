@@ -1,10 +1,7 @@
 import React, { useCallback } from "react";
 import { Link } from "react-router-dom";
 
-import {
-  useCreateLikeMutation,
-  useDestroyLikeMutation,
-} from "../../api/feedbackApiSlice";
+import { useUpdateLikeMutation } from "../../api/feedbackApiSlice";
 import useAuth from "../../hooks/useAuth";
 
 import ArrowUp from "../../icons/ArrowUp";
@@ -12,17 +9,10 @@ import Comment from "../../icons/Comment";
 
 const Feedback = ({ feedback }) => {
   const user = useAuth();
-  const [likeFeedback] = useCreateLikeMutation();
-  const [unlikeFeedback] = useDestroyLikeMutation();
+  const [updateLike] = useUpdateLikeMutation();
 
   const likeBtnHandler = () => {
-    const likeParams = { likeable_type: "Feedback", likeable_id: feedback.id };
-
-    if (feedback.user_liked) {
-      unlikeFeedback(likeParams);
-    } else {
-      likeFeedback(likeParams);
-    }
+    updateLike({ likeable_type: "Feedback", likeable_id: feedback.id });
   };
 
   return (
