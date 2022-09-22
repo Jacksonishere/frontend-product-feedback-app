@@ -6,10 +6,10 @@ import InputErrorMsg from "../utils/InputErrorMsg";
 
 import ArrowDown from "../../icons/ArrowDown";
 
-const feedbackTypes = ["Feature", "Bug", "Enhancement", "UI", "UX"];
-const statuses = ["Planned", "In-Progress", "Live"];
+const CATEGORIES = ["Feature", "Bug", "Enhancement", "UI", "UX"];
+const STATUSES = ["Planned", "In-Progress", "Live"];
 
-const FeedbackForm = ({ post }) => {
+const FeedbackForm = ({ feedback }) => {
   /**
    * MANAGING @CATEGORY DROPDOWN SELECT RELATED STATE
    * - toggling dropdown
@@ -19,7 +19,7 @@ const FeedbackForm = ({ post }) => {
 
   const [showCategories, setShowCategories] = useState(false);
   const [category, setCategory] = useState(
-    feedbackTypes.findIndex((category) => category === post?.category) ?? 0
+    CATEGORIES.findIndex((category) => category === feedback?.category) ?? 0
   );
 
   const toggleFeedbackOptions = (e) => {
@@ -34,7 +34,7 @@ const FeedbackForm = ({ post }) => {
   };
 
   /**
-   * MANAGING @STATUS DROPDOWN SELECT RELATED STATE ~ IF @POST EXIST
+   * MANAGING @STATUS DROPDOWN SELECT RELATED STATE ~ IF @feedback EXIST
    * - toggling dropdown
    * - handling select
    */
@@ -42,7 +42,7 @@ const FeedbackForm = ({ post }) => {
 
   const [showEditStatus, setShowEditStatus] = useState(false);
   const [status, setStatus] = useState(
-    statuses.findIndex((status) => status === post?.status) ?? 0
+    STATUSES.findIndex((status) => status === feedback?.status) ?? 0
   );
 
   const toggleEditStatus = (e) => {
@@ -60,7 +60,7 @@ const FeedbackForm = ({ post }) => {
    * MANAGING @TITLE FOR STATE
    * @HANDLERS FOR INPUT
    */
-  const [title, setTitle] = useState(post?.title);
+  const [title, setTitle] = useState(feedback?.title);
   const [titleErrorMsg, setTitleErrorMsg] = useState();
   const titleHandler = (e) => {
     const content = e.target.value;
@@ -72,10 +72,10 @@ const FeedbackForm = ({ post }) => {
   };
 
   /**
-   * MANAGING @DETAI FOR STATE
+   * MANAGING @DETAIL FOR STATE
    * @HANDLERS FOR INPUT
    */
-  const [detail, setDetail] = useState(post?.detail);
+  const [detail, setDetail] = useState(feedback?.detail);
   const [detailErrorMsg, setDetailErrorMsg] = useState();
   const detailHandler = (e) => {
     const content = e.target.value;
@@ -94,12 +94,12 @@ const FeedbackForm = ({ post }) => {
     <div className="relative mb-[56px] p-7 bg-white text-blue-900 text-[14px] rounded-lg space-y-5">
       <div
         className={`absolute top-0 w-10 h-10 -translate-y-[50%] rounded-full bg-cover ${
-          post ? "bg-edit-icon" : "bg-new-icon"
+          feedback ? "bg-edit-icon" : "bg-new-icon"
         }`}
       ></div>
 
       <h2 className="my-6 font-bold text-[20px]">
-        {post ? `Edit '${post.title}'` : "Create New Feedback"}
+        {feedback ? `Edit '${feedback.title}'` : "Create New Feedback"}
       </h2>
       <form className="relative space-y-6" onSubmit={formSubmitHandler}>
         <div>
@@ -131,14 +131,14 @@ const FeedbackForm = ({ post }) => {
             className="dropdown-select-focus form-input flex justify-between items-center text-left"
             onClick={toggleFeedbackOptions}
           >
-            <span>{feedbackTypes[category]}</span>
+            <span>{CATEGORIES[category]}</span>
             <ArrowDown arrowStroke="#4661E6" />
           </button>
 
           {showCategories && (
             <div className="dropdown-select-focus block absolute top-[calc(100%_+_6px)] left-0 w-full">
               <DropdownSelect
-                options={feedbackTypes}
+                options={CATEGORIES}
                 selected={category}
                 selectedHandler={categorySelected}
                 closeHandler={() => setShowCategories(false)}
@@ -155,14 +155,14 @@ const FeedbackForm = ({ post }) => {
             className="dropdown-select-focus form-input flex justify-between items-center text-left"
             onClick={toggleEditStatus}
           >
-            <span>{statuses[status]}</span>
+            <span>{STATUSES[status]}</span>
             <ArrowDown arrowStroke="#4661E6" />
           </button>
 
           {showEditStatus && (
             <div className="dropdown-select-focus block absolute top-[calc(100%_+_6px)] left-0 w-full">
               <DropdownSelect
-                options={statuses}
+                options={STATUSES}
                 selected={status}
                 selectedHandler={statusSelected}
                 closeHandler={() => setShowEditStatus(false)}
@@ -192,8 +192,11 @@ const FeedbackForm = ({ post }) => {
         </div>
 
         <div className="flex justify-end">
-          {post && <button className="btn bg-red-700">Delete</button>}
-          <Link to="/" className={`btn bg-blue-900 ${post ? "ml-auto" : ""}`}>
+          {feedback && <button className="btn bg-red-700">Delete</button>}
+          <Link
+            to="/"
+            className={`btn bg-blue-900 ${feedback ? "ml-auto" : ""}`}
+          >
             Cancel
           </Link>
           <button className="ml-2 btn bg-purple-700">Add Feedback</button>

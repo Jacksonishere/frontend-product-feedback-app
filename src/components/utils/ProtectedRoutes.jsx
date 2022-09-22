@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Navigate, Outlet, useLocation } from "react-router-dom";
 
 const ProtectedRoutes = () => {
-  const { loaded, user } = useSelector((state) => state.userSlice);
+  const { loaded, user } = useSelector((state) => state.user);
   const currLocation = useLocation();
 
   return user ? (

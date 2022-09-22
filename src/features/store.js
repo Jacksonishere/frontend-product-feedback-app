@@ -3,13 +3,15 @@ import authApi from "../api/userApiSlice";
 import feedbackApi from "../api/feedbackApiSlice";
 import userSlice from "./users/userSlice";
 import flashSlice from "./modals/flashSlice";
+import homeFeedConfigSlice from "./feedbacks/homeFeedConfigSlice";
 
 const store = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
     [feedbackApi.reducerPath]: feedbackApi.reducer,
-    userSlice: userSlice,
+    user: userSlice,
     flash: flashSlice,
+    homeFeed: homeFeedConfigSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware().concat(authApi.middleware, feedbackApi.middleware),

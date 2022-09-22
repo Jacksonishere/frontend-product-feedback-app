@@ -57,12 +57,12 @@ const Feedback = ({ feedback }) => {
 
       <button
         onClick={likeBtnHandler}
-        className={`feedback-tag flex justify-center items-center px-[14px] text-black ${
+        className={`feedback-tag flex justify-center items-center px-[14px] py-[9px] md:pb-[6px] text-black ${
           user && feedback.user_liked ? "bg-blue-500 text-white" : ""
         }  md:row-span-full md:col-[1_/_2] md:flex-col md:justify-between md:self-start`}
       >
         <ArrowUp color={user && feedback.user_liked ? "white" : "#4661E6"} />
-        <b className="ml-2 md:mt-[2px] md:ml-0">{feedback.num_likes ?? 0}</b>
+        <b className="ml-2 md:mt-[3px] md:ml-0">{feedback.num_likes ?? 0}</b>
       </button>
 
       <Link

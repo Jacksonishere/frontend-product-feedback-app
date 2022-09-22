@@ -8,7 +8,7 @@ import useAvatar from "../hooks/useAvatar";
 const Auth = () => {
   const { pathname } = useLocation();
   // const user = useAuth();
-  const { user, loaded } = useSelector((state) => state.userSlice);
+  const { user, loaded } = useSelector((state) => state.user);
 
   const loginPath = useMemo(
     () => pathname === "/auth" || pathname === "/auth/login",

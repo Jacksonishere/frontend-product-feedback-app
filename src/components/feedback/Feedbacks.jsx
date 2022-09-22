@@ -1,19 +1,30 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useState, useMemo } from "react";
+import { useSelector } from "react-redux";
+
 import { useGetFeedbacksQuery } from "../../api/feedbackApiSlice";
+import {
+  selectedCategorySelector,
+  selectedSortSelector,
+} from "../../features/feedbacks/homeFeedConfigSlice";
 
 import Feedback from "./Feedback";
 import Spinner from "../utils/Spinner";
 
 const Feedbacks = () => {
-  const { data: feedbacks, isLoading, error } = useGetFeedbacksQuery();
+  const category = useSelector(selectedCategorySelector);
+  const sort = useSelector(selectedSortSelector);
 
-  useEffect(() => {
-    // if (feedbacks) console.log(feedbacks);
-  }, [feedbacks]);
+  const [offset, setOffset] = useState(1);
+  const params = useMemo(
+    () => ({ category, sort, offset }),
+    [category, sort, offset]
+  );
+
+  const { data: feedbacks, isFetching, error } = useGetFeedbacksQuery(params);
 
   return (
     <div className="px-6 my-8 md:px-0 md:my-6">
-      {isLoading ? (
+      {isFetching ? (
         <div className="grid place-items-center">
           <Spinner />
         </div>

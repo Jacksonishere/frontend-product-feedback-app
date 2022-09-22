@@ -22,7 +22,7 @@ const DropdownSelect = (props) => {
           }}
           className={`flex justify-between items-center px-5 py-3 ${
             i === selected ? "text-purple-700" : "text-blue-400"
-          }   text-[14px] not-last:border-b border-opacity-75 cursor-pointer hover:text-purple-700 md:text-[16px]`}
+          }   text-[14px] not-last:border-b border-opacity-75 cursor-pointer hover:text-purple-700 md:text-[15px]`}
           key={i}
         >
           <button className="w-full text-left">{option}</button>

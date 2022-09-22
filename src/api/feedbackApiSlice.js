@@ -13,10 +13,10 @@ export const feedbackApi = createApi({
   }),
   endpoints: (builder) => ({
     getFeedbacks: builder.query({
-      query: (offset = 1, limit = 15) => ({
+      query: ({ offset = 1, limit = 15, category, sort }) => ({
         url: "/feedbacks",
         method: "GET",
-        params: { offset, limit },
+        params: { offset, limit, category },
       }),
       // If there are results, then the tags are the individual Feedback's with their id, and then a general tag, which is a List of Feedbacks
       providesTags: (result) =>
@@ -45,36 +45,39 @@ export const feedbackApi = createApi({
         params: { likeable_type, likeable_id },
       }),
       async onQueryStarted(
-        { likeable_type, likeable_id },
-        { dispatch, queryFulfilled }
+        { likeable_id },
+        { dispatch, queryFulfilled, getState }
       ) {
-        const patchResult = dispatch(
-          feedbackApi.util.updateQueryData(
-            `get${likeable_type}s`,
-            undefined,
-            (draft) => {
-              let updateLikeable = draft.find(
-                (likeable) => likeable.id === likeable_id
-              );
-              updateLikeable.num_likes = updateLikeable.num_likes + 1;
-              updateLikeable.user_liked = true;
-            }
-          )
-        );
-        const patchResult2 = dispatch(
-          feedbackApi.util.updateQueryData(
-            `get${likeable_type}`,
-            likeable_id,
-            (draft) => {
-              let updateLikeable = draft;
-              updateLikeable.num_likes = updateLikeable.num_likes + 1;
-              updateLikeable.user_liked = true;
-            }
-          )
-        );
+        let patchResults = [];
+        for (const {
+          endpointName,
+          originalArgs,
+        } of feedbackApi.util.selectInvalidatedBy(getState(), [
+          { type: "Feedback", id: likeable_id },
+        ])) {
+          patchResults.push(
+            dispatch(
+              feedbackApi.util.updateQueryData(
+                endpointName,
+                originalArgs,
+                (draft) => {
+                  let updateLikeable;
+                  if (endpointName === "getFeedbacks") {
+                    updateLikeable = draft.find(
+                      (likeable) => likeable.id === likeable_id
+                    );
+                  } else {
+                    updateLikeable = draft;
+                  }
+                  updateLikeable.num_likes = updateLikeable.num_likes + 1;
+                  updateLikeable.user_liked = true;
+                }
+              )
+            )
+          );
+        }
         queryFulfilled.catch(() => {
-          patchResult.undo();
-          patchResult2.undo();
+          patchResults.forEach((patch) => patch.undo());
         });
       },
       // Invalidate a specific feedback.
@@ -89,36 +92,39 @@ export const feedbackApi = createApi({
         params: { likeable_type, likeable_id },
       }),
       async onQueryStarted(
-        { likeable_type, likeable_id },
-        { dispatch, queryFulfilled }
+        { likeable_id },
+        { dispatch, queryFulfilled, getState }
       ) {
-        const patchResult = dispatch(
-          feedbackApi.util.updateQueryData(
-            `get${likeable_type}s`,
-            undefined,
-            (draft) => {
-              let updateLikeable = draft.find(
-                (likeable) => likeable.id === likeable_id
-              );
-              updateLikeable.num_likes = updateLikeable.num_likes - 1;
-              updateLikeable.user_liked = false;
-            }
-          )
-        );
-        const patchResult2 = dispatch(
-          feedbackApi.util.updateQueryData(
-            `get${likeable_type}`,
-            likeable_id,
-            (draft) => {
-              let updateLikeable = draft;
-              updateLikeable.num_likes = updateLikeable.num_likes - 1;
-              updateLikeable.user_liked = false;
-            }
-          )
-        );
+        let patchResults = [];
+        for (const {
+          endpointName,
+          originalArgs,
+        } of feedbackApi.util.selectInvalidatedBy(getState(), [
+          { type: "Feedback", id: likeable_id },
+        ])) {
+          patchResults.push(
+            dispatch(
+              feedbackApi.util.updateQueryData(
+                endpointName,
+                originalArgs,
+                (draft) => {
+                  let updateLikeable;
+                  if (endpointName === "getFeedbacks") {
+                    updateLikeable = draft.find(
+                      (likeable) => likeable.id === likeable_id
+                    );
+                  } else {
+                    updateLikeable = draft;
+                  }
+                  updateLikeable.num_likes = updateLikeable.num_likes - 1;
+                  updateLikeable.user_liked = false;
+                }
+              )
+            )
+          );
+        }
         queryFulfilled.catch(() => {
-          patchResult.undo();
-          patchResult2.undo();
+          patchResults.forEach((patch) => patch.undo());
         });
       },
       // Invalidate a specific feedback.

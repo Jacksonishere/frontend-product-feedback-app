@@ -24,5 +24,5 @@ const userSlice = createSlice({
 export default userSlice.reducer;
 
 export const { setLoaded, setUser, resetUser } = userSlice.actions;
-export const currentUserSelector = (state) => state.userSlice.user;
-export const loadedSelector = (state) => state.userSlice.loaded;
+export const currentUserSelector = (state) => state.user.user;
+export const loadedSelector = (state) => state.user.loaded;
