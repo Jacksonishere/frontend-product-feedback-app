@@ -69,7 +69,11 @@ const NewFeedbackNav = () => {
           {showSortOptions && (
             <motion.div
               initial={{ y: -20, opacity: 0 }}
-              animate={{ y: 0, opacity: 1 }}
+              animate={{
+                y: 0,
+                opacity: 1,
+                transition: { duration: 0.15, type: "spring" },
+              }}
               exit={{
                 y: -20,
                 opacity: 0,

@@ -11,6 +11,7 @@ export const feedbackApi = createApi({
     secure: true,
     credentials: "include",
   }),
+  keepUnusedDataFor: 60,
   endpoints: (builder) => ({
     getFeedbacks: builder.query({
       query: ({ offset = 1, limit = 15, category, sort }) => ({
@@ -26,9 +27,9 @@ export const feedbackApi = createApi({
                 type: "Feedback",
                 id: feedback.id,
               })),
-              { type: "Feedback", id: "LIST" },
+              { type: "Feedbacks", id: "LIST" },
             ]
-          : [{ type: "Feedback", id: "LIST" }],
+          : [{ type: "Feedbacks", id: "LIST" }],
     }),
     getFeedback: builder.query({
       query: (id) => ({
@@ -83,7 +84,7 @@ export const feedbackApi = createApi({
       },
       // Invalidate a specific feedback.
       invalidatesTags: (result, error, { likeable_type, likeable_id }) => {
-        return [{ type: "Feedbacks", id: likeable_id }];
+        return [{ type: "Feedback", id: likeable_id }];
       },
     }),
   }),

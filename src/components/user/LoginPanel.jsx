@@ -101,7 +101,7 @@ const LoginPanel = ({ hamOpen, setHamOpen }) => {
                 <AnimatePresence>
                   {showSignout && (
                     <motion.button
-                      className="absolute top-[calc(100%_+_10px)] right-[20px] z-[100] flex items-center justify-start px-[16px] py-[10px] w-max text-red-700 text-[14px] bg-white rounded-lg shadow-sm origin-top-right md:left-0 md:origin-top-left"
+                      className="absolute top-[calc(100%_+_10px)] right-[20px] z-[100] flex items-center justify-start px-[16px] py-[10px] w-max text-red-700 text-[14px] bg-white rounded-lg shadow-md origin-top-right md:left-0 md:origin-top-left"
                       onClick={signOutUserHandler}
                       variants={signoutBtnVariant}
                       initial="initial"

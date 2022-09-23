@@ -19,7 +19,9 @@ const FeedbackForm = ({ feedback }) => {
 
   const [showCategories, setShowCategories] = useState(false);
   const [category, setCategory] = useState(
-    CATEGORIES.findIndex((category) => category === feedback?.category) ?? 0
+    feedback
+      ? CATEGORIES.findIndex((category) => category === feedback.category)
+      : 0
   );
 
   const toggleFeedbackOptions = (e) => {
@@ -42,7 +44,7 @@ const FeedbackForm = ({ feedback }) => {
 
   const [showEditStatus, setShowEditStatus] = useState(false);
   const [status, setStatus] = useState(
-    STATUSES.findIndex((status) => status === feedback?.status) ?? 0
+    feedback ? STATUSES.findIndex((status) => status === feedback?.status) : 0
   );
 
   const toggleEditStatus = (e) => {

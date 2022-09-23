@@ -6,7 +6,9 @@ const ProtectedRoutes = () => {
   const { loaded, user } = useSelector((state) => state.user);
   const currLocation = useLocation();
 
-  return user ? (
+  return !loaded ? (
+    <></>
+  ) : user ? (
     <Outlet />
   ) : (
     <Navigate to="/auth/login" state={{ from: currLocation }} replace={true} />

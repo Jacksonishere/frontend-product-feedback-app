@@ -20,11 +20,12 @@ const Feedbacks = () => {
     [category, sort, offset]
   );
 
-  const { data: feedbacks, isFetching, error } = useGetFeedbacksQuery(params);
+  // const { data: feedbacks, isFetching, error } = useGetFeedbacksQuery(params);
+  const { data: feedbacks, isLoading, error } = useGetFeedbacksQuery(params);
 
   return (
-    <div className="px-6 my-8 md:px-0 md:my-6">
-      {isFetching ? (
+    <div className="px-6 py-8 md:px-0 md:py-6">
+      {isLoading ? (
         <div className="grid place-items-center">
           <Spinner />
         </div>
