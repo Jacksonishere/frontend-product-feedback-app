@@ -16,7 +16,7 @@ export const feedbackApi = createApi({
       query: ({ offset = 1, limit = 15, category, sort }) => ({
         url: "/feedbacks",
         method: "GET",
-        params: { offset, limit, category },
+        params: { offset, limit, category, sort: JSON.stringify(sort) },
       }),
       // If there are results, then the tags are the individual Feedback's with their id, and then a general tag, which is a List of Feedbacks
       providesTags: (result) =>

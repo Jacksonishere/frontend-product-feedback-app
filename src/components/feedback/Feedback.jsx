@@ -30,7 +30,10 @@ const Feedback = ({ feedback }) => {
             />
           </figure>
           <p className="translate-y-[3px]">
-            <b className="block font-bold">@{feedback.user.username}</b>
+            <b className="block font-bold">
+              <span className="mr-[1.5px]">@</span>
+              {feedback.user.username}
+            </b>
             <span className="text-blue-400">{feedback.updated_at}</span>
           </p>
         </div>

@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
 import Suggestion from "../../icons/Suggestion";
 import ArrowDown from "../../icons/ArrowDown";
 import DropdownSelect from "../utils/DropdownSelect";
+import { setSort } from "../../features/feedbacks/homeFeedConfigSlice";
 
 const sortOptions = [
   "Most Upvotes",
@@ -13,9 +15,30 @@ const sortOptions = [
   "Least Comments",
 ];
 
+const sortValues = [
+  {
+    likes: "desc",
+  },
+  {
+    likes: "asc",
+  },
+  {
+    comments: "desc",
+  },
+  {
+    comments: "asc",
+  },
+];
+
 const NewFeedbackNav = () => {
+  const dispatch = useDispatch();
   const [selectedOption, setSelectedOption] = useState(0);
   const [showSortOptions, setShowOptions] = useState(false);
+
+  const sortSelected = (option) => {
+    setSelectedOption(option);
+    dispatch(setSort(sortValues[option]));
+  };
 
   return (
     <div className="sticky top-0 z-[1] flex items-center pl-5 pr-3 py-[10px] bg-blue-800 md:static md:mt-10 md md:rounded-[10px] md:px-[24px] lg:mt-0">
@@ -57,7 +80,7 @@ const NewFeedbackNav = () => {
               <DropdownSelect
                 options={sortOptions}
                 selected={selectedOption}
-                selectedHandler={(option) => setSelectedOption(option)}
+                selectedHandler={sortSelected}
                 closeHandler={() => setShowOptions(false)}
               />
             </motion.div>
