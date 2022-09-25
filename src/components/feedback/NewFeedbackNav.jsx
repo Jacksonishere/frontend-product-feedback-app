@@ -8,6 +8,19 @@ import ArrowDown from "../../icons/ArrowDown";
 import DropdownSelect from "../utils/DropdownSelect";
 import { setSort } from "../../features/feedbacks/homeFeedConfigSlice";
 
+const dropDownVariant = {
+  initial: {
+    y: -20,
+    opacity: 0,
+    transition: { type: "tween", duration: 0.15 },
+  },
+  animate: {
+    y: 0,
+    opacity: 1,
+    transition: { duration: 0.3, type: "spring" },
+  },
+};
+
 const sortOptions = [
   "Most Upvotes",
   "Least Upvotes",
@@ -68,18 +81,11 @@ const NewFeedbackNav = () => {
         <AnimatePresence>
           {showSortOptions && (
             <motion.div
-              initial={{ y: -20, opacity: 0 }}
-              animate={{
-                y: 0,
-                opacity: 1,
-                transition: { duration: 0.15, type: "spring" },
-              }}
-              exit={{
-                y: -20,
-                opacity: 0,
-                transition: { type: "tween", duration: 0.1 },
-              }}
-              className="absolute top-[calc(100%_+_20px)] w-[255px]"
+              variants={dropDownVariant}
+              initial="initial"
+              animate="animate"
+              exit="initial"
+              className="absolute z-50 top-[calc(100%_+_20px)] w-[255px]"
             >
               <DropdownSelect
                 options={sortOptions}

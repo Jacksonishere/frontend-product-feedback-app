@@ -1,35 +1,30 @@
-import React, { useEffect, useCallback, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import { useLocation } from "react-router-dom";
 
 import { motion, AnimatePresence } from "framer-motion";
 
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import useFlash from "../../hooks/useFlash";
 
 import FlashContent from "./FlashContent";
 
 const flashContainerVariant = {
   initial: {
+    opacity: 0,
     top: -20,
     scale: 0,
-    left: "50%",
-    x: "-50%",
+    transition: {
+      duration: 0.15,
+    },
   },
   animate: {
+    opacity: 1,
     top: 20,
     scale: 1,
     transition: {
       duration: 0.2,
-      delayChildren: 0.1,
+      delayChildren: 0.15,
       type: "tween",
-    },
-  },
-  exit: {
-    top: -20,
-    scale: 0,
-    opacity: 0,
-    transition: {
-      duration: 0.3,
     },
   },
 };
@@ -43,36 +38,24 @@ const Flash = () => {
   const { dispatchHideFlash, dispatchTimedHideFlash, dispatchShowFlash } =
     useFlash();
 
-  /**
-   * For the case where flash is showing, but we do something to trigger it to reset the time to hide.
-   * Like retrying to login with invalid credentials before the flash msg disappeared the first time.
-   * Using dummy id to trigger effect but also works out because initial id is 0.
-   */
   useEffect(() => {
-    if (id) {
-      clearTimeout(timeOutId.current);
+    if (show) {
+      if (timeOutId.current) {
+        //reset timer
+        clearTimeout(timeOutId.current);
+      }
       timeOutId.current = dispatchTimedHideFlash(2500);
+    } else {
+      clearTimeout(timeOutId.current);
     }
-  }, [id]);
+  }, [show, id]);
 
-  /**
-   * Set timeout to hide flash
-   */
   useEffect(() => {
-    if (show) timeOutId.current = dispatchTimedHideFlash(2500);
-  }, [show]);
-
-  /**
-   * When rerouting - detected by location path, hide the flash and clear the timeout if it exists.
-   */
-  useEffect(() => {
-    dispatchHideFlash();
-    clearTimeout(timeOutId.current);
+    // if it is current shown, then we want to dispatch. this means that after the user has navigated and this has rendered as a result of that, then we want to hide it.
+    if (show) dispatchHideFlash();
+    // clearTimeout(timeOutId.current);
   }, [location.pathname]);
 
-  /**
-   * Listen for nav state changes
-   */
   useEffect(() => {
     let msg,
       redirected = location.state?.redirect;
@@ -88,6 +71,7 @@ const Flash = () => {
         default:
           break;
       }
+
       dispatchShowFlash({
         show: true,
         type: "SUCCESS",
@@ -98,20 +82,22 @@ const Flash = () => {
   }, [location.state]);
 
   return (
-    <AnimatePresence>
-      {show && (
-        <motion.div
-          key={location.pathname}
-          className="absolute z-50 w-max bg-white rounded-lg drop-shadow-xl text-[14px] text-blue-900"
-          variants={flashContainerVariant}
-          initial="initial"
-          animate="animate"
-          exit="exit"
-        >
-          <FlashContent type={type} msg={msg} />
-        </motion.div>
-      )}
-    </AnimatePresence>
+    <div className="flex justify-center">
+      <AnimatePresence mode="wait">
+        {show && (
+          <motion.div
+            key={location.pathname + msg}
+            className="fixed mx-auto z-50 w-max bg-white rounded-lg drop-shadow-xl text-[14px] text-blue-900"
+            variants={flashContainerVariant}
+            initial="initial"
+            animate="animate"
+            exit="initial"
+          >
+            <FlashContent type={type} msg={msg} />
+          </motion.div>
+        )}
+      </AnimatePresence>
+    </div>
   );
 };
 

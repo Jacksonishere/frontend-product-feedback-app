@@ -5,6 +5,7 @@ import { useParams } from "react-router-dom";
 import Feedback from "../components/feedback/Feedback";
 import NavigateBack from "../components/utils/NavigateBack";
 import Spinner from "../components/utils/Spinner";
+import { useEffect } from "react";
 
 const FeedbackPage = () => {
   const { id } = useParams();

@@ -5,7 +5,6 @@ const initialState = {
   type: "",
   msg: "",
   id: 0,
-  // action: null,
 };
 
 // can have predefined type of flash messages / conditional render for specific one
@@ -17,7 +16,7 @@ const flashSlice = createSlice({
       return action.payload;
     },
     hideFlash: () => {
-      return { show: false, type: "", msg: "" };
+      return { show: false, type: "", msg: "", id: 0 };
     },
   },
 });

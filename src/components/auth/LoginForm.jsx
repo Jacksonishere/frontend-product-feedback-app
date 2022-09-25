@@ -1,7 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { uniqueId } from "lodash";
 
 import Spinner from "../utils/Spinner";
 import InputErrorMsg from "../utils/InputErrorMsg";
@@ -39,7 +38,6 @@ const LoginForm = () => {
     const { data: user, error } = await signIn(formBody);
     if (user) {
       dispatch(setUser(user));
-      dispatchHideFlash();
       if (location.state?.from?.pathname) {
         navigate(location.state.from.pathname, { replace: true });
       } else {
@@ -49,12 +47,14 @@ const LoginForm = () => {
         });
       }
     } else if (error) {
-      dispatchShowFlash({
-        show: true,
-        type: "ERROR",
-        msg: "Invalid Credentials. Try again.",
-        id: uniqueId(),
-      });
+      dispatchShowFlash(
+        {
+          show: true,
+          type: "ERROR",
+          msg: "Invalid Credentials. Try again.",
+        },
+        true
+      );
     }
   };
 

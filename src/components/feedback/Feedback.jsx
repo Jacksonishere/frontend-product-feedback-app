@@ -7,12 +7,18 @@ import useAuth from "../../hooks/useAuth";
 import ArrowUp from "../../icons/ArrowUp";
 import Comment from "../../icons/Comment";
 
+import LikeBtn from "../utils/LikeBtn";
+
 const Feedback = ({ feedback }) => {
   const user = useAuth();
   const [updateLike] = useUpdateLikeMutation();
 
-  const likeBtnHandler = () => {
-    updateLike({ likeable_type: "Feedback", likeable_id: feedback.id });
+  const feedbackLikeHandler = () => {
+    const data = updateLike({
+      likeable_type: "Feedback",
+      likeable_id: feedback.id,
+    });
+    console.log(data);
   };
 
   return (
@@ -48,15 +54,11 @@ const Feedback = ({ feedback }) => {
         </div>
       </Link>
 
-      <button
-        onClick={likeBtnHandler}
-        className={`feedback-tag flex justify-center items-center px-[14px] py-[9px] md:pb-[6px] text-black ${
-          user && feedback.user_liked ? "bg-blue-500 text-white" : ""
-        }  md:row-span-full md:col-[1_/_2] md:flex-col md:justify-between md:self-start`}
-      >
-        <ArrowUp color={user && feedback.user_liked ? "white" : "#4661E6"} />
-        <b className="ml-2 md:mt-[3px] md:ml-0">{feedback.num_likes ?? 0}</b>
-      </button>
+      <LikeBtn
+        likeableHandler={feedbackLikeHandler}
+        likeableThing={feedback}
+        user={user}
+      />
 
       <Link
         className="flex items-center justify-self-end md:row-span-full md:col-[3_/_-1] md:self-center"

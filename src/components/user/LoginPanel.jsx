@@ -5,14 +5,14 @@ import { motion, AnimatePresence } from "framer-motion";
 
 import { loadedSelector, resetUser } from "../../features/users/userSlice";
 import { useSignOutUserMutation } from "../../api/userApiSlice";
+import { showFlash } from "../../features/modals/flashSlice";
+
 import useAuth from "../../hooks/useAuth";
+import useFlash from "../../hooks/useFlash";
 import useOutsideClick from "../../hooks/useOutsideClick";
 
 import LoginIcon from "../../icons/Login";
 import Logout from "../../icons/Logout";
-import { showFlash } from "../../features/modals/flashSlice";
-
-import { uniqueId } from "lodash";
 
 const signoutBtnVariant = {
   initial: {
@@ -38,32 +38,37 @@ const signoutBtnVariant = {
 };
 const LoginPanel = ({ hamOpen, setHamOpen }) => {
   const dispatch = useDispatch();
+
   const user = useAuth();
+  const { dispatchHideFlash, dispatchShowFlash } = useFlash();
 
   const loaded = useSelector(loadedSelector);
-  const [signOutUser, { isSuccess }] = useSignOutUserMutation();
+  const [signOutUser, { isSuccess, isLoading }] = useSignOutUserMutation();
+
+  const toggleHam = useCallback(() => setHamOpen((curr) => !curr), []);
 
   const [showSignout, setShowSignout] = useState(false);
   const outsideLoginBtnDetector = useOutsideClick(() => setShowSignout(false));
 
-  const toggleHam = useCallback(() => setHamOpen((curr) => !curr), []);
-
   const signOutUserHandler = useCallback(() => {
+    console.log("logging out");
+    dispatchHideFlash();
     signOutUser();
   }, []);
 
   useEffect(() => {
+    if (isLoading) {
+    }
+  }, [isLoading]);
+  useEffect(() => {
     if (isSuccess) {
       setShowSignout(false);
       dispatch(resetUser());
-      dispatch(
-        showFlash({
-          show: true,
-          type: "SUCCESS",
-          msg: "You have successfully logged out.",
-          id: uniqueId(),
-        })
-      );
+      dispatchShowFlash({
+        show: true,
+        type: "SUCCESS",
+        msg: "You have successfully logged out.",
+      });
     }
   }, [isSuccess]);
 

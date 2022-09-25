@@ -14,6 +14,7 @@ const iconContainerVariant = {
       staggerChildren: 0.1,
     },
   },
+  exit: {},
 };
 
 const kickVariant = {
@@ -23,6 +24,7 @@ const kickVariant = {
   animate: {
     width: "4px",
   },
+  exit: {},
 };
 
 const legVariant = {
@@ -32,6 +34,7 @@ const legVariant = {
   animate: {
     height: "9px",
   },
+  exit: {},
 };
 
 const Success = () => {

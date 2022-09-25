@@ -33,12 +33,14 @@ const Auth = () => {
           }`}
         >
           <Link
+            replace
             className={`auth-link ${loginPath ? "active-auth-link" : ""}`}
             to="/auth/login"
           >
             Login
           </Link>
           <Link
+            replace
             className={`auth-link ${loginPath ? "" : "active-auth-link"}`}
             to="/auth/signup"
           >
