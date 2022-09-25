@@ -3,6 +3,8 @@ import React from "react";
 import ArrowUp from "../../icons/ArrowUp";
 import useFlash from "../../hooks/useFlash";
 
+import { abbreviateNumber } from "../../utils/Utils";
+
 const LikeBtn = ({ likeableHandler, likeableThing, user }) => {
   const { dispatchShowFlash } = useFlash();
 
@@ -26,7 +28,7 @@ const LikeBtn = ({ likeableHandler, likeableThing, user }) => {
   return (
     <button
       onClick={likeBtnHandler}
-      className={`feedback-tag flex justify-center items-center px-[14px] py-[9px] md:pb-[6px] text-black ${
+      className={`feedback-tag flex justify-center items-center min-w-[46px] px-0 py-[9px] md:pb-[6px] text-black ${
         userLiked ? "bg-blue-500" : ""
       }  md:row-span-full md:col-[1_/_2] md:flex-col md:justify-between md:self-start`}
     >
@@ -36,7 +38,7 @@ const LikeBtn = ({ likeableHandler, likeableThing, user }) => {
           userLiked ? "text-blue-25" : ""
         }`}
       >
-        {likeableThing.num_likes ?? 0}
+        {abbreviateNumber(likeableThing.num_likes) ?? 0}
       </b>
     </button>
   );

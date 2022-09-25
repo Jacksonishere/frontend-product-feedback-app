@@ -8,6 +8,8 @@ import ArrowDown from "../../icons/ArrowDown";
 import DropdownSelect from "../utils/DropdownSelect";
 import { setSort } from "../../features/feedbacks/homeFeedConfigSlice";
 
+import useFetchFeedbacks from "./useFetchFeedbacks";
+
 const dropDownVariant = {
   initial: {
     y: -20,
@@ -48,6 +50,8 @@ const NewFeedbackNav = () => {
   const [selectedOption, setSelectedOption] = useState(0);
   const [showSortOptions, setShowOptions] = useState(false);
 
+  const { data } = useFetchFeedbacks();
+
   const sortSelected = (option) => {
     setSelectedOption(option);
     dispatch(setSort(sortValues[option]));
@@ -57,7 +61,7 @@ const NewFeedbackNav = () => {
     <div className="sticky top-0 z-[1] flex items-center pl-5 pr-3 py-[10px] bg-blue-800 md:static md:mt-10 md md:rounded-[10px] md:px-[24px] lg:mt-0">
       <p className="hidden text-[18px] text-blue-25 font-bold md:flex md:items-center md:py-[10px]">
         <Suggestion />
-        <span className="ml-3 font-bold">X Suggestions</span>
+        <span className="ml-3 font-bold">{data?.length} Suggestions</span>
       </p>
 
       <div className="relative text-blue-25 text-[14px] md:ml-10">

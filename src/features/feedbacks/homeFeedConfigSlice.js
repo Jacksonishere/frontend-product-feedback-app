@@ -5,6 +5,8 @@ const initialState = {
   sort: {
     likes: "desc",
   },
+  offset: 1,
+  limit: 15,
 };
 
 const homeFeedConfigSlice = createSlice({
@@ -25,3 +27,5 @@ export default homeFeedConfigSlice.reducer;
 export const { setCategory, setSort } = homeFeedConfigSlice.actions;
 export const selectedCategorySelector = (state) => state.homeFeed.category;
 export const selectedSortSelector = (state) => state.homeFeed.sort;
+export const offsetSelector = (state) => state.homeFeed.offset;
+export const limitSelector = (state) => state.homeFeed.limit;
