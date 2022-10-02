@@ -1,24 +1,56 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useContext } from "react";
 import { Link } from "react-router-dom";
 
 import { useUpdateLikeMutation } from "../../api/feedbackApiSlice";
 import useAuth from "../../hooks/useAuth";
+import useFlash from "../../hooks/useFlash";
 
 import ArrowUp from "../../icons/ArrowUp";
 import Comment from "../../icons/Comment";
 
 import LikeBtn from "../utils/LikeBtn";
+import FeedbackContext from "../../context/FeedbacksContext";
 
 const Feedback = ({ feedback, infiniteScroll }) => {
   const user = useAuth();
+  const { dispatchShowFlash } = useFlash();
   const [updateLike] = useUpdateLikeMutation();
+  const { allFeedbacks, setAllFeedbacks } = useContext(FeedbackContext);
 
-  const feedbackLikeHandler = () => {
-    const data = updateLike({
+  const feedbackLikeHandler = async () => {
+    const { user_liked, num_likes } = feedback;
+    let newLikeCount = num_likes + (user_liked ? -1 : 1);
+
+    const oldFeedbacks = [...allFeedbacks];
+
+    setAllFeedbacks((currFeedbacks) =>
+      currFeedbacks.map((f) =>
+        f.id === feedback.id
+          ? {
+              ...f,
+              user_liked: !user_liked,
+              num_likes: newLikeCount,
+            }
+          : f
+      )
+    );
+    // const resp = await updateLike({
+    const { error } = await updateLike({
       likeable_type: "Feedback",
       likeable_id: feedback.id,
     });
-    console.log(data);
+
+    if (error) {
+      dispatchShowFlash(
+        {
+          show: true,
+          type: "ERROR",
+          msg: "There was a problem liking this post",
+        },
+        true
+      );
+      setAllFeedbacks(oldFeedbacks);
+    }
   };
 
   return (

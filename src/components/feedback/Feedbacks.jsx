@@ -4,19 +4,23 @@ import React, {
   useMemo,
   useCallback,
   useRef,
+  useContext,
 } from "react";
 import { useDispatch } from "react-redux";
 
-import useFetchFeedbacks from "./useFetchFeedbacks";
 import { setNextPage } from "../../features/feedbacks/homeFeedConfigSlice";
+
+import FeedbackContext from "../../context/FeedbacksContext";
 
 import Feedback from "./Feedback";
 import Spinner from "../utils/Spinner";
 
 const Feedbacks = () => {
   const dispatch = useDispatch();
+  // const { isLoading, isFetching, allFeedbacks, canFetchMore } =
+  // useFetchFeedbacks();
   const { isLoading, isFetching, allFeedbacks, canFetchMore } =
-    useFetchFeedbacks();
+    useContext(FeedbackContext);
 
   const observerRef = useRef();
   const infiniteScroll = useCallback(

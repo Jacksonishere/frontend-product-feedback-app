@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useContext } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
 import { useDispatch } from "react-redux";
@@ -8,7 +8,8 @@ import ArrowDown from "../../icons/ArrowDown";
 import DropdownSelect from "../utils/DropdownSelect";
 import { setSort } from "../../features/feedbacks/homeFeedConfigSlice";
 
-import useFetchFeedbacks from "./useFetchFeedbacks";
+// import useFetchFeedbacks from "./useFetchFeedbacks";
+import FeedbackContext from "../../context/FeedbacksContext";
 
 const dropDownVariant = {
   initial: {
@@ -50,7 +51,8 @@ const NewFeedbackNav = () => {
   const [selectedOption, setSelectedOption] = useState(0);
   const [showSortOptions, setShowOptions] = useState(false);
 
-  const { allFeedbacks } = useFetchFeedbacks();
+  // const { allFeedbacks } = useFetchFeedbacks();
+  const { allFeedbacks } = useContext(FeedbackContext);
 
   const sortSelected = (option) => {
     setSelectedOption(option);
