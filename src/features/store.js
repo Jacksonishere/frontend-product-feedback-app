@@ -14,7 +14,9 @@ const store = configureStore({
     homeFeed: homeFeedConfigSlice,
   },
   middleware: (getDefaultMiddleware) =>
-    getDefaultMiddleware().concat(authApi.middleware, feedbackApi.middleware),
+    getDefaultMiddleware({
+      serializableCheck: false,
+    }).concat(authApi.middleware, feedbackApi.middleware),
 });
 
 export default store;

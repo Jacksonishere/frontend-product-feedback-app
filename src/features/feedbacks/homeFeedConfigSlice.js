@@ -19,12 +19,16 @@ const homeFeedConfigSlice = createSlice({
     setSort: (state, action) => {
       state.sort = action.payload;
     },
+    setNextPage: (state) => {
+      state.offset += 1;
+    },
   },
 });
 
 export default homeFeedConfigSlice.reducer;
 
-export const { setCategory, setSort } = homeFeedConfigSlice.actions;
+export const { setCategory, setSort, setNextPage } =
+  homeFeedConfigSlice.actions;
 export const selectedCategorySelector = (state) => state.homeFeed.category;
 export const selectedSortSelector = (state) => state.homeFeed.sort;
 export const offsetSelector = (state) => state.homeFeed.offset;

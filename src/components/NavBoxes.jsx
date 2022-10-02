@@ -21,7 +21,6 @@ const NavBoxes = () => {
 
   return (
     <div className="relative z-20 md:flex md:items-stretch md:gap-2 lg:fixed lg:flex-col lg:max-w-[255px] lg:gap-5">
-      {/* For more reusability, use a top-level background component that takes in a callback and create a slice that would control show/hidden. */}
       <div
         onClick={closeHam}
         aria-hidden

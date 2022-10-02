@@ -9,7 +9,7 @@ import Comment from "../../icons/Comment";
 
 import LikeBtn from "../utils/LikeBtn";
 
-const Feedback = ({ feedback }) => {
+const Feedback = ({ feedback, infiniteScroll }) => {
   const user = useAuth();
   const [updateLike] = useUpdateLikeMutation();
 
@@ -22,7 +22,11 @@ const Feedback = ({ feedback }) => {
   };
 
   return (
-    <div className="grid grid-rows-[repeat(2,_auto)] grid-cols-[1fr_1fr] gap-y-4 p-7 bg-white text-blue-900 rounded-md text-[13px] hover:opacity-100 md:grid-rows-[auto] md:grid-cols-[repeat(3,_auto)] md:gap-[1.5rem]">
+    <div
+      id={feedback.id}
+      ref={infiniteScroll}
+      className="grid grid-rows-[repeat(2,_auto)] grid-cols-[1fr_1fr] gap-y-4 p-7 bg-white text-blue-900 rounded-md text-[13px] hover:opacity-100 md:grid-rows-[auto] md:grid-cols-[repeat(3,_auto)] md:gap-[1.5rem]"
+    >
       <Link
         to={`/feedbacks/${feedback.id}`}
         className="col-span-full space-y-4 md:row-span-full md:col-[2_/_3]"
