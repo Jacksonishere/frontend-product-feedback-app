@@ -52,9 +52,10 @@ const NewFeedbackNav = () => {
   const [showSortOptions, setShowOptions] = useState(false);
 
   // const { allFeedbacks } = useFetchFeedbacks();
-  const { allFeedbacks } = useContext(FeedbackContext);
+  const { allFeedbacks, setAllFeedbacks } = useContext(FeedbackContext);
 
   const sortSelected = (option) => {
+    setAllFeedbacks([]);
     setSelectedOption(option);
     dispatch(setSort(sortValues[option]));
   };

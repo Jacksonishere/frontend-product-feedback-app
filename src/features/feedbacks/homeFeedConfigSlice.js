@@ -13,12 +13,16 @@ const homeFeedConfigSlice = createSlice({
   name: "homeFeedConfig",
   initialState,
   reducers: {
-    setCategory: (state, action) => {
-      state.category = action.payload;
-    },
-    setSort: (state, action) => {
-      state.sort = action.payload;
-    },
+    setCategory: (state, action) => ({
+      ...state,
+      offset: 1,
+      category: action.payload,
+    }),
+    setSort: (state, action) => ({
+      ...state,
+      offset: 1,
+      sort: action.payload,
+    }),
     setNextPage: (state) => {
       state.offset += 1;
     },

@@ -16,6 +16,7 @@ export const FeedbackContextProvider = (props) => {
 
   // Workaround for stitching infinite scroll query data
   const [allFeedbacks, setAllFeedbacks] = useState([]);
+
   // Store the IDs to filter out potential duplicate feedbacks during the fetch for more data
   const feedbackIDs = useMemo(() => {
     const IDs = new Set();
@@ -36,16 +37,13 @@ export const FeedbackContextProvider = (props) => {
 
   useEffect(() => {
     if (feedbacks) {
-      if (feedbacks.length === 0) {
-        setCanFetchMore(false);
-      }
+      setCanFetchMore(feedbacks.length === 0 ? false : true);
       setAllFeedbacks((currFeedbacks) => [...currFeedbacks, ...feedbacks]);
     }
   }, [feedbacks]);
 
   const [canFetchMore, setCanFetchMore] = useState(true);
 
-  // return { isLoading, isFetching, allFeedbacks, canFetchMore };
   return (
     <FeedbackContext.Provider
       value={{

@@ -21,8 +21,9 @@ export const feedbackApi = createApi({
       }),
       transformResponse: (response, meta, arg) => {
         const { feedbackIDs, ...originalArg } = arg;
-        // return response
-        return response.filter(({ id }) => !feedbackIDs.has(id));
+        // return response;
+        const filtered = response.filter(({ id }) => !feedbackIDs.has(id));
+        return filtered;
       },
       // If there are results, then the tags are the individual Feedback's with their id, and then a general tag, which is a List of Feedbacks
       providesTags: (result) =>
@@ -50,47 +51,6 @@ export const feedbackApi = createApi({
         method: "PATCH",
         params: { likeable_type, likeable_id },
       }),
-      // async onQueryStarted(
-      //   { likeable_id },
-      //   { dispatch, queryFulfilled, getState }
-      // ) {
-      //   let patchResults = [];
-      //   for (const {
-      //     endpointName,
-      //     originalArgs,
-      //   } of feedbackApi.util.selectInvalidatedBy(getState(), [
-      //     { type: "Feedback", id: likeable_id },
-      //   ])) {
-      //     patchResults.push(
-      //       dispatch(
-      //         feedbackApi.util.updateQueryData(
-      //           endpointName,
-      //           originalArgs,
-      //           (draft) => {
-      //             let updateLikeable;
-      //             if (endpointName === "getFeedbacks") {
-      //               updateLikeable = draft.find(
-      //                 (likeable) => likeable.id === likeable_id
-      //               );
-      //             } else {
-      //               updateLikeable = draft;
-      //             }
-      //             let liked = updateLikeable.user_liked;
-      //             updateLikeable.num_likes += liked ? -1 : 1;
-      //             updateLikeable.user_liked = !liked;
-      //           }
-      //         )
-      //       )
-      //     );
-      //   }
-      //   queryFulfilled.catch(() => {
-      //     patchResults.forEach((patch) => patch.undo());
-      //   });
-      // },
-      // Invalidate a specific feedback.
-      // invalidatesTags: (result, error, { likeable_type, likeable_id }) => {
-      //   return [{ type: "Feedback", id: likeable_id }];
-      // },
     }),
   }),
 });

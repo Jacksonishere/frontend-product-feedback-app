@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useContext } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import {
@@ -6,13 +6,17 @@ import {
   selectedCategorySelector,
 } from "../../features/feedbacks/homeFeedConfigSlice";
 
+import FeedbackContext from "../../context/FeedbacksContext";
+
 const CATEGORIES = ["all", "UI", "UX", "enhancement", "bug", "feature"];
 
 const FeedbackTags = ({ onClose }) => {
   const dispatch = useDispatch();
+  const { setAllFeedbacks } = useContext(FeedbackContext);
   const currCategory = useSelector(selectedCategorySelector);
 
   const handleCategoryChange = (category) => {
+    setAllFeedbacks([]);
     dispatch(setCategory(category));
     onClose();
   };

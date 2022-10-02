@@ -17,8 +17,6 @@ import Spinner from "../utils/Spinner";
 
 const Feedbacks = () => {
   const dispatch = useDispatch();
-  // const { isLoading, isFetching, allFeedbacks, canFetchMore } =
-  // useFetchFeedbacks();
   const { isLoading, isFetching, allFeedbacks, canFetchMore } =
     useContext(FeedbackContext);
 
