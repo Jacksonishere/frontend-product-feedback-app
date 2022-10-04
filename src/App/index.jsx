@@ -19,6 +19,7 @@ import ProtectedRoutes from "../components/utils/ProtectedRoutes";
 import useLoginCheck from "../hooks/useLoginCheck";
 import ScrollToTop from "../components/utils/ScrollToTop";
 import PublicRoutes from "../components/utils/PublicRoutes";
+import { FeedbackContextProvider } from "../context/FeedbacksContext";
 
 const App = () => {
   useLoginCheck();
@@ -27,21 +28,23 @@ const App = () => {
     <div className="max-w-7xl min-h-screen mx-auto md:px-10">
       <ScrollToTop />
       <Flash />
-      <Routes>
-        <Route index={true} path="/" element={<HomePage />} />
-        <Route path="auth" element={<Auth />}>
-          <Route path="/auth" element={<LoginForm />} />
-          <Route path="login" element={<LoginForm />} />
-          <Route path="signup" element={<SignUpForm />} />
-        </Route>
-        <Route element={<ProtectedRoutes />}>
-          <Route path="/feedback/new" element={<NewFeedback />} />
-        </Route>
-        <Route path="feedbacks">
-          <Route path=":id" element={<FeedbackPage />} />
-        </Route>
-        <Route path="*" element={<NotFound404 />} />
-      </Routes>
+      <FeedbackContextProvider>
+        <Routes>
+          <Route index={true} path="/" element={<HomePage />} />
+          <Route path="auth" element={<Auth />}>
+            <Route path="/auth" element={<LoginForm />} />
+            <Route path="login" element={<LoginForm />} />
+            <Route path="signup" element={<SignUpForm />} />
+          </Route>
+          <Route element={<ProtectedRoutes />}>
+            <Route path="/feedback/new" element={<NewFeedback />} />
+          </Route>
+          <Route path="feedbacks">
+            <Route path=":id" element={<FeedbackPage />} />
+          </Route>
+          <Route path="*" element={<NotFound404 />} />
+        </Routes>
+      </FeedbackContextProvider>
     </div>
   );
 };
