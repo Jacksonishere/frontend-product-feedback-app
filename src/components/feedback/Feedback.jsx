@@ -1,4 +1,4 @@
-import React, { useCallback, useContext } from "react";
+import React, { useCallback, useContext, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 
 import { useUpdateLikeMutation } from "../../api/feedbackApiSlice";
@@ -13,18 +13,23 @@ import FeedbackContext from "../../context/FeedbacksContext";
 
 const Feedback = ({ feedback, infiniteScroll }) => {
   const user = useAuth();
+  const likeBtnRef = useRef();
+  const likeDone = useRef(false);
+  const oldFeedbacks = useRef();
+
   const { dispatchShowFlash } = useFlash();
-  const [updateLike] = useUpdateLikeMutation();
-  const { allFeedbacks, setAllFeedbacks } = useContext(FeedbackContext);
+  const [updateLike, { isSuccess, isLoading, isError }] =
+    useUpdateLikeMutation();
+  const { allFeedbacks, setAllFeedbacks, sortAllFeedbacks } =
+    useContext(FeedbackContext);
 
-  const feedbackLikeHandler = async () => {
-    const { user_liked, num_likes } = feedback;
-    let newLikeCount = num_likes + (user_liked ? -1 : 1);
+  useEffect(() => {
+    if (isLoading) {
+      const { user_liked, num_likes } = feedback;
+      let newLikeCount = num_likes + (user_liked ? -1 : 1);
 
-    const oldFeedbacks = [...allFeedbacks];
-
-    setAllFeedbacks((currFeedbacks) =>
-      currFeedbacks.map((f) =>
+      oldFeedbacks.current = allFeedbacks;
+      const updatedFeedbacks = allFeedbacks.map((f) =>
         f.id === feedback.id
           ? {
               ...f,
@@ -32,15 +37,14 @@ const Feedback = ({ feedback, infiniteScroll }) => {
               num_likes: newLikeCount,
             }
           : f
-      )
-    );
-    // const resp = await updateLike({
-    const { error } = await updateLike({
-      likeable_type: "Feedback",
-      likeable_id: feedback.id,
-    });
+      );
 
-    if (error) {
+      setAllFeedbacks(updatedFeedbacks);
+    }
+  }, [isLoading]);
+
+  useEffect(() => {
+    if (isError) {
       dispatchShowFlash(
         {
           show: true,
@@ -49,9 +53,32 @@ const Feedback = ({ feedback, infiniteScroll }) => {
         },
         true
       );
-      setAllFeedbacks(oldFeedbacks);
+      setAllFeedbacks(oldFeedbacks.current);
+      oldFeedbacks.current = null;
     }
-  };
+  }, [isError]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      sortAllFeedbacks(allFeedbacks);
+      likeDone.current = true;
+      oldFeedbacks.current = null;
+    }
+  }, [isSuccess]);
+
+  useEffect(() => {
+    if (likeDone.current) {
+      likeBtnRef.current.scrollIntoView();
+      likeDone.current = false;
+    }
+  }, [allFeedbacks]);
+
+  const feedbackLikeHandler = useCallback(() => {
+    updateLike({
+      likeable_type: "Feedback",
+      likeable_id: feedback.id,
+    });
+  }, []);
 
   return (
     <div
@@ -60,10 +87,11 @@ const Feedback = ({ feedback, infiniteScroll }) => {
       className="grid grid-rows-[repeat(2,_auto)] grid-cols-[1fr_1fr] gap-y-4 p-7 bg-white text-blue-900 rounded-md text-[13px] hover:opacity-100 md:grid-rows-[auto] md:grid-cols-[repeat(3,_auto)] md:gap-[1.5rem]"
     >
       <Link
+        ref={likeBtnRef}
         to={`/feedbacks/${feedback.id}`}
         className="col-span-full space-y-4 md:row-span-full md:col-[2_/_3]"
       >
-        <div className="flex gap-[2px] items-center">
+        <div className="flex gap-1 items-center">
           <figure className="w-10 h-10">
             <img
               className="w-full h-full rounded-full"
@@ -71,7 +99,7 @@ const Feedback = ({ feedback, infiniteScroll }) => {
               alt=""
             />
           </figure>
-          <p className="translate-y-[3px]">
+          <p className="translate-y-[3px] grow">
             <b className="block font-bold">
               <span className="mr-[1.5px]">@</span>
               {feedback.user.username}

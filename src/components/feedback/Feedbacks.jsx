@@ -50,12 +50,12 @@ const Feedbacks = () => {
           {allFeedbacks.map((feedback, i) =>
             i === allFeedbacks.length - 1 ? (
               <Feedback
-                key={i}
+                key={feedback.id}
                 feedback={feedback}
                 infiniteScroll={infiniteScroll}
               />
             ) : (
-              <Feedback key={i} feedback={feedback} />
+              <Feedback key={feedback.id} feedback={feedback} />
             )
           )}
           {isFetching && <Spinner />}

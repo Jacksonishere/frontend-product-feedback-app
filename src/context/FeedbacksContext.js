@@ -28,21 +28,38 @@ export const FeedbackContextProvider = (props) => {
     return IDs;
   }, [allFeedbacks]);
 
+  const sortAllFeedbacks = useCallback((feedbacks) => {
+    const [sortBy, order] = Object.entries(params.sort)[0];
+    const sortedAll = feedbacks.sort((a, b) => {
+      switch (order) {
+        case "asc":
+          return a[`num_${sortBy}`] - b[`num_${sortBy}`];
+        default:
+          return b[`num_${sortBy}`] - a[`num_${sortBy}`];
+      }
+    });
+    setAllFeedbacks([...sortedAll]);
+  }, []);
+
   const {
     data: feedbacks,
     isLoading,
     isFetching,
     error,
-  } = useGetFeedbacksQuery({ ...params, feedbackIDs });
+    // } = useGetFeedbacksQuery({ ...params, feedbackIDs });
+  } = useGetFeedbacksQuery({ ...params });
+
+  const [canFetchMore, setCanFetchMore] = useState(true);
 
   useEffect(() => {
     if (feedbacks) {
       setCanFetchMore(feedbacks.length === 0 ? false : true);
-      setAllFeedbacks((currFeedbacks) => [...currFeedbacks, ...feedbacks]);
+      setAllFeedbacks((currFeedbacks) => [
+        ...currFeedbacks,
+        ...feedbacks.filter(({ id }) => !feedbackIDs.has(id)),
+      ]);
     }
   }, [feedbacks]);
-
-  const [canFetchMore, setCanFetchMore] = useState(true);
 
   return (
     <FeedbackContext.Provider
@@ -52,6 +69,7 @@ export const FeedbackContextProvider = (props) => {
         allFeedbacks,
         canFetchMore,
         setAllFeedbacks,
+        sortAllFeedbacks,
       }}
     >
       {props.children}

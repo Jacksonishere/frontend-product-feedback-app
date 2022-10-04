@@ -19,12 +19,12 @@ export const feedbackApi = createApi({
         method: "GET",
         params: { offset, limit, category, sort: JSON.stringify(sort) },
       }),
-      transformResponse: (response, meta, arg) => {
-        const { feedbackIDs, ...originalArg } = arg;
-        // return response;
-        const filtered = response.filter(({ id }) => !feedbackIDs.has(id));
-        return filtered;
-      },
+      // transformResponse: (response, meta, arg) => {
+      //   const { feedbackIDs, ...originalArg } = arg;
+      //   // return response;
+      //   const filtered = response.filter(({ id }) => !feedbackIDs.has(id));
+      //   return filtered;
+      // },
       // If there are results, then the tags are the individual Feedback's with their id, and then a general tag, which is a List of Feedbacks
       providesTags: (result) =>
         result
