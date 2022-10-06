@@ -12,7 +12,7 @@ const NavigateBack = () => {
       className={`flex items-center mt-[40px] mb-[30px] w-max`}
     >
       <ArrowLeft />
-      <span className="ml-2 text-blue-400 text-[13px] font-semibold md:text-[14px]">
+      <span className="ml-4 text-blue-400 text-[12px] font-semibold md:text-[13px]">
         Go Back
       </span>
     </button>

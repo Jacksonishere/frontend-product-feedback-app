@@ -11,6 +11,14 @@
     @apply h-full bg-slate-100  font-normal antialiased;
   }
 
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-bold;
+  }
   h1 {
     letter-spacing: -0.33px;
   }
@@ -93,7 +101,7 @@
   }
 
   .btn {
-    @apply px-5 py-[10px] text-white font-bold text-[13px] rounded-[9px] md:py-[12px];
+    @apply px-8 py-[10px] text-white font-bold text-[13px] rounded-[9px] md:py-[12px];
   }
 
   .feedback-tag {

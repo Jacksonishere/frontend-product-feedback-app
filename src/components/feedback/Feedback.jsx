@@ -1,4 +1,5 @@
 import React, { useCallback, useContext, useRef, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import { useUpdateLikeMutation } from "../../api/feedbackApiSlice";
@@ -11,11 +12,18 @@ import Comment from "../../icons/Comment";
 import LikeBtn from "../utils/LikeBtn";
 import FeedbackContext from "../../context/FeedbacksContext";
 
-const Feedback = ({ feedback, infiniteScroll }) => {
+const Feedback = ({
+  feedback,
+  infiniteScroll,
+  patchResult,
+  optimisticUpdate,
+}) => {
   const user = useAuth();
-  const likeBtnRef = useRef();
+  const feedbackAnchor = useRef();
   const likeDone = useRef(false);
   const oldFeedbacks = useRef();
+
+  const location = useLocation();
 
   const { dispatchShowFlash } = useFlash();
   const [updateLike, { isSuccess, isLoading, isError }] =
@@ -27,6 +35,8 @@ const Feedback = ({ feedback, infiniteScroll }) => {
     if (isLoading) {
       const { user_liked, num_likes } = feedback;
       let newLikeCount = num_likes + (user_liked ? -1 : 1);
+
+      optimisticUpdate?.(newLikeCount);
 
       oldFeedbacks.current = allFeedbacks;
       const updatedFeedbacks = allFeedbacks.map((f) =>
@@ -55,6 +65,8 @@ const Feedback = ({ feedback, infiniteScroll }) => {
       );
       setAllFeedbacks(oldFeedbacks.current);
       oldFeedbacks.current = null;
+
+      patchResult?.undo?.();
     }
   }, [isError]);
 
@@ -68,17 +80,17 @@ const Feedback = ({ feedback, infiniteScroll }) => {
 
   useEffect(() => {
     if (likeDone.current) {
-      likeBtnRef.current.scrollIntoView();
+      feedbackAnchor.current.scrollIntoView();
       likeDone.current = false;
     }
   }, [allFeedbacks]);
 
-  const feedbackLikeHandler = useCallback(() => {
+  const feedbackLikeHandler = () => {
     updateLike({
       likeable_type: "Feedback",
       likeable_id: feedback.id,
     });
-  }, []);
+  };
 
   return (
     <section
@@ -86,7 +98,11 @@ const Feedback = ({ feedback, infiniteScroll }) => {
       ref={infiniteScroll}
       className="relative grid grid-rows-[repeat(2,_auto)] grid-cols-[1fr_1fr] gap-y-4 p-7 bg-white text-blue-900 rounded-md text-[13px] hover:opacity-100 md:grid-rows-[auto] md:grid-cols-[repeat(3,_auto)] md:gap-[1.5rem]"
     >
-      <div className="absolute -top-6 h-1" ref={likeBtnRef} aria-hidden></div>
+      <div
+        className="absolute -top-6 h-1"
+        ref={feedbackAnchor}
+        aria-hidden
+      ></div>
       <Link
         to={`/feedbacks/${feedback.id}`}
         className="col-span-full space-y-4 md:row-span-full md:col-[2_/_3]"
