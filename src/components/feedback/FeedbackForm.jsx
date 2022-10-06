@@ -93,17 +93,21 @@ const FeedbackForm = ({ feedback }) => {
   };
 
   return (
-    <div className="relative mb-[56px] p-7 bg-white text-blue-900 text-[14px] rounded-lg space-y-5">
+    <div className="relative mb-[56px] p-7 bg-white text-blue-900 text-[14px] rounded-lg md:p-10 md:text-[15px] md:mt-[56px]">
       <div
         className={`absolute top-0 w-10 h-10 -translate-y-[50%] rounded-full bg-cover ${
           feedback ? "bg-edit-icon" : "bg-new-icon"
-        }`}
+        } md:w-[56px] md:h-[56px]`}
       ></div>
 
-      <h2 className="my-6 font-bold text-[20px]">
+      <h2 className="mt-3 mb-5 md:mt-5 md:mb-7 font-bold">
         {feedback ? `Edit '${feedback.title}'` : "Create New Feedback"}
       </h2>
-      <form className="relative space-y-6" onSubmit={formSubmitHandler}>
+
+      <form
+        className="relative space-y-7 md:space-y-9"
+        onSubmit={formSubmitHandler}
+      >
         <div>
           <label className="form-label">
             <b>Feedback Title</b>
@@ -128,50 +132,53 @@ const FeedbackForm = ({ feedback }) => {
           <span className="text-blue-400">
             Choose a category for your feedback
           </span>
+
           <button
             ref={categoryBtnRef}
-            className="dropdown-select-focus form-input flex justify-between items-center text-left"
+            className="dropdown-select-focus dropdown-toggle"
             onClick={toggleFeedbackOptions}
           >
             <span>{CATEGORIES[category]}</span>
             <ArrowDown arrowStroke="#4661E6" />
           </button>
 
-          {showCategories && (
-            <div className="dropdown-select-focus block absolute top-[calc(100%_+_6px)] left-0 w-full">
-              <DropdownSelect
-                options={CATEGORIES}
-                selected={category}
-                selectedHandler={categorySelected}
-                closeHandler={() => setShowCategories(false)}
-              />
-            </div>
-          )}
+          <div className="dropdown-select-focus block absolute top-[calc(100%_+_6px)] left-0 w-full">
+            <DropdownSelect
+              showOptions={showCategories}
+              options={CATEGORIES}
+              selected={category}
+              selectedHandler={categorySelected}
+              closeHandler={() => setShowCategories(false)}
+            />
+          </div>
         </div>
 
-        <div className="form-label relative">
-          <b>Update Status</b>
-          <span className="text-blue-400">Change Feedback State</span>
-          <button
-            ref={showEditStatusBtnRef}
-            className="dropdown-select-focus form-input flex justify-between items-center text-left"
-            onClick={toggleEditStatus}
-          >
-            <span>{STATUSES[status]}</span>
-            <ArrowDown arrowStroke="#4661E6" />
-          </button>
+        {feedback && (
+          <div className="form-label relative">
+            <b>Update Status</b>
+            <span className="text-blue-400">Change Feedback State</span>
 
-          {showEditStatus && (
-            <div className="dropdown-select-focus block absolute top-[calc(100%_+_6px)] left-0 w-full">
-              <DropdownSelect
-                options={STATUSES}
-                selected={status}
-                selectedHandler={statusSelected}
-                closeHandler={() => setShowEditStatus(false)}
-              />
-            </div>
-          )}
-        </div>
+            <button
+              ref={showEditStatusBtnRef}
+              className="dropdown-select-focus dropdown-toggle"
+              onClick={toggleEditStatus}
+            >
+              <span>{STATUSES[status]}</span>
+              <ArrowDown arrowStroke="#4661E6" />
+            </button>
+
+            {showEditStatus && (
+              <div className="dropdown-select-focus block absolute top-[calc(100%_+_6px)] left-0 w-full">
+                <DropdownSelect
+                  options={STATUSES}
+                  selected={status}
+                  selectedHandler={statusSelected}
+                  closeHandler={() => setShowEditStatus(false)}
+                />
+              </div>
+            )}
+          </div>
+        )}
 
         <div>
           <label className="form-label">
@@ -187,7 +194,7 @@ const FeedbackForm = ({ feedback }) => {
             }`}
             value={detail}
             name="detail"
-            rows={3}
+            rows={4}
             onChange={detailHandler}
           />
           <InputErrorMsg msg={detailErrorMsg} />

@@ -11,19 +11,6 @@ import { setSort } from "../../features/feedbacks/homeFeedConfigSlice";
 // import useFetchFeedbacks from "./useFetchFeedbacks";
 import FeedbackContext from "../../context/FeedbacksContext";
 
-const dropDownVariant = {
-  initial: {
-    y: -20,
-    opacity: 0,
-    transition: { type: "tween", duration: 0.15 },
-  },
-  animate: {
-    y: 0,
-    opacity: 1,
-    transition: { duration: 0.3, type: "spring" },
-  },
-};
-
 const sortOptions = [
   "Most Upvotes",
   "Least Upvotes",
@@ -87,24 +74,15 @@ const NewFeedbackNav = () => {
           </motion.span>
         </button>
 
-        <AnimatePresence>
-          {showSortOptions && (
-            <motion.div
-              variants={dropDownVariant}
-              initial="initial"
-              animate="animate"
-              exit="initial"
-              className="absolute z-50 top-[calc(100%_+_20px)] w-[255px]"
-            >
-              <DropdownSelect
-                options={sortOptions}
-                selected={selectedOption}
-                selectedHandler={sortSelected}
-                closeHandler={() => setShowOptions(false)}
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
+        <DropdownSelect
+          showOptions={showSortOptions}
+          options={sortOptions}
+          selected={selectedOption}
+          selectedHandler={sortSelected}
+          width={250}
+          top={40}
+          closeHandler={() => setShowOptions(false)}
+        />
       </div>
       <Link className="ml-auto btn bg-purple-700" to="/feedback/new">
         + Add Feedback

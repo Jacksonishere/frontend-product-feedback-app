@@ -9,7 +9,7 @@ const NavigateBack = () => {
   return (
     <button
       onClick={() => navigate(-1)}
-      className={`flex items-center mt-[40px] mb-[30px] w-max`}
+      className={`flex items-center my-[40px] w-max`}
     >
       <ArrowLeft />
       <span className="ml-4 text-blue-400 text-[12px] font-semibold md:text-[13px]">

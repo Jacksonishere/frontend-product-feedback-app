@@ -24,6 +24,7 @@
   }
   h2 {
     letter-spacing: -0.25px;
+    @apply text-[20px] md:text-[24px];
   }
   h3 {
     letter-spacing: -0.25px;
@@ -65,7 +66,7 @@
   }
 
   .form-group {
-    @apply text-[14px];
+    @apply text-[14px] md:text-[16px];
   }
 
   .input-label {
@@ -88,8 +89,11 @@
     @apply inline-block px-4 py-[10px] mt-[14px] w-full text-blue-900 text-[13px] bg-blue-100 rounded-[4px];
   }
 
+  .dropdown-toggle {
+    @apply relative z-[1000] form-input flex justify-between items-center text-left md:px-6;
+  }
   .dropdown-select-focus {
-    @apply h-[39.5px] border-none outline-none focus:ring-1 focus-visible:ring-1 focus:ring-blue-500;
+    @apply h-[44px] border-none outline-none focus:ring-1 focus-visible:ring-1 focus:ring-blue-500 md:text-[15px];
   }
 
   .error-input {

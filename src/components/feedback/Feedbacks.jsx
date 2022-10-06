@@ -40,7 +40,7 @@ const Feedbacks = () => {
   );
 
   return (
-    <div className="px-6 py-8 md:px-0 md:py-6">
+    <div className="px-6 py-8 md:px-0 md:pt-6 md:pb-[56px]">
       {isLoading && !allFeedbacks.length ? (
         <div className="grid place-items-center">
           <Spinner />
@@ -58,7 +58,11 @@ const Feedbacks = () => {
               <Feedback key={feedback.id} feedback={feedback} />
             )
           )}
-          {isFetching && <Spinner />}
+          {isFetching && (
+            <div className="mt-6">
+              <Spinner />
+            </div>
+          )}
         </section>
       )}
     </div>
