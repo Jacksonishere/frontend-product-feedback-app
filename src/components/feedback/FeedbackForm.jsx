@@ -277,7 +277,7 @@ const FeedbackForm = ({ feedback }) => {
           </Link>
           <button
             disabled={updatePending || createPending}
-            className="ml-2 btn bg-purple-700 md:ml-3"
+            className="btn ml-2 bg-purple-700 md:ml-3"
           >
             {updatePending || createPending ? <Spinner /> : "Add Feedback"}
           </button>

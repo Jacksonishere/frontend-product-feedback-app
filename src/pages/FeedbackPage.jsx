@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import feedbackApi, { useGetFeedbackQuery } from "../api/feedbackApiSlice";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import Feedback from "../components/feedback/Feedback";
 import NavigateBack from "../components/utils/NavigateBack";
 import Spinner from "../components/utils/Spinner";
 import FeedbackNotFound from "../components/utils/FeedbackNotFound";
+
+import useAuth from "../hooks/useAuth";
 
 const FeedbackPage = () => {
   const dispatch = useDispatch();
@@ -18,15 +20,9 @@ const FeedbackPage = () => {
     isError,
   } = useGetFeedbackQuery(parseInt(id));
 
+  const currentUser = useAuth();
+
   const [patchResult, setPatchResult] = useState();
-
-  // const [pageFeedback, setPageFeedback] = useState(feedback);
-
-  // useEffect(() => {
-  //   if (isSuccess) {
-  //     setPageFeedback(pageFeedback);
-  //   }
-  // }, [isSuccess]);
 
   const optimisticUpdate = (new_num_likes) => {
     setPatchResult(
@@ -45,7 +41,14 @@ const FeedbackPage = () => {
 
   return (
     <div className="container px-6 max-w-2xl md:mx-auto">
-      <NavigateBack mb={7} />
+      <nav className="flex justify-between items-center">
+        <NavigateBack mb={7} />
+        {isSuccess && feedback?.user.id === currentUser?.id && (
+          <Link className="btn bg-blue-700" to={`/feedbacks/edit/${id}`}>
+            Edit Feedback
+          </Link>
+        )}
+      </nav>
       {isLoading ? (
         <Spinner mt={10} />
       ) : isError ? (
@@ -56,7 +59,6 @@ const FeedbackPage = () => {
           showPage={true}
           patchResult={patchResult}
           optimisticUpdate={optimisticUpdate}
-          // setPageFeedback={setPageFeedback}
         />
       )}
     </div>
