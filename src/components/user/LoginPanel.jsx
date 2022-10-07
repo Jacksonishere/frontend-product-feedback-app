@@ -83,7 +83,7 @@ const LoginPanel = ({ hamOpen, setHamOpen }) => {
 
       <div
         onClick={() => setShowSignout((curr) => !curr)}
-        className="text-[16px] ml-auto md:order-1 md:ml-0"
+        className="text-[16px] ml-auto md:order-1 md:ml-0 cursor-pointer"
       >
         {loaded && (
           <>

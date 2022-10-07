@@ -14,6 +14,8 @@ import FeedbackContext from "../../context/FeedbacksContext";
 
 import Feedback from "./Feedback";
 import Spinner from "../utils/Spinner";
+import NotFoundGuy from "../../icons/NotFoundGuy";
+import { Link } from "react-router-dom";
 
 const Feedbacks = () => {
   const dispatch = useDispatch();
@@ -44,6 +46,22 @@ const Feedbacks = () => {
       {isLoading && !allFeedbacks.length ? (
         <div className="grid place-items-center">
           <Spinner />
+        </div>
+      ) : !allFeedbacks.length ? (
+        <div className="grid place-items-center min-h-[600px] bg-white rounded-[10px]">
+          <div className="flex flex-col justify-center items-center w-[90%] max-w-[410px] text-center">
+            <NotFoundGuy />
+            <h2 className="mt-[52px] text-blue-900">
+              There is no feedback yet.
+            </h2>
+            <p className="mt-2 text-blue-400">
+              Got a suggestion? Found a bug that needs to be squashed? We love
+              hearing about new ideas to improve our app.
+            </p>
+            <Link to="/feedbacks/new" className="btn mt-[46px] bg-purple-700">
+              + Add Feedback
+            </Link>
+          </div>
         </div>
       ) : (
         <section className="space-y-5 h-100">

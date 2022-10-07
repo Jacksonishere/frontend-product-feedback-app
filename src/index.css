@@ -105,11 +105,11 @@
   }
 
   .btn {
-    @apply px-8 py-[10px] text-white font-bold text-[13px] rounded-[9px] md:py-[12px];
+    @apply px-8 py-[12px] text-white font-bold text-[13px] rounded-[9px] md:py-[14px] md:text-[14px];
   }
 
   .feedback-tag {
-    @apply px-4 py-[7px] md:px-4 md:py-2 w-max bg-blue-100 text-blue-500 text-[13px] font-semibold rounded-[10px] capitalize;
+    @apply px-4 py-[7px] md:px-4 md:py-2 w-max bg-blue-100 text-blue-500 text-[13px] font-semibold rounded-[9px] capitalize;
   }
   .feedback-tag.selected {
     @apply text-blue-100 bg-blue-500;

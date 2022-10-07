@@ -23,7 +23,7 @@ const FeedbackTags = ({ onClose }) => {
 
   return (
     <div className="p-6 bg-white rounded-lg md:h-full md:basis-1/2 lg:basis-full">
-      <ul className="flex flex-wrap gap-x-2 gap-y-[10px] md:items-center md:h-max">
+      <ul className="flex flex-wrap gap-x-3 gap-y-[10px] md:items-center md:h-max">
         {CATEGORIES.map((category) => (
           <li key={category}>
             <button
