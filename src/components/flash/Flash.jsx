@@ -68,6 +68,12 @@ const Flash = () => {
         case "SIGNUP":
           msg = `Welcome ${location.state.username}!`;
           break;
+        case "FEEDBACK-CREATED":
+          msg = "Your feedback has been created!";
+          break;
+        case "FEEDBACK-UPDATED":
+          msg = "Your feedback has been updated!";
+          break;
         default:
           break;
       }

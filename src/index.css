@@ -90,10 +90,10 @@
   }
 
   .dropdown-toggle {
-    @apply relative z-[1000] form-input flex justify-between items-center text-left md:px-6;
+    @apply relative z-[1000] form-input h-[44px] flex justify-between items-center text-left md:px-6 md:h-[50px] md:text-[14px];
   }
   .dropdown-select-focus {
-    @apply h-[44px] border-none outline-none focus:ring-1 focus-visible:ring-1 focus:ring-blue-500 md:text-[15px];
+    @apply border-none outline-none focus:ring-1 focus-visible:ring-1 focus:ring-blue-500 md:text-[15px];
   }
 
   .error-input {
@@ -101,11 +101,11 @@
   }
 
   .error-p {
-    @apply mt-1 flex items-center text-red-700 text-[13px];
+    @apply absolute mt-1 flex items-center text-red-700 text-[13px];
   }
 
   .btn {
-    @apply px-8 py-[12px] text-white font-bold text-[13px] rounded-[9px] md:py-[14px] md:text-[14px];
+    @apply grid place-items-center px-8 h-[44px] text-white font-bold text-[13px] rounded-[9px] md:h-[48px] md:text-[14px];
   }
 
   .feedback-tag {

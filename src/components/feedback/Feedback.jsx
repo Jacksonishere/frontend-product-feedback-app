@@ -96,7 +96,7 @@ const Feedback = ({
     <section
       id={feedback.id}
       ref={infiniteScroll}
-      className="relative grid grid-rows-[repeat(2,_auto)] grid-cols-[1fr_1fr] gap-y-4 p-7 bg-white text-blue-900 rounded-md text-[13px] hover:opacity-100 md:grid-rows-[auto] md:grid-cols-[repeat(3,_auto)] md:gap-[1.5rem]"
+      className="relative grid grid-rows-[repeat(2,_auto)] grid-cols-[1fr_1fr] gap-y-4 p-7 bg-white text-blue-900 rounded-md text-[13px] hover:opacity-100 md:grid-rows-[auto] md:grid-cols-[max-content_auto_max-content] md:gap-[1.5rem]"
     >
       <div
         className="absolute -top-6 h-1"
@@ -145,7 +145,7 @@ const Feedback = ({
         to={`/feedbacks/${feedback.id}`}
       >
         <Comment />
-        <b className="ml-[4px] font-bold">29</b>
+        <b className="ml-[6px] font-bold">29</b>
       </Link>
     </section>
   );
