@@ -68,7 +68,7 @@ const LoginForm = () => {
 
   return (
     <form className="form" action="#" onSubmit={handleLogin}>
-      <div className="form-group">
+      <div className="text-[13px] md:text-[14px]">
         <label className="input-label" htmlFor="email">
           Email
         </label>
@@ -82,7 +82,7 @@ const LoginForm = () => {
         <InputErrorMsg msg={emailErrorMsg} />
       </div>
 
-      <div className="form-group">
+      <div className="text-[13px] md:text-[14px]">
         <label className="input-label" htmlFor="password">
           Password
         </label>

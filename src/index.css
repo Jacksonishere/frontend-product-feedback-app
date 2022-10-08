@@ -74,7 +74,7 @@
   }
 
   .input-text {
-    @apply w-full rounded-md py-3 px-4 bg-blue-100 text-blue-900;
+    @apply w-full px-4 py-3 bg-blue-100 text-blue-900 rounded-md md:px-5 md:py-[14px];
   }
 
   .form-submit {
@@ -86,11 +86,11 @@
   }
 
   .form-input {
-    @apply inline-block px-4 py-[10px] mt-[14px] w-full text-blue-900 text-[13px] bg-blue-100 rounded-[4px];
+    @apply inline-block px-4 mt-[14px] w-full text-blue-900 text-[13px] bg-blue-100 rounded-[4px] md:text-[15px];
   }
 
   .dropdown-toggle {
-    @apply relative z-[1000] form-input h-[44px] flex justify-between items-center text-left md:px-6 md:h-[50px] md:text-[14px];
+    @apply relative z-[1000] form-input h-[44px] flex justify-between items-center text-left hover:opacity-100 md:px-6 md:h-[50px] md:text-[14px];
   }
   .dropdown-select-focus {
     @apply border-none outline-none focus:ring-1 focus-visible:ring-1 focus:ring-blue-500 md:text-[15px];
@@ -111,8 +111,13 @@
   .feedback-tag {
     @apply px-4 py-[7px] md:px-4 md:py-2 w-max bg-blue-100 text-blue-500 text-[13px] font-semibold rounded-[9px] capitalize;
   }
+
   .feedback-tag.selected {
     @apply text-blue-100 bg-blue-500;
+  }
+
+  .sm-container {
+    @apply mx-auto max-w-[592px];
   }
 }
 

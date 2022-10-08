@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import feedbackApi, { useGetFeedbackQuery } from "../api/feedbackApiSlice";
-import { Link, useParams } from "react-router-dom";
+import { Link, Outlet, useParams } from "react-router-dom";
 
 import Feedback from "../components/feedback/Feedback";
 import NavigateBack from "../components/utils/NavigateBack";
@@ -40,11 +40,11 @@ const FeedbackPage = () => {
   };
 
   return (
-    <div className="container px-6 max-w-2xl md:mx-auto">
+    <div className="relative container px-6 max-w-2xl md:mx-auto">
       <nav className="flex justify-between items-center">
         <NavigateBack mb={7} />
         {isSuccess && feedback?.user.id === currentUser?.id && (
-          <Link className="btn bg-blue-700" to={`/feedbacks/edit/${id}`}>
+          <Link className="btn bg-blue-700" to={`/feedbacks/${id}/edit`}>
             Edit Feedback
           </Link>
         )}
@@ -54,12 +54,15 @@ const FeedbackPage = () => {
       ) : isError ? (
         <FeedbackNotFound />
       ) : (
-        <Feedback
-          feedback={feedback}
-          showPage={true}
-          patchResult={patchResult}
-          optimisticUpdate={optimisticUpdate}
-        />
+        <>
+          <Feedback
+            feedback={feedback}
+            showPage={true}
+            patchResult={patchResult}
+            optimisticUpdate={optimisticUpdate}
+          />
+          <Outlet context={[feedback, currentUser]} />
+        </>
       )}
     </div>
   );

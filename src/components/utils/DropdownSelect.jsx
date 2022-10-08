@@ -46,15 +46,19 @@ const DropdownSelect = (props) => {
             {options.map((option, i) => (
               <li
                 onClick={() => {
-                  optionSelected(i);
+                  optionSelected(option);
                 }}
                 className={`flex justify-between items-center px-5 py-3 ${
-                  i === selected ? "text-purple-700" : "text-blue-400"
+                  option.value === selected
+                    ? "text-purple-700"
+                    : "text-blue-400"
                 }   text-[14px] not-last:border-b border-opacity-75 cursor-pointer hover:text-purple-700 md:text-[15px]`}
                 key={i}
               >
-                <button className="w-full text-left">{option}</button>
-                {i === selected && <Check />}
+                <button type="button" className="w-full text-left">
+                  {option.label}
+                </button>
+                {option.value === selected && <Check />}
               </li>
             ))}
           </ul>

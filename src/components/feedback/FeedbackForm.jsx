@@ -14,8 +14,19 @@ import InputErrorMsg from "../utils/InputErrorMsg";
 import ArrowDown from "../../icons/ArrowDown";
 import Spinner from "../utils/Spinner";
 
-const CATEGORIES = ["Feature", "Bug", "Enhancement", "UI", "UX"];
-const STATUSES = ["Planned", "In-Progress", "Live"];
+const CATEGORIES = [
+  { label: "Feature", value: "feature" },
+  { label: "Bug", value: "bug" },
+  { label: "Enhancement", value: "enhancement" },
+  { label: "UI", value: "ui" },
+  { label: "UX", value: "ux" },
+];
+const STATUSES = [
+  { label: "Suggestion", value: "suggestion" },
+  { label: "Planned", value: "planned" },
+  { label: "In-Progess", value: "in-progess" },
+  { label: "Live", value: "live" },
+];
 
 const FeedbackForm = ({ feedback }) => {
   const [
@@ -44,8 +55,8 @@ const FeedbackForm = ({ feedback }) => {
   const [showCategories, setShowCategories] = useState(false);
   const [category, setCategory] = useState(
     feedback
-      ? CATEGORIES.findIndex((category) => category === feedback.category)
-      : 0
+      ? CATEGORIES.find((category) => category.value === feedback.category)
+      : CATEGORIES[0]
   );
 
   const toggleFeedbackOptions = (e) => {
@@ -68,7 +79,9 @@ const FeedbackForm = ({ feedback }) => {
 
   const [showEditStatus, setShowEditStatus] = useState(false);
   const [status, setStatus] = useState(
-    feedback ? STATUSES.findIndex((status) => status === feedback?.status) : 0
+    feedback
+      ? STATUSES.find((status) => status.value === feedback?.status)
+      : STATUSES[0]
   );
 
   const toggleEditStatus = (e) => {
@@ -119,8 +132,8 @@ const FeedbackForm = ({ feedback }) => {
       const body = {
         feedback: {
           title: title,
-          category: CATEGORIES[category],
-          status: STATUSES[status],
+          category: category.value,
+          status: status.value,
           detail: detail,
         },
       };
@@ -196,7 +209,7 @@ const FeedbackForm = ({ feedback }) => {
             className="dropdown-select-focus dropdown-toggle"
             onClick={toggleFeedbackOptions}
           >
-            <span>{CATEGORIES[category]}</span>
+            <span>{category.label}</span>
             <ArrowDown arrowStroke="#4661E6" />
           </button>
 
@@ -204,7 +217,7 @@ const FeedbackForm = ({ feedback }) => {
             <DropdownSelect
               showOptions={showCategories}
               options={CATEGORIES}
-              selected={category}
+              selected={category.value}
               selectedHandler={categorySelected}
               closeHandler={() => setShowCategories(false)}
             />
@@ -222,7 +235,7 @@ const FeedbackForm = ({ feedback }) => {
               className="dropdown-select-focus dropdown-toggle"
               onClick={toggleEditStatus}
             >
-              <span>{STATUSES[status]}</span>
+              <span>{status.label}</span>
               <ArrowDown arrowStroke="#4661E6" />
             </button>
 
@@ -230,7 +243,7 @@ const FeedbackForm = ({ feedback }) => {
               <div className="dropdown-select-focus block absolute top-[calc(100%_+_6px)] left-0 w-full">
                 <DropdownSelect
                   options={STATUSES}
-                  selected={status}
+                  selected={status.value}
                   selectedHandler={statusSelected}
                   closeHandler={() => setShowEditStatus(false)}
                 />
@@ -250,7 +263,7 @@ const FeedbackForm = ({ feedback }) => {
           <textarea
             className={`input-text form-input ${
               detailErrorMsg ? "error-input" : ""
-            }`}
+            } md:px-6`}
             value={detail}
             name="detail"
             rows={4}
@@ -279,7 +292,13 @@ const FeedbackForm = ({ feedback }) => {
             disabled={updatePending || createPending}
             className="btn ml-2 bg-purple-700 md:ml-3"
           >
-            {updatePending || createPending ? <Spinner /> : "Add Feedback"}
+            {updatePending || createPending ? (
+              <Spinner />
+            ) : feedback ? (
+              "Save Changes"
+            ) : (
+              "Add Feedback"
+            )}
           </button>
         </div>
       </form>

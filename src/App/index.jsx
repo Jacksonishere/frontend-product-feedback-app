@@ -4,8 +4,9 @@ import { AnimatePresence } from "framer-motion";
 
 // Pages
 import HomePage from "../pages/HomePage";
-import NewFeedback from "../pages/NewFeedback";
+import NewFeedbackPage from "../pages/NewFeedbackPage";
 import FeedbackPage from "../pages/FeedbackPage";
+import EditFeedbackPage from "../pages/EditFeedbackPage";
 import Auth from "../pages/Auth";
 import NotFound404 from "../pages/NotFound404";
 
@@ -31,17 +32,19 @@ const App = () => {
       <FeedbackContextProvider>
         <Routes>
           <Route index={true} path="/" element={<HomePage />} />
+          <Route element={<ProtectedRoutes />}>
+            <Route path="/feedbacks/new" element={<NewFeedbackPage />} />
+          </Route>
+          <Route path="feedbacks/:id" element={<FeedbackPage />}>
+            <Route path="edit" element={<EditFeedbackPage />} />
+          </Route>
+
           <Route path="auth" element={<Auth />}>
             <Route path="/auth" element={<LoginForm />} />
             <Route path="login" element={<LoginForm />} />
             <Route path="signup" element={<SignUpForm />} />
           </Route>
-          <Route element={<ProtectedRoutes />}>
-            <Route path="/feedback/new" element={<NewFeedback />} />
-          </Route>
-          <Route path="feedbacks">
-            <Route path=":id" element={<FeedbackPage />} />
-          </Route>
+
           <Route path="*" element={<NotFound404 />} />
         </Routes>
       </FeedbackContextProvider>

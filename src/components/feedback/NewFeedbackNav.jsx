@@ -84,7 +84,7 @@ const NewFeedbackNav = () => {
           closeHandler={() => setShowOptions(false)}
         />
       </div>
-      <Link className="ml-auto btn bg-purple-700" to="/feedback/new">
+      <Link className="ml-auto btn bg-purple-700" to="/feedbacks/new">
         + Add Feedback
       </Link>
     </div>
