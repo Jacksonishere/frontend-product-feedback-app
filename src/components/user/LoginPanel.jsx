@@ -51,7 +51,6 @@ const LoginPanel = ({ hamOpen, setHamOpen }) => {
   const outsideLoginBtnDetector = useOutsideClick(() => setShowSignout(false));
 
   const signOutUserHandler = useCallback(() => {
-    console.log("logging out");
     dispatchHideFlash();
     signOutUser();
   }, []);

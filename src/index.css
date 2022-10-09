@@ -24,7 +24,7 @@
   }
   h2 {
     letter-spacing: -0.25px;
-    @apply text-[20px] md:text-[24px];
+    @apply text-[18px] md:text-[22px];
   }
   h3 {
     letter-spacing: -0.25px;
@@ -117,7 +117,7 @@
   }
 
   .sm-container {
-    @apply mx-auto max-w-[592px];
+    @apply mx-auto w-[89%] max-w-[592px];
   }
 }
 

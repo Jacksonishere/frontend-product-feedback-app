@@ -46,7 +46,7 @@ export const feedbackApi = createApi({
     }),
     updateFeedback: builder.mutation({
       query: (feedback) => ({
-        url: "/feedbacks",
+        url: `/feedbacks/${feedback.id}`,
         method: "PATCH",
         body: feedback,
       }),

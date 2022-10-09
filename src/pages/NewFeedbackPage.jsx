@@ -5,7 +5,7 @@ import FeedbackForm from "../components/feedback/FeedbackForm";
 
 const NewFeedbackPage = () => {
   return (
-    <div className="sm-container px-6">
+    <div className="sm-container">
       <NavigateBack />
       <FeedbackForm />
     </div>

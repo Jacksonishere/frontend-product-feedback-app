@@ -1,10 +1,14 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import feedbackApi from "../../api/feedbackApiSlice";
 
 import {
   useCreateFeedackMutation,
   useUpdateFeedbackMutation,
 } from "../../api/feedbackApiSlice";
+
+import FeedbackContext from "../../context/FeedbacksContext";
 
 import useFlash from "../../hooks/useFlash";
 
@@ -29,6 +33,7 @@ const STATUSES = [
 ];
 
 const FeedbackForm = ({ feedback }) => {
+  const { updateOneFeedback } = useContext(FeedbackContext);
   const [
     createFeedback,
     { isLoading: createPending, isSuccess: createSuccess, data: newFeedback },
@@ -43,6 +48,7 @@ const FeedbackForm = ({ feedback }) => {
     },
   ] = useUpdateFeedbackMutation();
 
+  const dispatch = useDispatch();
   const navigate = useNavigate();
 
   /**
@@ -61,7 +67,7 @@ const FeedbackForm = ({ feedback }) => {
 
   const toggleFeedbackOptions = (e) => {
     e.stopPropagation();
-    setShowEditStatus(false);
+    setshowStatus(false);
     setShowCategories((shown) => !shown);
   };
 
@@ -75,9 +81,9 @@ const FeedbackForm = ({ feedback }) => {
    * - toggling dropdown
    * - handling select
    */
-  const showEditStatusBtnRef = useRef();
+  const showStatusBtnRef = useRef();
 
-  const [showEditStatus, setShowEditStatus] = useState(false);
+  const [showStatus, setshowStatus] = useState(false);
   const [status, setStatus] = useState(
     feedback
       ? STATUSES.find((status) => status.value === feedback?.status)
@@ -87,12 +93,12 @@ const FeedbackForm = ({ feedback }) => {
   const toggleEditStatus = (e) => {
     e.stopPropagation();
     setShowCategories(false);
-    setShowEditStatus((shown) => !shown);
+    setshowStatus((shown) => !shown);
   };
 
   const statusSelected = (selected) => {
     setStatus(selected);
-    showEditStatusBtnRef?.current?.focus();
+    showStatusBtnRef?.current?.focus();
   };
 
   /**
@@ -138,7 +144,9 @@ const FeedbackForm = ({ feedback }) => {
         },
       };
 
-      feedback ? updateFeedback(body) : createFeedback(body);
+      feedback
+        ? updateFeedback({ id: feedback.id, ...body })
+        : createFeedback(body);
     }
   };
 
@@ -155,10 +163,21 @@ const FeedbackForm = ({ feedback }) => {
   useEffect(() => {
     if (updateSuccess) {
       navigate(`/feedbacks/${updatedFeedback.id}`, {
+        replace: true,
         state: {
           redirect: "FEEDBACK-UPDATED",
         },
       });
+
+      dispatch(
+        feedbackApi.util.updateQueryData(
+          "getFeedback",
+          updatedFeedback.id,
+          () => updatedFeedback
+        )
+      );
+
+      updateOneFeedback(updatedFeedback);
     }
   }, [updateSuccess]);
 
@@ -225,13 +244,13 @@ const FeedbackForm = ({ feedback }) => {
         </div>
 
         {feedback && (
-          <div className="form-label relative">
+          <div className="form-label relative z-[4]">
             <b>Update Status</b>
             <span className="text-blue-400">Change Feedback State</span>
 
             <button
               type="button"
-              ref={showEditStatusBtnRef}
+              ref={showStatusBtnRef}
               className="dropdown-select-focus dropdown-toggle"
               onClick={toggleEditStatus}
             >
@@ -239,16 +258,15 @@ const FeedbackForm = ({ feedback }) => {
               <ArrowDown arrowStroke="#4661E6" />
             </button>
 
-            {showEditStatus && (
-              <div className="dropdown-select-focus block absolute top-[calc(100%_+_6px)] left-0 w-full">
-                <DropdownSelect
-                  options={STATUSES}
-                  selected={status.value}
-                  selectedHandler={statusSelected}
-                  closeHandler={() => setShowEditStatus(false)}
-                />
-              </div>
-            )}
+            <div className="dropdown-select-focus block absolute top-[calc(100%_+_6px)] left-0 w-full">
+              <DropdownSelect
+                showOptions={showStatus}
+                options={STATUSES}
+                selected={status.value}
+                selectedHandler={statusSelected}
+                closeHandler={() => setshowStatus(false)}
+              />
+            </div>
           </div>
         )}
 
@@ -282,13 +300,14 @@ const FeedbackForm = ({ feedback }) => {
             </button>
           )}
           <Link
-            to="/"
+            to={feedback ? `/feedbacks/${feedback.id}` : "/"}
             disabled={updatePending || createPending}
             className={`btn bg-blue-900 ${feedback ? "ml-auto" : ""}`}
           >
             Cancel
           </Link>
           <button
+            type="submit"
             disabled={updatePending || createPending}
             className="btn ml-2 bg-purple-700 md:ml-3"
           >

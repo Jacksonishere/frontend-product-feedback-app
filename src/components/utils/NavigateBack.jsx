@@ -3,12 +3,12 @@ import { useNavigate } from "react-router-dom";
 
 import ArrowLeft from "../../icons/ArrowLeft";
 
-const NavigateBack = () => {
+const NavigateBack = ({ to }) => {
   const navigate = useNavigate();
 
   return (
     <button
-      onClick={() => navigate(-1)}
+      onClick={() => navigate(to ?? -1)}
       className={`flex items-center my-[40px] w-max`}
     >
       <ArrowLeft />

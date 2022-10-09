@@ -4,6 +4,8 @@ import useOutsideClick from "../../hooks/useOutsideClick";
 
 import Check from "../../icons/Check";
 
+import isEqual from "lodash.isequal";
+
 const dropDownVariant = {
   initial: {
     y: -20,
@@ -49,7 +51,7 @@ const DropdownSelect = (props) => {
                   optionSelected(option);
                 }}
                 className={`flex justify-between items-center px-5 py-3 ${
-                  option.value === selected
+                  isEqual(option.value, selected)
                     ? "text-purple-700"
                     : "text-blue-400"
                 }   text-[14px] not-last:border-b border-opacity-75 cursor-pointer hover:text-purple-700 md:text-[15px]`}
@@ -58,7 +60,7 @@ const DropdownSelect = (props) => {
                 <button type="button" className="w-full text-left">
                   {option.label}
                 </button>
-                {option.value === selected && <Check />}
+                {isEqual(option.value, selected) && <Check />}
               </li>
             ))}
           </ul>

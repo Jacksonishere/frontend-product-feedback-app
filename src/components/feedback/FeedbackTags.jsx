@@ -8,7 +8,14 @@ import {
 
 import FeedbackContext from "../../context/FeedbacksContext";
 
-const CATEGORIES = ["all", "UI", "UX", "enhancement", "bug", "feature"];
+const CATEGORIES = [
+  { label: "All", value: "all" },
+  { label: "UI", value: "ui" },
+  { label: "UX", value: "ux" },
+  { label: "Enhancement", value: "enhancement" },
+  { label: "Bug", value: "bug" },
+  { label: "Feature", value: "feature" },
+];
 
 const FeedbackTags = ({ onClose }) => {
   const dispatch = useDispatch();
@@ -24,15 +31,15 @@ const FeedbackTags = ({ onClose }) => {
   return (
     <div className="p-6 bg-white rounded-lg md:h-full md:basis-1/2 lg:basis-full">
       <ul className="flex flex-wrap gap-x-3 gap-y-[10px] md:items-center md:h-max">
-        {CATEGORIES.map((category) => (
-          <li key={category}>
+        {CATEGORIES.map(({ value, label }) => (
+          <li key={value}>
             <button
               className={`feedback-tag ${
-                currCategory === category ? "selected" : ""
+                currCategory === value ? "selected" : ""
               }`}
-              onClick={handleCategoryChange.bind(null, category)}
+              onClick={handleCategoryChange.bind(null, value)}
             >
-              {category}
+              {label}
             </button>
           </li>
         ))}

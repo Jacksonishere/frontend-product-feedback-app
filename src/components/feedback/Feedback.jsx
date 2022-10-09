@@ -96,7 +96,7 @@ const Feedback = ({
     <section
       id={feedback.id}
       ref={infiniteScroll}
-      className="relative grid grid-rows-[repeat(2,_auto)] grid-cols-[1fr_1fr] gap-y-4 p-7 bg-white text-blue-900 rounded-md text-[13px] hover:opacity-100 md:grid-rows-[auto] md:grid-cols-[max-content_auto_max-content] md:gap-[1.5rem]"
+      className="relative grid grid-rows-[repeat(2,_auto)] grid-cols-[1fr_1fr] gap-y-4 p-7 bg-white text-blue-900 rounded-md text-[13px] hover:opacity-100 md:grid-rows-[auto] md:grid-cols-[max-content_auto_max-content] md:gap-[2rem]"
     >
       <div
         className="absolute -top-6 h-1"
@@ -107,7 +107,7 @@ const Feedback = ({
         to={`/feedbacks/${feedback.id}`}
         className="col-span-full space-y-4 md:row-span-full md:col-[2_/_3]"
       >
-        <div className="flex gap-1 items-center">
+        <div className="flex gap-1.5 items-center">
           <figure className="w-10 h-10">
             <img
               className="w-full h-full rounded-full"
@@ -124,8 +124,8 @@ const Feedback = ({
           </p>
         </div>
         <p>
-          <b className="block text-[15px] md:text-[17.5px]">{feedback.title}</b>
-          <span className="inline-block mt-1 text-[13px] text-blue-400 md:text-[14px]">
+          <b className="block text-[14px] md:text-[15px]">{feedback.title}</b>
+          <span className="inline-block mt-1 text-[12px] text-blue-400 md:text-[13px]">
             {feedback.detail}
           </span>
         </p>

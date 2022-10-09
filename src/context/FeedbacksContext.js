@@ -47,7 +47,7 @@ export const FeedbackContextProvider = (props) => {
     isFetching,
     error,
     // } = useGetFeedbacksQuery({ ...params, feedbackIDs });
-  } = useGetFeedbacksQuery({ ...params });
+  } = useGetFeedbacksQuery(params);
 
   const [canFetchMore, setCanFetchMore] = useState(true);
 
@@ -61,6 +61,15 @@ export const FeedbackContextProvider = (props) => {
     }
   }, [feedbacks]);
 
+  // can potentially cause it to do one more fetch when updating feedbacks which triggers ^ useeffect even though the number of feedbacks is the same
+  const updateOneFeedback = (feedback) => {
+    let update = allFeedbacks.findIndex(({ id }) => feedback.id === id);
+    if (update !== -1) {
+      allFeedbacks[update] = feedback;
+      setAllFeedbacks(allFeedbacks);
+    }
+  };
+
   return (
     <FeedbackContext.Provider
       value={{
@@ -70,6 +79,7 @@ export const FeedbackContextProvider = (props) => {
         canFetchMore,
         setAllFeedbacks,
         sortAllFeedbacks,
+        updateOneFeedback,
       }}
     >
       {props.children}

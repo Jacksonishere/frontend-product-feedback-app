@@ -42,7 +42,7 @@ const FeedbackPage = () => {
   return (
     <div className="relative container px-6 max-w-2xl md:mx-auto">
       <nav className="flex justify-between items-center">
-        <NavigateBack mb={7} />
+        <NavigateBack to="/" />
         {isSuccess && feedback?.user.id === currentUser?.id && (
           <Link className="btn bg-blue-700" to={`/feedbacks/${id}/edit`}>
             Edit Feedback

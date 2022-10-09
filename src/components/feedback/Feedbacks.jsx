@@ -43,7 +43,7 @@ const Feedbacks = () => {
 
   return (
     <div className="px-6 py-8 md:px-0 md:pt-6 md:pb-[56px]">
-      {isLoading && !allFeedbacks.length ? (
+      {isFetching && !allFeedbacks.length ? (
         <div className="grid place-items-center">
           <Spinner />
         </div>
@@ -54,7 +54,7 @@ const Feedbacks = () => {
             <h2 className="mt-[52px] text-blue-900">
               There is no feedback yet.
             </h2>
-            <p className="mt-2 text-blue-400">
+            <p className="mt-2 text-blue-400 text-[15px]">
               Got a suggestion? Found a bug that needs to be squashed? We love
               hearing about new ideas to improve our app.
             </p>

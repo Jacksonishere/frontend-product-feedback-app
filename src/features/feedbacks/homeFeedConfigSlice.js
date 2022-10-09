@@ -7,6 +7,7 @@ const initialState = {
   },
   offset: 1,
   limit: 15,
+  reset: 0,
 };
 
 const homeFeedConfigSlice = createSlice({
@@ -16,6 +17,7 @@ const homeFeedConfigSlice = createSlice({
     setCategory: (state, action) => ({
       ...state,
       offset: 1,
+      reset: state.reset + 1, //workaround for forcing rtkquery to refresh when reclicking tag. its sort of like refreshing on clicking tag type.
       category: action.payload,
     }),
     setSort: (state, action) => ({
