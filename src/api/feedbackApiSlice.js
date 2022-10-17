@@ -58,6 +58,13 @@ export const feedbackApi = createApi({
         params: { likeable_type, likeable_id },
       }),
     }),
+    createComment: builder.mutation({
+      query: (comment) => ({
+        url: "/comments",
+        method: "POST",
+        body: comment,
+      }),
+    }),
   }),
 });
 
@@ -68,4 +75,5 @@ export const {
   useUpdateLikeMutation,
   useCreateFeedackMutation,
   useUpdateFeedbackMutation,
+  useCreateCommentMutation,
 } = feedbackApi;

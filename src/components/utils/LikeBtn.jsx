@@ -28,13 +28,13 @@ const LikeBtn = ({ likeableHandler, likeableThing, user }) => {
   return (
     <button
       onClick={likeBtnHandler}
-      className={`feedback-tag flex justify-center items-center min-w-[46px] px-0 py-[9px] md:pb-[6px] text-black ${
+      className={`feedback-tag flex justify-center items-center h-[32px] min-w-[46px] px-3 text-black ${
         userLiked ? "bg-blue-500" : ""
-      }  md:row-span-full md:col-[1_/_2] md:flex-col md:justify-between md:self-start`}
+      }  md:row-span-full md:col-[1_/_2] md:flex-col md:center md:self-start md:pb-1 md:h-[48px]`}
     >
       <ArrowUp color={userLiked ? "white" : "#4661E6"} />
       <b
-        className={`ml-2 md:mt-[3px] md:ml-0 ${
+        className={`ml-2 md:mt-[6px] md:ml-0 ${
           userLiked ? "text-blue-25" : ""
         }`}
       >

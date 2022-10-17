@@ -8,7 +8,7 @@
   html,
   body {
     font-family: "Jost", sans-serif, Helvetica, Arial, sans-serif;
-    @apply h-full bg-slate-100  font-normal antialiased;
+    @apply min-h-[100vh] bg-slate-100 font-normal antialiased;
   }
 
   h1,
@@ -19,6 +19,7 @@
   h6 {
     @apply font-bold;
   }
+
   h1 {
     letter-spacing: -0.33px;
   }
@@ -28,9 +29,14 @@
   }
   h3 {
     letter-spacing: -0.25px;
+    @apply text-[18px];
   }
   h4 {
     letter-spacing: -0.2px;
+  }
+
+  img {
+    display: block;
   }
 
   [type="text"],
@@ -39,7 +45,7 @@
   [type="number"],
   textarea,
   select {
-    @apply border-none outline-none focus:ring-1 focus-visible:ring-1 focus:ring-blue-500;
+    @apply border-none outline-none focus:ring-1 focus-visible:ring-1 focus:ring-blue-500 cursor-pointer;
   }
 
   button,
@@ -66,7 +72,7 @@
   }
 
   .form-group {
-    @apply text-[14px] md:text-[16px];
+    @apply text-[14px] md:text-[15px];
   }
 
   .input-label {
@@ -77,6 +83,9 @@
     @apply w-full px-4 py-3 bg-blue-100 text-blue-900 rounded-md md:px-5 md:py-[14px];
   }
 
+  .default-cont {
+    @apply p-8 bg-white rounded-lg;
+  }
   .form-submit {
     @apply block w-full mt-7 h-[50px] bg-purple-700 font-semibold text-white rounded-lg text-[14px];
   }
@@ -109,7 +118,7 @@
   }
 
   .feedback-tag {
-    @apply px-4 py-[7px] md:px-4 md:py-2 w-max bg-blue-100 text-blue-500 text-[13px] font-semibold rounded-[9px] capitalize;
+    @apply grid place-items-center px-4 h-[33.5px] md:px-4 md:py-2 w-max bg-blue-100 text-blue-500 text-[13px] font-semibold rounded-[9px] capitalize;
   }
 
   .feedback-tag.selected {
@@ -117,7 +126,11 @@
   }
 
   .sm-container {
-    @apply mx-auto w-[89%] max-w-[592px];
+    @apply mx-auto w-[89%] max-w-[575px];
+  }
+
+  .body-text {
+    @apply text-[13px] md:text-[14px] text-blue-400;
   }
 }
 

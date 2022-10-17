@@ -182,7 +182,7 @@ const FeedbackForm = ({ feedback }) => {
   }, [updateSuccess]);
 
   return (
-    <div className="relative mb-[56px] p-7 bg-white text-blue-900 text-[14px] rounded-lg md:p-10 md:text-[15px] md:mt-[56px]">
+    <div className="default-cont relative mb-[56px] p-7 text-blue-900 text-[14px] md:p-9 md:text-[15px] md:mt-[56px]">
       <div
         className={`absolute top-0 w-10 h-10 -translate-y-[50%] rounded-full bg-cover ${
           feedback ? "bg-edit-icon" : "bg-new-icon"

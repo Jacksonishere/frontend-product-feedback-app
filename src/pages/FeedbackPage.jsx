@@ -7,8 +7,10 @@ import Feedback from "../components/feedback/Feedback";
 import NavigateBack from "../components/utils/NavigateBack";
 import Spinner from "../components/utils/Spinner";
 import FeedbackNotFound from "../components/utils/FeedbackNotFound";
+import CommentForm from "../components/feedback/comments/CommentForm";
 
 import useAuth from "../hooks/useAuth";
+import CommentThread from "../components/feedback/comments/CommentThread";
 
 const FeedbackPage = () => {
   const dispatch = useDispatch();
@@ -40,7 +42,7 @@ const FeedbackPage = () => {
   };
 
   return (
-    <div className="relative container px-6 max-w-2xl md:mx-auto">
+    <div className="relative container mb-[120px] px-6 max-w-2xl md:mx-auto">
       <nav className="flex justify-between items-center">
         <NavigateBack to="/" />
         {isSuccess && feedback?.user.id === currentUser?.id && (
@@ -54,15 +56,17 @@ const FeedbackPage = () => {
       ) : isError ? (
         <FeedbackNotFound />
       ) : (
-        <>
+        <div className="space-y-8">
           <Feedback
             feedback={feedback}
             showPage={true}
             patchResult={patchResult}
             optimisticUpdate={optimisticUpdate}
           />
+          <CommentForm />
+          <CommentThread feedback={feedback} />
           <Outlet context={[feedback, currentUser]} />
-        </>
+        </div>
       )}
     </div>
   );

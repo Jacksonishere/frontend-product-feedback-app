@@ -21,9 +21,9 @@ const Auth = () => {
   });
 
   return (
-    <div className="mx-auto px-6 pb-8 max-w-[490px]">
+    <div className="mx-auto px-6 pb-8 max-w-[550px]">
       <NavigateBack />
-      <div className="px-6 pt-6 pb-8 bg-white rounded-xl md:px-9 md:py-9">
+      <div className="px-6 pt-6 pb-8 bg-white rounded-xl md:px-9 md:p">
         <figure className="mx-auto my-6 h-[80px] max-w-[80px] rounded-full overflow-hidden">
           <img key={loginPath} src={avatarUrl} alt="avatar" />
         </figure>

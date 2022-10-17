@@ -93,7 +93,7 @@ const SignUpForm = () => {
         <InputErrorMsg msg={usernameErrorMsg} />
       </div>
 
-      <div className="text-[13px] md:text-[14px]">
+      <div className="form-group">
         <label className="input-label" htmlFor="email">
           Email
         </label>
@@ -107,7 +107,7 @@ const SignUpForm = () => {
         <InputErrorMsg msg={emailErrorMsg} />
       </div>
 
-      <div className="text-[13px] md:text-[14px]">
+      <div className="form-group">
         <label className="input-label" htmlFor="password">
           Password
         </label>
