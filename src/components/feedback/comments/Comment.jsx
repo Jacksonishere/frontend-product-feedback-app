@@ -1,14 +1,18 @@
 import React from "react";
 
-const Comment = ({ comment }) => {
+const Comment = ({ comment, lastComment }) => {
+  const { comments:replies, parent_id } = comment
   const { username, avatar_url: pfp } = comment.user;
 
+  const parent = parent_id === null;
+  // const parent = replies.length;
   return (
     // <div className="p-7">
     <section
-      className={`bg-white rounded-[10px] my-6 ${
-        comment.parent_id ? "pl-6" : ""
-      }`}
+      className={`relative bg-white rounded-[10px] my-6
+        ${!parent ? "thread-line pl-6" : ""}
+        ${!lastComment ? 'before:bottom-[-24px]' : 'before:bottom-[calc(100%-46px)]'}
+      `}
     >
       <div
         className={`default-cont p-0 grid grid-cols-[max-content_1fr_max-content] grid-rows-[repeat(2,auto)] gap-x-2 gap-y-[1.375rem] items-center`}
@@ -31,11 +35,21 @@ const Comment = ({ comment }) => {
         <p className="body-text col-[1/3] row-[2/3]">{comment.content}</p>
       </div>
 
-      {comment.comments.map((reply) => (
+      {/* <div className="relative">
+        <div className="separator absolute top-0 left-0 bottom-0 w-[1px]"></div>
+      {replies.map((reply) => (
         <Comment key={reply.id} comment={reply} />
       ))}
+    </div> */}
+      {replies.map((reply, i) => (
+        <Comment
+          key={reply.id}
+          comment={reply}
+          lastComment={i === replies.length - 1}
+        />
+      ))}
 
-      {!comment.parent_id && <hr className="mt-4" />}
+      {!parent_id && <hr className="separator mt-4" />}
     </section>
     // </div>
   );

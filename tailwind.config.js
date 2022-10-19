@@ -12,6 +12,7 @@ module.exports = {
       },
       colors: {
         backdrop: "#00000080",
+        separator: "#E5E7EB",
         success: {
           green: "#4BB543",
         },
