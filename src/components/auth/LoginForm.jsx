@@ -49,7 +49,6 @@ const LoginForm = () => {
     } else if (error) {
       dispatchShowFlash(
         {
-          show: true,
           type: "ERROR",
           msg: "Invalid Credentials. Try again.",
         },
@@ -99,7 +98,7 @@ const LoginForm = () => {
         <InputErrorMsg msg={passwordErrorMsg} />
       </div>
       <button
-        className={`form-submit ${isLoading ? "opacity-80" : ""}`}
+        className={`form-submit w-full ${isLoading ? "opacity-80" : ""}`}
         disabled={isLoading}
         type="submit"
       >

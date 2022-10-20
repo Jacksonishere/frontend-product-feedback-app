@@ -79,7 +79,6 @@ const Flash = () => {
       }
 
       dispatchShowFlash({
-        show: true,
         type: "SUCCESS",
         msg,
       });

@@ -63,7 +63,7 @@ const FeedbackPage = () => {
             patchResult={patchResult}
             optimisticUpdate={optimisticUpdate}
           />
-          <CommentForm />
+          <CommentForm forFeedback={feedback.id} />
           <CommentThread feedback={feedback} />
           <Outlet context={[feedback, currentUser]} />
         </div>

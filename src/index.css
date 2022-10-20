@@ -87,7 +87,7 @@
     @apply p-8 bg-white rounded-lg;
   }
   .form-submit {
-    @apply block w-full mt-7 h-[50px] bg-purple-700 font-semibold text-white rounded-lg text-[14px];
+    @apply block mt-7 h-[50px] bg-purple-700 font-semibold text-white rounded-lg text-[14px];
   }
 
   .form-label {
@@ -114,7 +114,7 @@
   }
 
   .btn {
-    @apply grid place-items-center px-8 h-[40px] text-white font-bold text-[12px] rounded-[9px] md:h-[44px] md:text-[13px];
+    @apply grid place-items-center px-6 h-[40px] text-white font-bold text-[12px] rounded-[10px] md:h-[44px] md:text-[13px];
   }
 
   .feedback-tag {

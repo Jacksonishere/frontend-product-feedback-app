@@ -57,7 +57,6 @@ const Feedback = ({
     if (isError) {
       dispatchShowFlash(
         {
-          show: true,
           type: "ERROR",
           msg: "There was a problem liking this post",
         },

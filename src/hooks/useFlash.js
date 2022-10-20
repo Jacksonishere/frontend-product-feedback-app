@@ -10,6 +10,7 @@ const useFlash = () => {
   const dispatchShowFlash = useCallback((flashContent, changeId = false) => {
     dispatch(
       showFlash({
+        showFlash: true,
         ...flashContent,
         ...(changeId ? { id: uniqueId() } : {}),
       })

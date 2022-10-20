@@ -8,11 +8,8 @@ const CommentThread = ({ feedback }) => {
         className={`${feedback.num_comments ? "mb-6" : ""}`}
       >{`${feedback.num_comments} Comment(s)`}</h3>
       <div>
-        {feedback.comments.map((comment, i) => (
-          <Comment
-            key={comment.id}
-            comment={comment}
-          />
+        {feedback.comments.map((comment) => (
+          <Comment key={comment.id} comment={comment} />
         ))}
       </div>
     </section>

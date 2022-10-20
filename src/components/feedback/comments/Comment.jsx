@@ -1,17 +1,30 @@
-import React from "react";
+import React, { useState, useMemo, useCallback } from "react";
+import CommentForm from "./CommentForm";
 
 const Comment = ({ comment, lastComment }) => {
-  const { comments:replies, parent_id } = comment
+  const { comments: replies, parent_id } = comment;
   const { username, avatar_url: pfp } = comment.user;
+  const [showReplyForm, setShowReplyForm] = useState(false);
 
-  const parent = parent_id === null;
-  // const parent = replies.length;
+  const parent = useMemo(() => parent_id === null, [parent_id]);
+  const hideReplyForm = useCallback(() => {
+    setShowReplyForm(false);
+  }, []);
+
+  const displayReplyForm = useCallback(() => {
+    setShowReplyForm(true);
+  }, []);
+
   return (
-    // <div className="p-7">
     <section
       className={`relative bg-white rounded-[10px] my-6
         ${!parent ? "thread-line pl-6" : ""}
-        ${!lastComment ? 'before:bottom-[-24px]' : 'before:bottom-[calc(100%-46px)]'}
+        ${
+          !lastComment
+            ? "before:bottom-[-24px]"
+            : "before:bottom-[17px] md:before:bottom-[32px]"
+          // : "before:bottom-[calc(100%-46px)]"
+        }
       `}
     >
       <div
@@ -27,8 +40,9 @@ const Comment = ({ comment, lastComment }) => {
           <span className="text-blue-400">@{username}</span>
         </p>
         <button
+          onClick={displayReplyForm}
           type="button"
-          className="col-[3/4] row-[1/2] text-[13px] text-blue-500 font-bold"
+          className="col-[3/4] row-[1/2] text-[13px] self-top text-blue-500 font-bold"
         >
           Reply
         </button>
@@ -41,6 +55,14 @@ const Comment = ({ comment, lastComment }) => {
         <Comment key={reply.id} comment={reply} />
       ))}
     </div> */}
+
+      {showReplyForm && (
+        <CommentForm
+          commentType="REPLY"
+          closeForm={hideReplyForm}
+          forFeedback={comment.feedback_id}
+        />
+      )}
       {replies.map((reply, i) => (
         <Comment
           key={reply.id}

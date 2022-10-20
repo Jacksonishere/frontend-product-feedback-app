@@ -10,8 +10,6 @@ import InputErrorMsg from "../utils/InputErrorMsg";
 import Spinner from "../utils/Spinner";
 import { ValidateEmail } from "../../utils/Utils";
 
-import uniqueId from "lodash";
-
 const SignUpForm = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -19,7 +17,7 @@ const SignUpForm = () => {
 
   const [signUp, { isLoading }] = useSignUpUserMutation();
   const [avatarUrl] = useOutletContext();
-  const { dispatchHideFlash, dispatchShowFlash } = useFlash();
+  const { dispatchHideFlash } = useFlash();
 
   const [usernameErrorMsg, setUsernameErrorMsg] = useState();
   const [emailErrorMsg, setEmailErrorMsg] = useState();
@@ -127,7 +125,7 @@ const SignUpForm = () => {
         <InputErrorMsg msg={passwordErrorMsg} />
       </div>
 
-      <button className="form-submit" type="submit">
+      <button className="form-submit w-full" type="submit">
         {isLoading ? <Spinner /> : "Sign Up"}
       </button>
     </form>

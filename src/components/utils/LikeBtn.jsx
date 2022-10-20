@@ -12,7 +12,6 @@ const LikeBtn = ({ likeableHandler, likeableThing, user }) => {
     if (!user) {
       dispatchShowFlash(
         {
-          show: true,
           type: "ERROR",
           msg: "You must be signed in to do that!",
         },

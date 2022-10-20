@@ -64,7 +64,6 @@ const LoginPanel = ({ hamOpen, setHamOpen }) => {
       setShowSignout(false);
       dispatch(resetUser());
       dispatchShowFlash({
-        show: true,
         type: "SUCCESS",
         msg: "You have successfully logged out.",
       });
