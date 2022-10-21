@@ -52,6 +52,10 @@
   a {
     @apply cursor-pointer hover:opacity-80;
   }
+
+  *:disabled {
+    @apply opacity-80 cursor-not-allowed;
+  }
 }
 
 @layer components {

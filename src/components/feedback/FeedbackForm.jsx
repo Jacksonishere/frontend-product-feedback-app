@@ -129,7 +129,7 @@ const FeedbackForm = ({ feedback }) => {
       : setDetailErrorMsg(null);
   }, [detail]);
 
-  const formSubmitHandler = (e) => {
+  const submitHandler = (e) => {
     e.preventDefault();
     if (!title) setTitle("");
     if (!detail) setDetail("");
@@ -195,7 +195,7 @@ const FeedbackForm = ({ feedback }) => {
 
       <form
         className="relative space-y-7 md:space-y-9"
-        onSubmit={formSubmitHandler}
+        onSubmit={submitHandler}
       >
         <div>
           <label className="form-label">

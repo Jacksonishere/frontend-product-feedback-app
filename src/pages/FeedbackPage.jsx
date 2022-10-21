@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import feedbackApi, { useGetFeedbackQuery } from "../api/feedbackApiSlice";
 import { Link, Outlet, useParams } from "react-router-dom";
@@ -25,6 +25,7 @@ const FeedbackPage = () => {
   const currentUser = useAuth();
 
   const [patchResult, setPatchResult] = useState();
+  const [comments, setComments] = useState(feedback.comments);
 
   const optimisticUpdate = (new_num_likes) => {
     setPatchResult(
@@ -42,7 +43,7 @@ const FeedbackPage = () => {
   };
 
   return (
-    <div className="relative container mb-[120px] px-6 max-w-2xl md:mx-auto">
+    <div className="relative container mb-[120px] px-6 max-w-2xl md:mx-auto lg:max-w-3xl">
       <nav className="flex justify-between items-center">
         <NavigateBack to="/" />
         {isSuccess && feedback?.user.id === currentUser?.id && (
@@ -64,7 +65,7 @@ const FeedbackPage = () => {
             optimisticUpdate={optimisticUpdate}
           />
           <CommentForm forFeedback={feedback.id} />
-          <CommentThread feedback={feedback} />
+          <CommentThread feedback={feedback} forFeedback={feedback.id} />
           <Outlet context={[feedback, currentUser]} />
         </div>
       )}

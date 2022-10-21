@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 import Spinner from "../../utils/Spinner";
 
@@ -7,20 +7,33 @@ import { useCreateCommentMutation } from "../../../api/feedbackApiSlice";
 import useAuth from "../../../hooks/useAuth";
 import useFlash from "../../../hooks/useFlash";
 
-const CommentForm = ({ commentType, closeForm, forFeedback }) => {
+const CommentForm = ({
+  commentType,
+  appendNewComment,
+  closeForm,
+  parent_id,
+  replyToUser,
+}) => {
   const currentUser = useAuth();
   const { dispatchShowFlash } = useFlash();
-
-  const [createComment, { isSuccess, isError, isLoading }] =
+  const { id: feedback_id } = useParams();
+  const [createComment, { isSuccess, isError, isLoading, data: newComment }] =
     useCreateCommentMutation();
   const [comment, setComment] = useState("");
 
   const isReply = commentType === "REPLY";
 
-  const formHandler = () => {
+  const formHandler = (e) => {
+    e.preventDefault();
     const commentBody = {
-      feedback_id: forFeedback,
+      feedback_id,
       content: comment,
+      ...(isReply
+        ? {
+            parent_id: parent_id,
+            replied_to: replyToUser,
+          }
+        : {}),
     };
     createComment(commentBody);
   };
@@ -28,6 +41,7 @@ const CommentForm = ({ commentType, closeForm, forFeedback }) => {
   useEffect(() => {
     if (isSuccess) {
       isReply && closeForm();
+      appendNewComment(newComment);
       dispatchShowFlash({
         type: "SUCCESS",
         msg: "Your comment has been successfully added!",
@@ -50,11 +64,10 @@ const CommentForm = ({ commentType, closeForm, forFeedback }) => {
       }`}
     >
       {!isReply && <h3>Add Comment</h3>}
-      <form onSubmit={formHandler}>
+      <form onSubmit={formHandler} action="#">
         <textarea
-          onChange={(e) => {
-            if (comment.length < 250) setComment(e.target.value);
-          }}
+          autoFocus={isReply}
+          onChange={(e) => setComment(e.target.value)}
           name="comment"
           className={`input-text form-input ${!isReply ? "mt-6" : "mt-2"}`}
           rows="3"
@@ -76,8 +89,9 @@ const CommentForm = ({ commentType, closeForm, forFeedback }) => {
           ) : (
             <div className="flex justify-start items-center mt-1 md:ml-auto">
               <button
+                type="submit"
                 className="btn form-submit mt-1 md:mt-0"
-                disabled={!currentUser}
+                disabled={!currentUser || comment.length > 250 || isLoading}
               >
                 {isLoading ? (
                   <Spinner />
@@ -88,7 +102,12 @@ const CommentForm = ({ commentType, closeForm, forFeedback }) => {
                 )}
               </button>
               {isReply && (
-                <button className="btn ml-4 bg-blue-900" onClick={closeForm}>
+                <button
+                  type="button"
+                  className="btn ml-4 bg-blue-900"
+                  onClick={closeForm}
+                  disabled={isLoading}
+                >
                   Cancel
                 </button>
               )}

@@ -1,10 +1,11 @@
 import React, { useState, useMemo, useCallback } from "react";
 import CommentForm from "./CommentForm";
 
-const Comment = ({ comment, lastComment }) => {
-  const { comments: replies, parent_id } = comment;
+const Comment = ({ comment, lastComment, top_comment_id }) => {
+  const { comments, parent_id, id: comment_id } = comment;
   const { username, avatar_url: pfp } = comment.user;
   const [showReplyForm, setShowReplyForm] = useState(false);
+  const [replies, setReplies] = useState(comments);
 
   const parent = useMemo(() => parent_id === null, [parent_id]);
   const hideReplyForm = useCallback(() => {
@@ -15,8 +16,16 @@ const Comment = ({ comment, lastComment }) => {
     setShowReplyForm(true);
   }, []);
 
+  const appendNewComment = useCallback(
+    (newComment) => {
+      setReplies([...replies, newComment]);
+    },
+    [replies]
+  );
+
   return (
     <section
+      id={`comment-id-${comment.id}`}
       className={`relative bg-white rounded-[10px] my-6
         ${!parent ? "thread-line pl-6" : ""}
         ${
@@ -59,14 +68,17 @@ const Comment = ({ comment, lastComment }) => {
       {showReplyForm && (
         <CommentForm
           commentType="REPLY"
+          appendNewComment={appendNewComment}
           closeForm={hideReplyForm}
-          forFeedback={comment.feedback_id}
+          parent_id={top_comment_id ?? comment_id}
+          replyToUser={comment.user.username}
         />
       )}
       {replies.map((reply, i) => (
         <Comment
           key={reply.id}
           comment={reply}
+          top_comment_id={top_comment_id ?? comment_id}
           lastComment={i === replies.length - 1}
         />
       ))}
