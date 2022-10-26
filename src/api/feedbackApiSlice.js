@@ -65,6 +65,13 @@ export const feedbackApi = createApi({
         body: comment,
       }),
     }),
+    getComments: builder.query({
+      query: ({ offset = 1, limit = 15, feedback_id, parent_id }) => ({
+        url: "/comments",
+        method: "GET",
+        params: { offset, limit, feedback_id, parent_id },
+      }),
+    })
   }),
 });
 
@@ -76,4 +83,5 @@ export const {
   useCreateFeedackMutation,
   useUpdateFeedbackMutation,
   useCreateCommentMutation,
+  useGetCommentsQuery
 } = feedbackApi;

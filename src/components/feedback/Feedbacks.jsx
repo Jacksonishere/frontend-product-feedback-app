@@ -11,6 +11,7 @@ import { useDispatch } from "react-redux";
 import { setNextPage } from "../../features/feedbacks/homeFeedConfigSlice";
 
 import FeedbackContext from "../../context/FeedbacksContext";
+import useInfiniteScroll from "../..//hooks/useInfiniteScroll.js";
 
 import Feedback from "./Feedback";
 import Spinner from "../utils/Spinner";
@@ -22,24 +23,15 @@ const Feedbacks = () => {
   const { isLoading, isFetching, allFeedbacks, canFetchMore } =
     useContext(FeedbackContext);
 
-  const observerRef = useRef();
-  const infiniteScroll = useCallback(
-    (node) => {
-      if (isFetching) return;
-      else if (node) {
-        observerRef.current?.disconnect();
-        if (canFetchMore) {
-          observerRef.current = new IntersectionObserver((entries) => {
-            if (entries[0].isIntersecting) {
-              dispatch(setNextPage());
-            }
-          });
-          observerRef.current.observe(node);
-        }
-      }
-    },
-    [isFetching, canFetchMore]
-  );
+  const infiniteScrollHandler = useCallback(() => {
+    dispatch(setNextPage());
+  }, []);
+
+  const infiniteScrollTrigger = useInfiniteScroll({
+    isFetching,
+    canFetchMore,
+    infiniteScrollHandler,
+  });
 
   return (
     <div className="px-6 py-8 md:px-0 md:pt-6 md:pb-[56px]">
@@ -70,7 +62,7 @@ const Feedbacks = () => {
               <Feedback
                 key={feedback.id}
                 feedback={feedback}
-                infiniteScroll={infiniteScroll}
+                infiniteScroll={infiniteScrollTrigger}
               />
             ) : (
               <Feedback key={feedback.id} feedback={feedback} />
