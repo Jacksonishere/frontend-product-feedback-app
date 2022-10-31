@@ -70,6 +70,19 @@ export const FeedbackContextProvider = (props) => {
     }
   };
 
+  const updateFeedbackLikes = ({ id, userLiked, newLikeCount }) => {
+    const updatedFeedbacks = allFeedbacks.map((f) =>
+      f.id === id
+        ? {
+            ...f,
+            user_liked: userLiked,
+            num_likes: newLikeCount,
+          }
+        : f
+    );
+    setAllFeedbacks(updatedFeedbacks);
+  };
+
   return (
     <FeedbackContext.Provider
       value={{
@@ -80,6 +93,7 @@ export const FeedbackContextProvider = (props) => {
         setAllFeedbacks,
         sortAllFeedbacks,
         updateOneFeedback,
+        updateFeedbackLikes,
       }}
     >
       {props.children}

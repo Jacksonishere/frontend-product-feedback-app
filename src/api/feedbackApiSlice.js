@@ -65,13 +65,20 @@ export const feedbackApi = createApi({
         body: comment,
       }),
     }),
-    getComments: builder.query({
-      query: ({ offset = 1, limit = 15, feedback_id, parent_id }) => ({
-        url: "/comments",
+    getParentComments: builder.query({
+      query: ({ offset = 1, limit = 10, feedback_id }) => ({
+        url: "/parent_comments",
         method: "GET",
-        params: { offset, limit, feedback_id, parent_id },
+        params: { offset, limit, feedback_id },
       }),
-    })
+    }),
+    getReplies: builder.query({
+      query: ({ offset = 1, limit = 5, parent_id }) => ({
+        url: "/replies",
+        method: "GET",
+        params: { offset, limit, parent_id },
+      }),
+    }),
   }),
 });
 
@@ -83,5 +90,6 @@ export const {
   useCreateFeedackMutation,
   useUpdateFeedbackMutation,
   useCreateCommentMutation,
-  useGetCommentsQuery
+  useGetParentCommentsQuery,
+  useGetRepliesQuery,
 } = feedbackApi;

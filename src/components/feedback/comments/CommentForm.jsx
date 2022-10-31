@@ -41,6 +41,8 @@ const CommentForm = ({
   useEffect(() => {
     if (isSuccess) {
       isReply && closeForm();
+      setComment("");
+
       appendNewComment(newComment);
       dispatchShowFlash({
         type: "SUCCESS",
@@ -53,10 +55,11 @@ const CommentForm = ({
     if (isError) {
       dispatchShowFlash({
         type: "ERROR",
-        msg: "Your comment has been successfully added!",
+        msg: "There was an error adding your comment!",
       });
     }
   }, [isError]);
+
   return (
     <section
       className={`bg-white rounded-lg text-blue-900 ${
@@ -70,6 +73,7 @@ const CommentForm = ({
           onChange={(e) => setComment(e.target.value)}
           name="comment"
           className={`input-text form-input ${!isReply ? "mt-6" : "mt-2"}`}
+          value={comment}
           rows="3"
         ></textarea>
         <div className="flex flex-col justify-start mt-1 md:flex-row md:items-center md:mt-3">

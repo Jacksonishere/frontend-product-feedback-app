@@ -25,9 +25,8 @@ const FeedbackPage = () => {
   const currentUser = useAuth();
 
   const [patchResult, setPatchResult] = useState();
-  const [comments, setComments] = useState(feedback.comments);
 
-  const optimisticUpdate = (new_num_likes) => {
+  const likeOptimisticUpdate = (new_num_likes) => {
     setPatchResult(
       dispatch(
         feedbackApi.util.updateQueryData(
@@ -62,9 +61,8 @@ const FeedbackPage = () => {
             feedback={feedback}
             showPage={true}
             patchResult={patchResult}
-            optimisticUpdate={optimisticUpdate}
+            likeOptimisticUpdate={likeOptimisticUpdate}
           />
-          <CommentForm forFeedback={feedback.id} />
           <CommentThread feedback={feedback} forFeedback={feedback.id} />
           <Outlet context={[feedback, currentUser]} />
         </div>

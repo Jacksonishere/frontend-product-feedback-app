@@ -16,40 +16,36 @@ const Feedback = ({
   feedback,
   infiniteScroll,
   patchResult,
-  optimisticUpdate,
+  likeOptimisticUpdate,
 }) => {
   const user = useAuth();
   const feedbackAnchor = useRef();
   const likeDone = useRef(false);
   const oldFeedbacks = useRef();
 
-  const location = useLocation();
-
   const { dispatchShowFlash } = useFlash();
   const [updateLike, { isSuccess, isLoading, isError }] =
     useUpdateLikeMutation();
-  const { allFeedbacks, setAllFeedbacks, sortAllFeedbacks } =
-    useContext(FeedbackContext);
+  const {
+    allFeedbacks,
+    setAllFeedbacks,
+    sortAllFeedbacks,
+    updateFeedbackLikes,
+  } = useContext(FeedbackContext);
 
   useEffect(() => {
     if (isLoading) {
       const { user_liked, num_likes } = feedback;
       let newLikeCount = num_likes + (user_liked ? -1 : 1);
 
-      optimisticUpdate?.(newLikeCount);
+      likeOptimisticUpdate?.(newLikeCount);
 
       oldFeedbacks.current = allFeedbacks;
-      const updatedFeedbacks = allFeedbacks.map((f) =>
-        f.id === feedback.id
-          ? {
-              ...f,
-              user_liked: !user_liked,
-              num_likes: newLikeCount,
-            }
-          : f
-      );
-
-      setAllFeedbacks(updatedFeedbacks);
+      updateFeedbackLikes({
+        id: feedback.id,
+        userLiked: !user_liked,
+        newLikeCount,
+      });
     }
   }, [isLoading]);
 

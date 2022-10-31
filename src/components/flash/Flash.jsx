@@ -27,6 +27,15 @@ const flashContainerVariant = {
       type: "tween",
     },
   },
+  exit: {
+    opacity: 0,
+    top: -20,
+    scale: 0,
+    transition: {
+      duration: 0.3,
+      type: "tween",
+    },
+  },
 };
 
 const Flash = () => {
@@ -96,7 +105,7 @@ const Flash = () => {
             variants={flashContainerVariant}
             initial="initial"
             animate="animate"
-            exit="initial"
+            exit="exit"
           >
             <FlashContent type={type} msg={msg} />
           </motion.div>
