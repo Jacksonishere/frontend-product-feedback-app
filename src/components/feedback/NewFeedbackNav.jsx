@@ -44,7 +44,7 @@ const NewFeedbackNav = () => {
   const [showSortOptions, setShowOptions] = useState(false);
 
   // const { allFeedbacks } = useFetchFeedbacks();
-  const { allFeedbacks, setAllFeedbacks } = useContext(FeedbackContext);
+  const { setAllFeedbacks, feedbackCount } = useContext(FeedbackContext);
 
   const sortSelected = (option) => {
     setAllFeedbacks([]);
@@ -57,9 +57,7 @@ const NewFeedbackNav = () => {
       <div className="hidden text-[18px] text-blue-25 font-bold md:flex md:items-center md:py-[10px]">
         <Suggestion />
         <p className="ml-3 font-bold">
-          <span className="inline-block min-w-[12px]">
-            {allFeedbacks?.length}
-          </span>
+          <span className="inline-block min-w-[12px]">{feedbackCount}</span>
           <span className="ml-2">Suggestions</span>
         </p>
       </div>

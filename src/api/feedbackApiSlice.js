@@ -19,23 +19,12 @@ export const feedbackApi = createApi({
         method: "GET",
         params: { offset, limit, category, sort: JSON.stringify(sort) },
       }),
-      providesTags: (result) =>
-        result
-          ? [
-              ...result.map((feedback) => ({
-                type: "Feedback",
-                id: feedback.id,
-              })),
-              { type: "Feedbacks", id: "LIST" },
-            ]
-          : [{ type: "Feedbacks", id: "LIST" }],
     }),
     getFeedback: builder.query({
       query: (id) => ({
         url: `/feedbacks/${id}`,
         method: "GET",
       }),
-      providesTags: (result, error, id) => [{ type: "Feedback", id }],
     }),
     createFeedack: builder.mutation({
       query: (feedback) => ({

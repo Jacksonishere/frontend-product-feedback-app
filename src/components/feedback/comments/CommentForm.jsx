@@ -12,7 +12,7 @@ const CommentForm = ({
   appendNewComment,
   closeForm,
   parent_id,
-  replyToUser,
+  replied_to,
 }) => {
   const currentUser = useAuth();
   const { dispatchShowFlash } = useFlash();
@@ -30,8 +30,8 @@ const CommentForm = ({
       content: comment,
       ...(isReply
         ? {
-            parent_id: parent_id,
-            replied_to: replyToUser,
+            parent_id,
+            ...(replied_to !== currentUser.username ? { replied_to } : {}),
           }
         : {}),
     };

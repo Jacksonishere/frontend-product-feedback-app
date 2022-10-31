@@ -109,7 +109,12 @@ const Comment = ({
         >
           Reply
         </button>
-        <p className="body-text col-[1/3] row-[2/3]">{comment.content}</p>
+        <p className="body-text col-[1/3] row-[2/3]">
+          {comment.replied_to && (
+            <span className="inline-block mr-2 text-[13.5px] text-purple-700 font-bold">{`@${comment.replied_to}`}</span>
+          )}
+          <span>{comment.content}</span>
+        </p>
       </div>
 
       {/* <div className="relative">
@@ -125,7 +130,7 @@ const Comment = ({
           appendNewComment={childReplyHandler ?? appendNewComment}
           closeForm={hideReplyForm}
           parent_id={top_comment_id ?? comment_id}
-          replyToUser={comment.user.username}
+          replied_to={comment.user.username}
         />
       )}
       {replies.map((reply, i) => (

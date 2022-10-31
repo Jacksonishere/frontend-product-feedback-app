@@ -33,7 +33,8 @@ const STATUSES = [
 ];
 
 const FeedbackForm = ({ feedback }) => {
-  const { updateOneFeedback } = useContext(FeedbackContext);
+  const { updateOneFeedback, updateFeedbackCount } =
+    useContext(FeedbackContext);
   const [
     createFeedback,
     { isLoading: createPending, isSuccess: createSuccess, data: newFeedback },

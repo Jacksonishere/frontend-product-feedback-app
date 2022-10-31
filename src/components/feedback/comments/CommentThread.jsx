@@ -53,8 +53,8 @@ const CommentThread = ({ feedback }) => {
   return (
     <>
       <CommentForm appendNewComment={appendNewComment} />
-      <section className="default-cont">
-        <h3 className={`${comments ? "mb-6" : ""}`}>{`${
+      <section className="default-cont pb-[1px_!important]">
+        <h3 className={`${comments ? "mb-8" : ""}`}>{`${
           comments?.length ? feedback.num_comments : 0
         } Comment(s)`}</h3>
         <div>
