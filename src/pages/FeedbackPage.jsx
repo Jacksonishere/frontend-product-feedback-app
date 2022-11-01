@@ -7,7 +7,6 @@ import Feedback from "../components/feedback/Feedback";
 import NavigateBack from "../components/utils/NavigateBack";
 import Spinner from "../components/utils/Spinner";
 import FeedbackNotFound from "../components/utils/FeedbackNotFound";
-import CommentForm from "../components/feedback/comments/CommentForm";
 
 import useAuth from "../hooks/useAuth";
 import CommentThread from "../components/feedback/comments/CommentThread";

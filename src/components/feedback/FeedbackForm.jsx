@@ -158,6 +158,7 @@ const FeedbackForm = ({ feedback }) => {
           redirect: "FEEDBACK-CREATED",
         },
       });
+      updateFeedbackCount("inc");
     }
   }, [createSuccess]);
 

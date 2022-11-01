@@ -1,11 +1,16 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
+import { useDispatch } from "react-redux";
 
-import Spinner from "../../utils/Spinner";
+import FeedbackContext from "../../../context/FeedbacksContext";
+import feedbackApi, {
+  useCreateCommentMutation,
+} from "../../../api/feedbackApiSlice";
 
-import { useCreateCommentMutation } from "../../../api/feedbackApiSlice";
 import useAuth from "../../../hooks/useAuth";
 import useFlash from "../../../hooks/useFlash";
+
+import Spinner from "../../utils/Spinner";
 
 const CommentForm = ({
   commentType,
@@ -14,9 +19,13 @@ const CommentForm = ({
   parent_id,
   replied_to,
 }) => {
+  const dispatch = useDispatch();
   const currentUser = useAuth();
   const { dispatchShowFlash } = useFlash();
-  const { id: feedback_id } = useParams();
+  const { id } = useParams();
+  const feedback_id = parseInt(id);
+
+  const { updateFeedbackCommentCount } = useContext(FeedbackContext);
   const [createComment, { isSuccess, isError, isLoading, data: newComment }] =
     useCreateCommentMutation();
   const [comment, setComment] = useState("");
@@ -36,6 +45,16 @@ const CommentForm = ({
         : {}),
     };
     createComment(commentBody);
+    updateFeedbackCommentCount({ id: feedback_id });
+    dispatch(
+      feedbackApi.util.updateQueryData(
+        "getFeedback",
+        parseInt(feedback_id),
+        (currFeedback) => {
+          currFeedback.num_comments += 1;
+        }
+      )
+    );
   };
 
   useEffect(() => {

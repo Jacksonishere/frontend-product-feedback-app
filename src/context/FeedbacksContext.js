@@ -74,29 +74,31 @@ export const FeedbackContextProvider = (props) => {
   };
 
   const updateFeedbackLikes = ({ id, userLiked, newLikeCount }) => {
-    const updatedFeedbacks = allFeedbacks.map((f) =>
-      f.id === id
-        ? {
-            ...f,
-            user_liked: userLiked,
-            num_likes: newLikeCount,
-          }
-        : f
-    );
-    setAllFeedbacks(updatedFeedbacks);
+    let update = allFeedbacks.findIndex((feedback) => feedback.id === id);
+    if (update !== -1) {
+      allFeedbacks[update] = {
+        ...allFeedbacks[update],
+        user_liked: userLiked,
+        num_likes: newLikeCount,
+      };
+      setAllFeedbacks(allFeedbacks);
+    }
+  };
+
+  const updateFeedbackCommentCount = ({ id, action }) => {
+    let update = allFeedbacks.findIndex((feedback) => feedback.id === id);
+    if (update !== -1) {
+      const curr_num_comments = allFeedbacks[update].num_comments;
+      allFeedbacks[update] = {
+        ...allFeedbacks[update],
+        num_comments: curr_num_comments + (action === "desc" ? -1 : 1),
+      };
+      setAllFeedbacks(allFeedbacks);
+    }
   };
 
   const updateFeedbackCount = (action) => {
-    switch (action) {
-      case "DESC":
-        setFeedbackCount((curr) => curr - 1);
-        return;
-      case "INC":
-        setFeedbackCount((curr) => curr + 1);
-        return;
-      default:
-        return;
-    }
+    setFeedbackCount((curr) => curr + (action === "desc" ? -1 : 1));
   };
 
   return (
@@ -112,6 +114,7 @@ export const FeedbackContextProvider = (props) => {
         updateOneFeedback,
         updateFeedbackLikes,
         updateFeedbackCount,
+        updateFeedbackCommentCount,
       }}
     >
       {props.children}
