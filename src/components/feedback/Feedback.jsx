@@ -125,7 +125,9 @@ const Feedback = ({
           </span>
         </p>
         <div className="feedback-tag w-max h-[30px] py-0 col-span-full md:h-[33px]">
-          {feedback.category}
+          {feedback.category.length === 2
+            ? feedback.category.toUpperCase()
+            : feedback.category}
         </div>
       </Link>
 

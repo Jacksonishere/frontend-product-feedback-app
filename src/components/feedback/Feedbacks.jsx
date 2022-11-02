@@ -56,7 +56,7 @@ const Feedbacks = () => {
           </div>
         </div>
       ) : (
-        <section className="space-y-5 h-100">
+        <section className="space-y-6 h-100">
           {allFeedbacks.map((feedback, i) =>
             i === allFeedbacks.length - 1 ? (
               <Feedback

@@ -29,23 +29,29 @@ export const FeedbackContextProvider = (props) => {
     return IDs;
   }, [allFeedbacks]);
 
-  const sortAllFeedbacks = useCallback((feedbacks) => {
-    const [sortBy, order] = Object.entries(params.sort)[0];
-    const sortedAll = feedbacks.sort((a, b) => {
-      switch (order) {
-        case "asc":
-          return a[`num_${sortBy}`] - b[`num_${sortBy}`];
-        default:
-          return b[`num_${sortBy}`] - a[`num_${sortBy}`];
-      }
-    });
-    setAllFeedbacks([...sortedAll]);
-  }, []);
+  const sortAllFeedbacks = useCallback(
+    (feedbacks) => {
+      const [sortBy, order] = Object.entries(params.sort)[0];
+      const sortedAll = feedbacks.sort((a, b) => {
+        switch (order) {
+          case "asc":
+            return a[`num_${sortBy}`] - b[`num_${sortBy}`];
+          case "desc":
+            return b[`num_${sortBy}`] - a[`num_${sortBy}`];
+          default:
+            return 0;
+        }
+      });
+      setAllFeedbacks([...sortedAll]);
+    },
+    [params.sort]
+  );
 
   const {
     data,
     isLoading,
     isFetching,
+    isSuccess,
     error,
     // } = useGetFeedbacksQuery({ ...params, feedbackIDs });
   } = useGetFeedbacksQuery(params);
@@ -106,6 +112,7 @@ export const FeedbackContextProvider = (props) => {
       value={{
         isLoading,
         isFetching,
+        isSuccess,
         allFeedbacks,
         feedbackCount,
         canFetchMore,

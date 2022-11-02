@@ -10,6 +10,7 @@ import { setSort } from "../../features/feedbacks/homeFeedConfigSlice";
 
 // import useFetchFeedbacks from "./useFetchFeedbacks";
 import FeedbackContext from "../../context/FeedbacksContext";
+import isEqual from "lodash.isequal";
 
 const SORT = [
   {
@@ -31,7 +32,7 @@ const SORT = [
     },
   },
   {
-    label: "Most Comments",
+    label: "Least Comments",
     value: {
       comments: "asc",
     },
@@ -47,6 +48,7 @@ const NewFeedbackNav = () => {
   const { setAllFeedbacks, feedbackCount } = useContext(FeedbackContext);
 
   const sortSelected = (option) => {
+    if (isEqual(option, sortBy)) return;
     setAllFeedbacks([]);
     setSortBy(option);
     dispatch(setSort(option.value));
