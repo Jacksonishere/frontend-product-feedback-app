@@ -3,7 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   category: "all",
   sort: {
-    likes: "desc",
+    label: "Most Upvotes",
+    value: {
+      likes: "desc",
+    },
   },
   offset: 1,
   limit: 15,

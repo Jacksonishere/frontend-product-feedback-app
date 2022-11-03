@@ -60,12 +60,13 @@ const Feedbacks = () => {
           {allFeedbacks.map((feedback, i) =>
             i === allFeedbacks.length - 1 ? (
               <Feedback
+                hover={true}
                 key={feedback.id}
                 feedback={feedback}
                 infiniteScroll={infiniteScrollTrigger}
               />
             ) : (
-              <Feedback key={feedback.id} feedback={feedback} />
+              <Feedback hover={true} key={feedback.id} feedback={feedback} />
             )
           )}
           {isFetching && (

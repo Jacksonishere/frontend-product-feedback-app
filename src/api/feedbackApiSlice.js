@@ -17,7 +17,7 @@ export const feedbackApi = createApi({
       query: ({ offset = 1, limit = 15, category, sort }) => ({
         url: "/feedbacks",
         method: "GET",
-        params: { offset, limit, category, sort: JSON.stringify(sort) },
+        params: { offset, limit, category, sort: JSON.stringify(sort.value) },
       }),
     }),
     getFeedback: builder.query({
@@ -38,6 +38,12 @@ export const feedbackApi = createApi({
         url: `/feedbacks/${feedback.id}`,
         method: "PATCH",
         body: feedback,
+      }),
+    }),
+    deleteFeedback: builder.mutation({
+      query: (feedback_id) => ({
+        url: `/feedbacks/${feedback_id}`,
+        method: "DELETE",
       }),
     }),
     updateLike: builder.mutation({
@@ -78,6 +84,7 @@ export const {
   useUpdateLikeMutation,
   useCreateFeedackMutation,
   useUpdateFeedbackMutation,
+  useDeleteFeedbackMutation,
   useCreateCommentMutation,
   useGetParentCommentsQuery,
   useGetRepliesQuery,

@@ -31,7 +31,7 @@ export const FeedbackContextProvider = (props) => {
 
   const sortAllFeedbacks = useCallback(
     (feedbacks) => {
-      const [sortBy, order] = Object.entries(params.sort)[0];
+      const [sortBy, order] = Object.entries(params.sort.value)[0];
       const sortedAll = feedbacks.sort((a, b) => {
         switch (order) {
           case "asc":
@@ -44,7 +44,7 @@ export const FeedbackContextProvider = (props) => {
       });
       setAllFeedbacks([...sortedAll]);
     },
-    [params.sort]
+    [params.sort.value]
   );
 
   const {
@@ -107,6 +107,16 @@ export const FeedbackContextProvider = (props) => {
     setFeedbackCount((curr) => curr + (action === "desc" ? -1 : 1));
   };
 
+  const eraseFeedback = (id) => {
+    setAllFeedbacks((currFeedbacks) => {
+      const afterRemoved = currFeedbacks.filter(
+        (feedback) => feedback.id !== id
+      );
+      return afterRemoved;
+    });
+    setFeedbackCount((curr) => curr - 1);
+  };
+
   return (
     <FeedbackContext.Provider
       value={{
@@ -122,6 +132,7 @@ export const FeedbackContextProvider = (props) => {
         updateFeedbackLikes,
         updateFeedbackCount,
         updateFeedbackCommentCount,
+        eraseFeedback,
       }}
     >
       {props.children}

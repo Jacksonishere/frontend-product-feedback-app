@@ -83,6 +83,9 @@ const Flash = () => {
         case "FEEDBACK-UPDATED":
           msg = "Your feedback has been updated!";
           break;
+        case "FEEDBACK-DELETED":
+          msg = "Your feedback has been deleted!";
+          break;
         default:
           break;
       }

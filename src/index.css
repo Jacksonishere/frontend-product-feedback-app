@@ -25,11 +25,11 @@
   }
   h2 {
     letter-spacing: -0.25px;
-    @apply text-[18px] md:text-[22px];
+    @apply text-[19px] md:text-[22px];
   }
   h3 {
     letter-spacing: -0.25px;
-    @apply text-[18px];
+    @apply text-[19px];
   }
   h4 {
     letter-spacing: -0.2px;

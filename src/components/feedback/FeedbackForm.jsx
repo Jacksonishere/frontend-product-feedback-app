@@ -1,7 +1,9 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import feedbackApi from "../../api/feedbackApiSlice";
+import feedbackApi, {
+  useDeleteFeedbackMutation,
+} from "../../api/feedbackApiSlice";
 
 import {
   useCreateFeedackMutation,
@@ -33,12 +35,29 @@ const STATUSES = [
 ];
 
 const FeedbackForm = ({ feedback }) => {
-  const { updateOneFeedback, updateFeedbackCount } =
+  const { updateOneFeedback, updateFeedbackCount, eraseFeedback } =
     useContext(FeedbackContext);
+
+  const { dispatchShowFlash } = useFlash();
+
   const [
     createFeedback,
-    { isLoading: createPending, isSuccess: createSuccess, data: newFeedback },
+    {
+      isLoading: createPending,
+      isSuccess: createSuccess,
+      data: newFeedback,
+      isError: createError,
+    },
   ] = useCreateFeedackMutation();
+
+  const [
+    deleteFeedback,
+    {
+      isLoading: deletePending,
+      isSuccess: deleteSuccess,
+      isError: deleteError,
+    },
+  ] = useDeleteFeedbackMutation();
 
   const [
     updateFeedback,
@@ -46,6 +65,7 @@ const FeedbackForm = ({ feedback }) => {
       isLoading: updatePending,
       isSuccess: updateSuccess,
       data: updatedFeedback,
+      isError: updateError,
     },
   ] = useUpdateFeedbackMutation();
 
@@ -183,6 +203,29 @@ const FeedbackForm = ({ feedback }) => {
     }
   }, [updateSuccess]);
 
+  useEffect(() => {
+    if (deleteSuccess) {
+      navigate(`/`, {
+        state: {
+          redirect: "FEEDBACK-DELETED",
+        },
+      });
+      eraseFeedback(feedback.id);
+    }
+  }, [deleteSuccess]);
+
+  useEffect(() => {
+    if (createError || deleteError || updateError) {
+      dispatchShowFlash(
+        {
+          type: "ERROR",
+          msg: "There was an error proccessing your request",
+        },
+        true
+      );
+    }
+  }, [createError, deleteError, updateError]);
+
   return (
     <div className="default-cont relative mb-[56px] p-7 text-blue-900 text-[14px] md:p-9 md:text-[15px] md:mt-[56px]">
       <div
@@ -295,10 +338,12 @@ const FeedbackForm = ({ feedback }) => {
         <div className="flex justify-end">
           {feedback && (
             <button
+              type="button"
+              onClick={() => deleteFeedback(feedback.id)}
               disabled={updatePending || createPending}
               className="btn bg-red-700"
             >
-              Delete
+              {deletePending ? <Spinner /> : <span>Delete</span>}
             </button>
           )}
           <Link

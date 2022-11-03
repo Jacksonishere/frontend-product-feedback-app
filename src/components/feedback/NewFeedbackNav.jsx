@@ -1,12 +1,15 @@
 import React, { useState, useCallback, useContext } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 
 import Suggestion from "../../icons/Suggestion";
 import ArrowDown from "../../icons/ArrowDown";
 import DropdownSelect from "../utils/DropdownSelect";
-import { setSort } from "../../features/feedbacks/homeFeedConfigSlice";
+import {
+  setSort,
+  selectedSortSelector,
+} from "../../features/feedbacks/homeFeedConfigSlice";
 
 // import useFetchFeedbacks from "./useFetchFeedbacks";
 import FeedbackContext from "../../context/FeedbacksContext";
@@ -41,7 +44,9 @@ const SORT = [
 
 const NewFeedbackNav = () => {
   const dispatch = useDispatch();
-  const [sortBy, setSortBy] = useState(SORT[0]);
+  const sortBy = useSelector(selectedSortSelector);
+
+  // const [sortBy, setSortBy] = useState(selectedSortBy);
   const [showSortOptions, setShowOptions] = useState(false);
 
   // const { allFeedbacks } = useFetchFeedbacks();
@@ -50,8 +55,8 @@ const NewFeedbackNav = () => {
   const sortSelected = (option) => {
     if (isEqual(option, sortBy)) return;
     setAllFeedbacks([]);
-    setSortBy(option);
-    dispatch(setSort(option.value));
+    // setSortBy(option);
+    dispatch(setSort(option));
   };
 
   return (

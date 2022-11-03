@@ -9,7 +9,7 @@ const EditFeedbackPage = () => {
   return !feedback ? (
     <></>
   ) : currentUser?.id === feedback.user.id ? (
-    <div className="absolute z-1000 top-0 left-0 right-0 bg-blue-25">
+    <div className="absolute z-1000 top-0 left-0 right-0 !mt-0 bg-blue-25">
       <div className="sm-container ">
         <NavigateBack />
         <FeedbackForm feedback={feedback} />

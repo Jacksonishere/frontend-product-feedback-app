@@ -1,5 +1,5 @@
 import React, { useCallback, useContext, useRef, useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
 
 import { useUpdateLikeMutation } from "../../api/feedbackApiSlice";
@@ -17,11 +17,13 @@ const Feedback = ({
   infiniteScroll,
   patchResult,
   likeOptimisticUpdate,
+  hover,
 }) => {
   const user = useAuth();
   const feedbackAnchor = useRef();
   const likeDone = useRef(false);
   const oldFeedbacks = useRef();
+  const params = useParams();
 
   const { dispatchShowFlash } = useFlash();
   const [updateLike, { isSuccess, isLoading, isError }] =
@@ -91,7 +93,8 @@ const Feedback = ({
     <section
       id={feedback.id}
       ref={infiniteScroll}
-      className="default-cont relative grid grid-rows-[repeat(2,_auto)] grid-cols-[1fr_1fr] gap-y-4 text-blue-900 rounded-md text-[13px] hover:opacity-100 md:grid-rows-[auto] md:grid-cols-[max-content_auto_max-content] md:gap-[2rem]"
+      className={`default-cont relative grid grid-rows-[repeat(2,_auto)] grid-cols-[1fr_1fr] gap-y-4 text-blue-900 rounded-md text-[13px] md:grid-rows-[auto] md:grid-cols-[max-content_auto_max-content] md:gap-[2rem]
+      `}
     >
       <div
         className="absolute -top-6 h-1"
@@ -100,7 +103,9 @@ const Feedback = ({
       ></div>
       <Link
         to={`/feedbacks/${feedback.id}`}
-        className="col-span-full space-y-4 md:row-span-full md:col-[2_/_3]"
+        className={`col-span-full space-y-4 md:row-span-full md:col-[2_/_3] ${
+          !hover ? "pointer-events-none" : ""
+        }`}
       >
         <div className="flex gap-2 items-center">
           <figure className="w-10 h-10">
