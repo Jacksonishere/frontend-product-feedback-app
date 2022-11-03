@@ -19,6 +19,7 @@ const SignUpForm = () => {
   const [avatarUrl] = useOutletContext();
   const { dispatchHideFlash } = useFlash();
 
+  const [fullNameErrorMsg, setFullNameErrorMsg] = useState();
   const [usernameErrorMsg, setUsernameErrorMsg] = useState();
   const [emailErrorMsg, setEmailErrorMsg] = useState();
   const [passwordErrorMsg, setPasswordErrorMsg] = useState();
@@ -83,6 +84,24 @@ const SignUpForm = () => {
             e.target.value === ""
               ? setUsernameErrorMsg("Username cannot be blank")
               : setUsernameErrorMsg(null)
+          }
+          name="username"
+          type="text"
+          placeholder="johndoe123"
+        />
+        <InputErrorMsg msg={usernameErrorMsg} />
+      </div>
+
+      <div className="form-group">
+        <label className="input-label" htmlFor="full_name">
+          Full Name
+        </label>
+        <input
+          className={`input-text ${fullNameErrorMsg ? "error-input" : ""}`}
+          onChange={(e) =>
+            e.target.value === ""
+              ? setFullNameErrorMsg("Username cannot be blank")
+              : setFullNameErrorMsg(null)
           }
           name="username"
           type="text"

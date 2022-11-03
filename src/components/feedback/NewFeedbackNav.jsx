@@ -46,16 +46,13 @@ const NewFeedbackNav = () => {
   const dispatch = useDispatch();
   const sortBy = useSelector(selectedSortSelector);
 
-  // const [sortBy, setSortBy] = useState(selectedSortBy);
   const [showSortOptions, setShowOptions] = useState(false);
 
-  // const { allFeedbacks } = useFetchFeedbacks();
   const { setAllFeedbacks, feedbackCount } = useContext(FeedbackContext);
 
   const sortSelected = (option) => {
     if (isEqual(option, sortBy)) return;
     setAllFeedbacks([]);
-    // setSortBy(option);
     dispatch(setSort(option));
   };
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from "react";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 
 import FeedbackContext from "../../../context/FeedbacksContext";
@@ -23,6 +23,7 @@ const CommentForm = ({
   const currentUser = useAuth();
   const { dispatchShowFlash } = useFlash();
   const { id } = useParams();
+  const currLocation = useLocation();
   const feedback_id = parseInt(id);
 
   const { updateFeedbackCommentCount } = useContext(FeedbackContext);
@@ -82,7 +83,7 @@ const CommentForm = ({
   return (
     <section
       className={`bg-white rounded-lg text-blue-900 ${
-        isReply ? "pt-4 pb-1" : "py-[26px] px-8 pb-5"
+        isReply ? "pt-4 pb-1" : "py-[26px] px-8 pb-6"
       }`}
     >
       {!isReply && <h3>Add Comment</h3>}
@@ -95,7 +96,7 @@ const CommentForm = ({
           value={comment}
           rows="3"
         ></textarea>
-        <div className="flex flex-col justify-start mt-1 md:flex-row md:items-center md:mt-3">
+        <div className="flex flex-col justify-start mt-1 md:flex-row md:items-center md:mt-5">
           <p
             className={`${
               currentUser ? "text-[13px] text-blue-400 md:text-[15px]" : ""
@@ -106,7 +107,11 @@ const CommentForm = ({
               : "You need to login to comment!"}
           </p>
           {!currentUser ? (
-            <Link className="btn form-btn" to="/auth/signin">
+            <Link
+              state={{ from: currLocation }}
+              className="btn form-submit !mt-0 ml-auto"
+              to="/auth/login"
+            >
               Log In
             </Link>
           ) : (
@@ -124,17 +129,17 @@ const CommentForm = ({
                   "Post Comment"
                 )}
               </button>
-              {isReply && (
-                <button
-                  type="button"
-                  className="btn ml-4 bg-blue-900"
-                  onClick={closeForm}
-                  disabled={isLoading}
-                >
-                  Cancel
-                </button>
-              )}
             </div>
+          )}
+          {isReply && (
+            <button
+              type="button"
+              className="btn ml-2 bg-blue-900"
+              onClick={closeForm}
+              disabled={isLoading}
+            >
+              Cancel
+            </button>
           )}
         </div>
       </form>
