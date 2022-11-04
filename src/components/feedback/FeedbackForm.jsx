@@ -30,7 +30,7 @@ const CATEGORIES = [
 const STATUSES = [
   { label: "Suggestion", value: "suggestion" },
   { label: "Planned", value: "planned" },
-  { label: "In-Progess", value: "in-progess" },
+  { label: "In-Progess", value: "in_progress" },
   { label: "Live", value: "live" },
 ];
 

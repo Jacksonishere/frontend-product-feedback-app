@@ -17,7 +17,7 @@ const Comment = ({
     parent_id,
     id: comment_id,
   } = comment;
-  const { username, avatar_url: pfp } = comment.user;
+  const { username, avatar_url: pfp, full_name } = comment.user;
 
   const [showReplyForm, setShowReplyForm] = useState(false);
   const [replies, setReplies] = useState(firstReplies);
@@ -80,7 +80,7 @@ const Comment = ({
     <section
       ref={infiniteScroll}
       id={`comment-id-${comment.id}`}
-      className={`relative bg-white rounded-[10px] my-6
+      className={`relative bg-white rounded-[10px] my-[28px]
         ${!parent ? "thread-line pl-6" : ""}
         ${
           !lastComment
@@ -99,7 +99,7 @@ const Comment = ({
           alt={username + "_profile_img"}
         />
         <p className="col-[2/3] row-[1/2] text-[13px] translate-y-[3px] md:text[14px]">
-          <b className="block text-blue-900">FULL NAME</b>
+          <b className="block text-blue-900">{full_name ?? "No Name :)"}</b>
           <span className="text-blue-400">@{username}</span>
         </p>
         <button

@@ -80,7 +80,7 @@
   }
 
   .input-label {
-    @apply block py-4 font-bold text-blue-800;
+    @apply block pt-[19px] pb-4 font-bold text-blue-800;
   }
 
   .input-text {

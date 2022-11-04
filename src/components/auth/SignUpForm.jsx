@@ -100,10 +100,10 @@ const SignUpForm = () => {
           className={`input-text ${fullNameErrorMsg ? "error-input" : ""}`}
           onChange={(e) =>
             e.target.value === ""
-              ? setFullNameErrorMsg("Username cannot be blank")
+              ? setFullNameErrorMsg("Please enter your full name")
               : setFullNameErrorMsg(null)
           }
-          name="username"
+          name="full_name"
           type="text"
           placeholder="johndoe123"
         />
