@@ -74,6 +74,12 @@ export const feedbackApi = createApi({
         params: { offset, limit, parent_id },
       }),
     }),
+    getRoadmapCount: builder.query({
+      query: () => ({
+        url: "/roadmap",
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -88,4 +94,5 @@ export const {
   useCreateCommentMutation,
   useGetParentCommentsQuery,
   useGetRepliesQuery,
+  useGetRoadmapCountQuery,
 } = feedbackApi;

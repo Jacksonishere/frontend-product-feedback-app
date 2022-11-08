@@ -79,6 +79,12 @@ export const FeedbackContextProvider = (props) => {
     }
   };
 
+  const updateFeedbacks = (feedbacks) => {
+    feedbacks.each((feedback) => {
+      updateOneFeedback(feedback);
+    });
+  };
+
   const updateFeedbackLikes = ({ id, userLiked, newLikeCount }) => {
     let update = allFeedbacks.findIndex((feedback) => feedback.id === id);
     if (update !== -1) {
@@ -129,6 +135,7 @@ export const FeedbackContextProvider = (props) => {
         setAllFeedbacks,
         sortAllFeedbacks,
         updateOneFeedback,
+        updateFeedbacks,
         updateFeedbackLikes,
         updateFeedbackCount,
         updateFeedbackCommentCount,

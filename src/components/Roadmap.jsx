@@ -1,25 +1,42 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-const Roadmap = () => {
-  const roadmap = [
-    {
-      name: "Planned",
-      count: 2,
-      color: "bg-peach-orange",
-    },
-    {
-      name: "In-Progress",
-      count: 3,
-      color: "bg-purple-700",
-    },
-    {
-      name: "Live",
-      count: 1,
-      color: "bg-sky-blue",
-    },
-  ];
+import { useGetRoadmapCountQuery } from "../api/feedbackApiSlice";
 
+// const roadmap = {
+//   planned: {
+//     label: "Planned",
+//     color: "bg-peach-orange",
+//   },
+//   in_progress: {
+//     label: "In-Progress",
+//     color: "bg-purple-700",
+//   },
+//   live: {
+//     label: "Live",
+//     color: "bg-sky-blue",
+//   },
+// };
+const roadmap = [
+  {
+    value: "planned",
+    name: "Planned",
+    color: "bg-peach-orange",
+  },
+  {
+    value: "in_progress",
+    name: "In-Progress",
+    color: "bg-purple-700",
+  },
+  {
+    value: "live",
+    name: "Live",
+    color: "bg-sky-blue",
+  },
+];
+
+const Roadmap = () => {
+  const { data: roadmapCount } = useGetRoadmapCountQuery();
   return (
     <div className="p-6 rounded-lg bg-white md:basis-1/2 lg:basis-full">
       <div className="flex items-center">
@@ -40,7 +57,9 @@ const Roadmap = () => {
               className={`inline-block w-2 h-2 rounded-full ${card.color}`}
             ></span>
             <span className="ml-4 font-regular">{card.name}</span>
-            <span className="ml-auto font-semibold">{card.count}</span>
+            <span className="ml-auto font-semibold">
+              {roadmapCount?.[card.value]}
+            </span>
           </li>
         ))}
       </ul>
