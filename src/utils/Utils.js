@@ -28,3 +28,24 @@ export const abbreviateNumber = (value) => {
   }
   return newValue;
 };
+
+export const ROADMAP = [
+  {
+    value: "planned",
+    name: "Planned",
+    detail: "Ideas prioritized for research",
+    color: "bg-peach-orange",
+  },
+  {
+    value: "in_progress",
+    name: "In-Progress",
+    detail: "Currently being developed",
+    color: "bg-purple-700",
+  },
+  {
+    value: "live",
+    name: "Live",
+    detail: "Released features",
+    color: "bg-sky-blue",
+  },
+];

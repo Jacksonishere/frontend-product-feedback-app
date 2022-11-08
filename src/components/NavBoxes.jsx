@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import LoginPanel from "../components/user/LoginPanel";
 import FeedbackTags from "../components/feedback/FeedbackTags";
-import Roadmap from "../components/Roadmap";
+import Roadmap from "../components/roadmap/Roadmap";
 
 const NavBoxes = () => {
   const [hamOpen, setHamOpen] = useState(false);

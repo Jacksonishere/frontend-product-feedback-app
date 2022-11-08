@@ -5,6 +5,8 @@ import NavigateBack from "../components/utils/NavigateBack";
 
 import useAvatar from "../hooks/useAvatar";
 
+import ArrowLeft from "../icons/ArrowLeft";
+
 const Auth = () => {
   const { pathname } = useLocation();
   // const user = useAuth();
@@ -22,7 +24,12 @@ const Auth = () => {
 
   return (
     <div className="mx-auto px-6 pb-8 max-w-[550px]">
-      <NavigateBack />
+      <NavigateBack>
+        <ArrowLeft color="#4661E6" />
+        <span className="ml-4 text-[13px] font-semibold md:text-[14px]">
+          Go Back
+        </span>
+      </NavigateBack>
       <div className="px-6 pt-6 pb-8 bg-white rounded-xl md:px-9 md:p">
         <figure className="mx-auto my-6 h-[80px] max-w-[80px] rounded-full overflow-hidden">
           <img key={loginPath} src={avatarUrl} alt="avatar" />

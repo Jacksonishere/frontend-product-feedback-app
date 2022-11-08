@@ -8,6 +8,8 @@ import NavigateBack from "../components/utils/NavigateBack";
 import Spinner from "../components/utils/Spinner";
 import FeedbackNotFound from "../components/utils/FeedbackNotFound";
 
+import ArrowLeft from "../icons/ArrowLeft";
+
 import useAuth from "../hooks/useAuth";
 import CommentThread from "../components/feedback/comments/CommentThread";
 
@@ -43,7 +45,12 @@ const FeedbackPage = () => {
   return (
     <div className="relative container mb-[120px] px-6 max-w-2xl md:mx-auto lg:max-w-3xl">
       <nav className="flex justify-between items-center">
-        <NavigateBack to="/" />
+        <NavigateBack to="/">
+          <ArrowLeft color="#4661E6" />
+          <span className="ml-4 text-blue-400 text-[13px] font-semibold md:text-[14px]">
+            Go Back
+          </span>
+        </NavigateBack>
         {isSuccess && feedback?.user.id === currentUser?.id && (
           <Link className="btn bg-blue-700" to={`/feedbacks/${id}/edit`}>
             Edit Feedback

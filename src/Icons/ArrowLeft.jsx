@@ -1,9 +1,9 @@
 import React from "react";
 
-const ArrowLeft = () => {
+const ArrowLeft = ({ color = "inherit" }) => {
   return (
     <svg
-      color="#4661E6"
+      color={color}
       width="1em"
       height="1em"
       viewBox="0 0 5 10"

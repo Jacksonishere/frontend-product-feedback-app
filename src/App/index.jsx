@@ -19,8 +19,8 @@ import SignUpForm from "../components/auth/SignUpForm";
 import ProtectedRoutes from "../components/utils/ProtectedRoutes";
 import useLoginCheck from "../hooks/useLoginCheck";
 import ScrollToTop from "../components/utils/ScrollToTop";
-import PublicRoutes from "../components/utils/PublicRoutes";
 import { FeedbackContextProvider } from "../context/FeedbacksContext";
+import RoadmapPage from "../pages/RoadmapPage";
 
 const App = () => {
   useLoginCheck();
@@ -45,6 +45,7 @@ const App = () => {
             <Route path="signup" element={<SignUpForm />} />
           </Route>
 
+          <Route path="roadmap" element={<RoadmapPage />} />
           <Route path="*" element={<NotFound404 />} />
         </Routes>
       </FeedbackContextProvider>

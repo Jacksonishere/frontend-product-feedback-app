@@ -1,39 +1,8 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-import { useGetRoadmapCountQuery } from "../api/feedbackApiSlice";
-
-// const roadmap = {
-//   planned: {
-//     label: "Planned",
-//     color: "bg-peach-orange",
-//   },
-//   in_progress: {
-//     label: "In-Progress",
-//     color: "bg-purple-700",
-//   },
-//   live: {
-//     label: "Live",
-//     color: "bg-sky-blue",
-//   },
-// };
-const roadmap = [
-  {
-    value: "planned",
-    name: "Planned",
-    color: "bg-peach-orange",
-  },
-  {
-    value: "in_progress",
-    name: "In-Progress",
-    color: "bg-purple-700",
-  },
-  {
-    value: "live",
-    name: "Live",
-    color: "bg-sky-blue",
-  },
-];
+import { useGetRoadmapCountQuery } from "../../api/feedbackApiSlice";
+import { ROADMAP } from "../../utils/Utils";
 
 const Roadmap = () => {
   const { data: roadmapCount } = useGetRoadmapCountQuery();
@@ -50,7 +19,7 @@ const Roadmap = () => {
       </div>
 
       <ul className="space-y-1 mt-6 text-[1rem]">
-        {roadmap.map((card, index) => (
+        {ROADMAP.map((card, index) => (
           <li key={index} className="flex text-blue-400 items-center">
             <span
               aria-hidden
