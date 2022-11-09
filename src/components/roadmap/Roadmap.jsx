@@ -1,11 +1,11 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
-import { useGetRoadmapCountQuery } from "../../api/feedbackApiSlice";
+import { useGetStatusCountQuery } from "../../api/feedbackApiSlice";
 import { ROADMAP } from "../../utils/Utils";
 
 const Roadmap = () => {
-  const { data: roadmapCount } = useGetRoadmapCountQuery();
+  const { data: roadmapCount } = useGetStatusCountQuery();
   return (
     <div className="p-6 rounded-lg bg-white md:basis-1/2 lg:basis-full">
       <div className="flex items-center">

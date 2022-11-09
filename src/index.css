@@ -118,7 +118,7 @@
   }
 
   .btn {
-    @apply grid place-items-center px-6 h-[40px] text-white font-bold text-[12px] rounded-[10px] md:h-[44px] md:text-[13px];
+    @apply grid place-items-center px-6 h-[40px] text-white font-bold text-[13px] rounded-[10px] md:h-[44px] md:text-[14px];
   }
 
   .feedback-tag {

@@ -26,7 +26,7 @@ const Auth = () => {
     <div className="mx-auto px-6 pb-8 max-w-[550px]">
       <NavigateBack>
         <ArrowLeft color="#4661E6" />
-        <span className="ml-4 text-[13px] font-semibold md:text-[14px]">
+        <span className="ml-4 text-[14px] font-bold md:text-[15px]">
           Go Back
         </span>
       </NavigateBack>

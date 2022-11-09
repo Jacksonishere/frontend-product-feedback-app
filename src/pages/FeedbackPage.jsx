@@ -47,7 +47,7 @@ const FeedbackPage = () => {
       <nav className="flex justify-between items-center">
         <NavigateBack to="/">
           <ArrowLeft color="#4661E6" />
-          <span className="ml-4 text-blue-400 text-[13px] font-semibold md:text-[14px]">
+          <span className="ml-4 text-blue-400 text-[14px] font-bold md:text-[15px]">
             Go Back
           </span>
         </NavigateBack>
