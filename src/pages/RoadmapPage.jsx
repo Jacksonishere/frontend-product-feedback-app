@@ -2,11 +2,12 @@ import React, { useState, useEffect, useMemo, createContext } from "react";
 import { Link } from "react-router-dom";
 // import { DndContext } from "@dnd-kit/core";
 import { useGetFeedbacksByStatusesQuery } from "../api/feedbackApiSlice";
+import RoadmapSection from "../components/roadmap/RoadmapSection";
 
 import NavigateBack from "../components/utils/NavigateBack";
 import ArrowLeft from "../icons/ArrowLeft";
 
-const RoadmapContext = createContext();
+export const RoadmapContext = createContext();
 
 const RoadmapContextProvider = (props) => {
   const { data, isLoading } = useGetFeedbacksByStatusesQuery();
@@ -43,6 +44,9 @@ const RoadmapContextProvider = (props) => {
         live,
         numLive,
         isLoading,
+        setPlanned,
+        setInProgress,
+        setLive,
       }}
     >
       {props.children}
@@ -74,7 +78,7 @@ const RoadmapPage = () => {
     <div className="md:mx-auto md:py-[56px] md:max-w-[1000px]">
       <RoadmapNav />
       <RoadmapContextProvider>
-        {/* <RoadmapSection /> */}
+        <RoadmapSection />
       </RoadmapContextProvider>
     </div>
   );

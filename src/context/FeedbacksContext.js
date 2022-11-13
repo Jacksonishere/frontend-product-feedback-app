@@ -30,7 +30,7 @@ export const FeedbackContextProvider = (props) => {
   }, [allFeedbacks]);
 
   const sortAllFeedbacks = useCallback(
-    (feedbacks) => {
+    (feedbacks = allFeedbacks) => {
       const [sortBy, order] = Object.entries(params.sort.value)[0];
       const sortedAll = feedbacks.sort((a, b) => {
         switch (order) {
@@ -44,7 +44,7 @@ export const FeedbackContextProvider = (props) => {
       });
       setAllFeedbacks([...sortedAll]);
     },
-    [params.sort.value]
+    [params.sort.value, allFeedbacks]
   );
 
   const {

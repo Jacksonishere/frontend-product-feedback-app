@@ -18,12 +18,13 @@ const Feedback = ({
   patchResult,
   likeOptimisticUpdate,
   hover,
+  TYPE,
+  COLOR,
 }) => {
   const user = useAuth();
   const feedbackAnchor = useRef();
   const likeDone = useRef(false);
   const oldFeedbacks = useRef();
-  const params = useParams();
 
   const { dispatchShowFlash } = useFlash();
   const [updateLike, { isSuccess, isLoading, isError }] =
@@ -42,7 +43,7 @@ const Feedback = ({
 
       likeOptimisticUpdate?.(newLikeCount);
 
-      oldFeedbacks.current = allFeedbacks;
+      oldFeedbacks.current = [...allFeedbacks];
       updateFeedbackLikes({
         id: feedback.id,
         userLiked: !user_liked,
@@ -63,6 +64,7 @@ const Feedback = ({
       setAllFeedbacks(oldFeedbacks.current);
       oldFeedbacks.current = null;
 
+      // Undo feedback page rtk query optimistic update.
       patchResult?.undo?.();
     }
   }, [isError]);
@@ -93,7 +95,13 @@ const Feedback = ({
     <section
       id={feedback.id}
       ref={infiniteScroll}
-      className={`default-cont relative grid grid-rows-[repeat(2,_auto)] grid-cols-[1fr_1fr] gap-y-4 text-blue-900 rounded-md text-[13px] md:grid-rows-[auto] md:grid-cols-[max-content_auto_max-content] md:gap-[2rem]
+      className={`default-cont relative grid grid-rows-[repeat(2,_auto)] grid-cols-[1fr_1fr] gap-y-4 text-blue-900 rounded-md text-[13px]
+      ${
+        TYPE === "ROADMAP"
+          ? "!border-t-[6px] !p-6 rounded-[10px]"
+          : "md:grid-rows-[auto] md:grid-cols-[max-content_auto_max-content] md:gap-[2rem]"
+      }
+      ${COLOR ?? ""}
       `}
     >
       <div
@@ -103,26 +111,31 @@ const Feedback = ({
       ></div>
       <Link
         to={`/feedbacks/${feedback.id}`}
-        className={`col-span-full space-y-4 md:row-span-full md:col-[2_/_3] ${
+        className={`col-span-full space-y-4 
+        ${TYPE === "ROADMAP" ? "" : "md:row-span-full md:col-[2_/_3]"}  ${
           !hover ? "pointer-events-none" : ""
         }`}
       >
-        <div className="flex gap-2 items-center">
-          <figure className="w-10 h-10">
-            <img
-              className="w-full h-full rounded-full"
-              src={feedback.user.avatar_url}
-              alt=""
-            />
-          </figure>
-          <p className="translate-y-[3px] grow">
-            <b className="block font-bold">
-              <span className="mr-[1.5px]">@</span>
-              {feedback.user.username}
-            </b>
-            <span className="text-blue-400">{feedback.updated_at}</span>
-          </p>
-        </div>
+        {TYPE === "ROADMAP" ? (
+          <></>
+        ) : (
+          <div className="flex gap-2 items-center">
+            <figure className="w-10 h-10">
+              <img
+                className="w-full h-full rounded-full"
+                src={feedback.user.avatar_url}
+                alt=""
+              />
+            </figure>
+            <p className="translate-y-[3px] grow">
+              <b className="block font-bold">
+                <span className="mr-[1.5px]">@</span>
+                {feedback.user.username}
+              </b>
+              <span className="text-blue-400">{feedback.updated_at}</span>
+            </p>
+          </div>
+        )}
         <p>
           <b className="block text-[15px] md:text-[16px]">{feedback.title}</b>
           <span className="body-text inline-block mt-1 text-blue-400">
@@ -140,14 +153,21 @@ const Feedback = ({
         likeableHandler={feedbackLikeHandler}
         likeableThing={feedback}
         user={user}
+        ROADMAP={TYPE === "ROADMAP"}
       />
 
       <Link
-        className="flex items-center justify-self-end md:row-span-full md:col-[3_/_-1] md:self-center"
+        className={`flex items-center justify-self-end ${
+          TYPE === "ROADMAP"
+            ? ""
+            : "md:row-span-full md:col-[3_/_-1] md:self-center"
+        } `}
         to={`/feedbacks/${feedback.id}`}
       >
         <Comment />
-        <b className="ml-[6px] font-bold">{feedback.num_comments}</b>
+        <b className="ml-[6px] text-blue-900 font-bold">
+          {feedback.num_comments}
+        </b>
       </Link>
     </section>
   );

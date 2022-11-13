@@ -9,7 +9,9 @@ const NavigateBack = ({ children, to, margin = true }) => {
   return (
     <button
       onClick={() => navigate(to ?? -1)}
-      className={`flex items-center w-max ${margin ? "my-[40px]" : ""}`}
+      className={`flex items-center w-max ${
+        margin ? "my-[32px] md:my-[40px]" : ""
+      }`}
     >
       {children}
     </button>

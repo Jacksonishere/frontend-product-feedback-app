@@ -50,11 +50,11 @@
 
   button,
   a {
-    @apply cursor-pointer hover:opacity-80;
+    @apply border-none outline-none focus:ring-0 focus-visible:ring-0 cursor-pointer hover:opacity-80 transition-opacity ease-in-out;
   }
 
   *:disabled {
-    @apply opacity-80 cursor-not-allowed;
+    @apply opacity-50 hover:!opacity-50;
   }
 }
 
@@ -118,7 +118,7 @@
   }
 
   .btn {
-    @apply grid place-items-center px-6 h-[40px] text-white font-bold text-[13px] rounded-[10px] md:h-[44px] md:text-[14px];
+    @apply grid place-items-center px-6 h-[40px] text-white font-bold text-[13px] rounded-[10px] md:h-[44px] md:text-[13.5px];
   }
 
   .feedback-tag {
@@ -134,7 +134,7 @@
   }
 
   .body-text {
-    @apply text-[14px] md:text-[14.5px] text-blue-400;
+    @apply text-[14px] md:text-[15px] text-blue-400;
   }
 
   .separator {

@@ -129,7 +129,7 @@ const LoginPanel = ({ hamOpen, setHamOpen }) => {
 
       <div
         onClick={toggleHam}
-        className="flex flex-col space-y-1 ml-5 md:hidden"
+        className="flex flex-col space-y-1 ml-5 cursor-pointer md:hidden"
       >
         <span
           className={`origin-left ham-bar ${hamOpen ? "rotate-45" : ""} `}

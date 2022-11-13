@@ -5,7 +5,7 @@ import useFlash from "../../hooks/useFlash";
 
 import { abbreviateNumber } from "../../utils/Utils";
 
-const LikeBtn = ({ likeableHandler, likeableThing, user }) => {
+const LikeBtn = ({ likeableHandler, likeableThing, user, ROADMAP }) => {
   const { dispatchShowFlash } = useFlash();
 
   const likeBtnHandler = () => {
@@ -27,13 +27,17 @@ const LikeBtn = ({ likeableHandler, likeableThing, user }) => {
   return (
     <button
       onClick={likeBtnHandler}
-      className={`feedback-tag flex justify-center items-center h-[32px] min-w-[46px] px-3 text-black ${
+      className={`feedback-tag flex justify-center items-center h-[32px] min-w-[46px] px-3 text-blue-900 ${
         userLiked ? "bg-blue-500" : ""
-      }  md:row-span-full md:col-[1_/_2] md:flex-col md:center md:self-start md:pb-1 md:h-[48px]`}
+      }  ${
+        ROADMAP
+          ? ""
+          : "md:row-span-full md:col-[1_/_2] md:flex-col md:center md:self-start md:pb-1 md:h-[48px]"
+      }`}
     >
       <ArrowUp color={userLiked ? "white" : "#4661E6"} />
       <b
-        className={`ml-2 md:mt-[6px] md:ml-0 ${
+        className={`ml-2  ${ROADMAP ? "" : "md:mt-[6px] md:ml-0"} ${
           userLiked ? "text-blue-25" : ""
         }`}
       >

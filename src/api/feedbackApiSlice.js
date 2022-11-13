@@ -81,6 +81,7 @@ export const feedbackApi = createApi({
       }),
     }),
     getFeedbacksByStatuses: builder.query({
+      // keepUnusedDataFor: 30,
       query: () => ({
         url: "/feedbacks_by_statuses",
         method: "GET",

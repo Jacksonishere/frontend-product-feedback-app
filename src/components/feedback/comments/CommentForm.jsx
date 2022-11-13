@@ -96,7 +96,7 @@ const CommentForm = ({
           value={comment}
           rows="3"
         ></textarea>
-        <div className="flex flex-col justify-start mt-1 md:flex-row md:items-center md:mt-5">
+        <div className="flex flex-row items-center mt-2 md:mt-5">
           <p
             className={`${
               currentUser ? "text-[13px] text-blue-400 md:text-[15px]" : ""
@@ -115,11 +115,16 @@ const CommentForm = ({
               Log In
             </Link>
           ) : (
-            <div className="flex justify-start items-center mt-1 md:ml-auto">
+            <div className="flex justify-start items-center ml-auto">
               <button
                 type="submit"
-                className="btn form-submit mt-1 md:mt-0"
-                disabled={!currentUser || comment.length > 250 || isLoading}
+                className="btn form-submit mt-0"
+                disabled={
+                  !currentUser ||
+                  comment.length > 250 ||
+                  comment.length === 0 ||
+                  isLoading
+                }
               >
                 {isLoading ? (
                   <Spinner />

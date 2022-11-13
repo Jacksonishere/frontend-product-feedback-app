@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { useDispatch } from "react-redux";
 import feedbackApi, { useGetFeedbackQuery } from "../api/feedbackApiSlice";
-import { Link, Outlet, useParams } from "react-router-dom";
+import { Link, Outlet, useParams, useLocation } from "react-router-dom";
 
 import Feedback from "../components/feedback/Feedback";
 import NavigateBack from "../components/utils/NavigateBack";
@@ -16,6 +16,8 @@ import CommentThread from "../components/feedback/comments/CommentThread";
 const FeedbackPage = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
+  const location = useLocation();
+
   const {
     data: feedback,
     isLoading,
@@ -45,7 +47,7 @@ const FeedbackPage = () => {
   return (
     <div className="relative container mb-[120px] px-6 max-w-2xl md:mx-auto lg:max-w-3xl">
       <nav className="flex justify-between items-center">
-        <NavigateBack to="/">
+        <NavigateBack>
           <ArrowLeft color="#4661E6" />
           <span className="ml-4 text-blue-400 text-[14px] font-bold md:text-[15px]">
             Go Back
@@ -62,16 +64,22 @@ const FeedbackPage = () => {
       ) : isError ? (
         <FeedbackNotFound />
       ) : (
-        <div className="space-y-8">
-          <Feedback
-            feedback={feedback}
-            showPage={true}
-            patchResult={patchResult}
-            likeOptimisticUpdate={likeOptimisticUpdate}
-          />
-          <CommentThread feedback={feedback} forFeedback={feedback.id} />
+        <>
+          <div
+            className={`space-y-8 ${
+              location.pathname.includes("/edit") ? "hidden " : ""
+            }`}
+          >
+            <Feedback
+              feedback={feedback}
+              showPage={true}
+              patchResult={patchResult}
+              likeOptimisticUpdate={likeOptimisticUpdate}
+            />
+            <CommentThread feedback={feedback} forFeedback={feedback.id} />
+          </div>
           <Outlet context={[feedback, currentUser]} />
-        </div>
+        </>
       )}
     </div>
   );
