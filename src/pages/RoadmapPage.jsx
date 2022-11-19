@@ -12,41 +12,35 @@ export const RoadmapContext = createContext();
 const RoadmapContextProvider = (props) => {
   const { data, isLoading } = useGetFeedbacksByStatusesQuery();
 
-  const [planned, setPlanned] = useState([]);
-  const [numPlanned, setNumPlanned] = useState();
-
-  const [inProgress, setInProgress] = useState([]);
-  const [numInProgress, setNumInProgress] = useState();
-
-  const [live, setLive] = useState([]);
-  const [numLive, setNumLive] = useState();
+  const [items, setItems] = useState();
+  const [counts, setCounts] = useState({});
 
   useEffect(() => {
     if (data) {
-      setPlanned(data.planned.feedbacks);
-      setNumPlanned(data.planned.count);
+      const roadmapItems = {
+        planned: data.planned.feedbacks,
+        inProgress: data.in_progress.feedbacks,
+        live: data.live.feedbacks,
+      };
+      const roadmapCounts = {
+        planned: data.planned.count,
+        inProgress: data.in_progress.count,
+        live: data.live.count,
+      };
 
-      setInProgress(data.in_progress.feedbacks);
-      setNumInProgress(data.in_progress.count);
-
-      setLive(data.live.feedbacks);
-      setNumLive(data.live.count);
+      setItems({ ...roadmapItems });
+      setCounts({ ...roadmapCounts });
     }
   }, [data]);
 
   return (
     <RoadmapContext.Provider
       value={{
-        planned,
-        numPlanned,
-        inProgress,
-        numInProgress,
-        live,
-        numLive,
         isLoading,
-        setPlanned,
-        setInProgress,
-        setLive,
+        items,
+        setItems,
+        counts,
+        setCounts,
       }}
     >
       {props.children}
