@@ -25,6 +25,7 @@ import RoadmapPage from "../pages/RoadmapPage";
 const App = () => {
   useLoginCheck();
 
+  console.log(process.env);
   return (
     <div className="max-w-7xl min-h-screen mx-auto md:px-10">
       <ScrollToTop />

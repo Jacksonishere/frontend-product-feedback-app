@@ -6,8 +6,8 @@ export const feedbackApi = createApi({
   reducerPath: "feedbackApi",
   tagTypes: ["Feedbacks", "Likes"],
   baseQuery: fetchBaseQuery({
-    baseUrl: process.env.FEEDBACK_API_URL ?? "http://localhost:3111/api/v1",
-    sameSite: "None",
+    baseUrl: process.env.REACT_APP_API_URL ?? "http://localhost:3111/api/v1",
+    // sameSite: "None",
     secure: true,
     credentials: "include",
   }),
