@@ -13,7 +13,7 @@ import { useSignInUserMutation } from "../../api/userApiSlice";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const { dispatchHideFlash, dispatchShowFlash } = useFlash();
+  const { dispatchShowFlash } = useFlash();
 
   const [emailErrorMsg, setEmailErrorMsg] = useState();
   const [passwordErrorMsg, setPasswordErrorMsg] = useState();

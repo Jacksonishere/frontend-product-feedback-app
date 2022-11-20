@@ -1,16 +1,14 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
 
-import ArrowLeft from "../../icons/ArrowLeft";
-
 const NavigateBack = ({ children, to, margin = true }) => {
   const navigate = useNavigate();
 
   return (
     <button
-      onClick={() => navigate(to ?? -1)}
+      onClick={() => navigate(to ?? -1, { state: null })}
       className={`flex items-center w-max ${
-        margin ? "my-[32px] md:my-[40px]" : ""
+        margin ? "mt-[38px] mb-[28px] md:mt-[44px] md:mb-[34px]" : ""
       }`}
     >
       {children}

@@ -78,7 +78,7 @@ const Feedback = ({
   }, [isSuccess]);
 
   useEffect(() => {
-    if (likeDone.current) {
+    if (likeDone.current && !feedback) {
       feedbackAnchor.current.scrollIntoView();
       likeDone.current = false;
     }

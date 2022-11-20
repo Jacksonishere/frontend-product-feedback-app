@@ -8,7 +8,7 @@ import useAvatar from "../hooks/useAvatar";
 import ArrowLeft from "../icons/ArrowLeft";
 
 const Auth = () => {
-  const { pathname } = useLocation();
+  const { pathname, state } = useLocation();
   // const user = useAuth();
   const { user, loaded } = useSelector((state) => state.user);
 
@@ -26,7 +26,7 @@ const Auth = () => {
     <div className="mx-auto px-6 pb-8 max-w-[550px]">
       <NavigateBack>
         <ArrowLeft color="#4661E6" />
-        <span className="ml-4 text-[14px] font-bold md:text-[15px]">
+        <span className="ml-4 text-[14px] text-blue-400 font-bold md:text-[15px]">
           Go Back
         </span>
       </NavigateBack>
@@ -43,6 +43,7 @@ const Auth = () => {
             replace
             className={`auth-link ${loginPath ? "active-auth-link" : ""}`}
             to="/auth/login"
+            state={{ ...state }}
           >
             Login
           </Link>
@@ -50,6 +51,7 @@ const Auth = () => {
             replace
             className={`auth-link ${loginPath ? "" : "active-auth-link"}`}
             to="/auth/signup"
+            state={{ ...state }}
           >
             Sign Up
           </Link>

@@ -87,7 +87,7 @@ const CommentForm = ({
       }`}
     >
       {!isReply && <h3>Add Comment</h3>}
-      <form onSubmit={formHandler} action="#">
+      <form onSubmit={formHandler}>
         <textarea
           autoFocus={isReply}
           onChange={(e) => setComment(e.target.value)}
