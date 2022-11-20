@@ -16,8 +16,8 @@ const RoadmapFeedback = ({
   feedback,
   infiniteScroll,
   likeHandler,
-  hover,
   COLOR,
+  linkActive,
 }) => {
   const user = useAuth();
   const likeDone = useRef(false);
@@ -77,7 +77,7 @@ const RoadmapFeedback = ({
       <Link
         to={`/feedbacks/${feedback.id}`}
         className={`col-span-full space-y-4 
-        ${!hover ? "pointer-events-none" : ""}`}
+        ${!linkActive ? "pointer-events-none" : ""}`}
       >
         <p>
           <b className="block text-[15px] md:text-[16px]">{feedback.title}</b>

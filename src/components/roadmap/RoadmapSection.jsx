@@ -1,4 +1,7 @@
 import React, { useContext, useState, useEffect, useRef } from "react";
+import { Tab } from "@headlessui/react";
+import cloneDeep from "lodash.clonedeep";
+import { useMediaQuery } from "react-responsive";
 
 import { RoadmapContext } from "../../pages/RoadmapPage";
 import FeedbackContext from "../../context/FeedbacksContext";
@@ -8,9 +11,6 @@ import { useUpdateFeedbackMutation } from "../../api/feedbackApiSlice";
 
 import useFlash from "../../hooks/useFlash";
 import useAuth from "../../hooks/useAuth";
-
-import { Tab } from "@headlessui/react";
-import cloneDeep from "lodash.clonedeep";
 
 import {
   DndContext,
@@ -45,21 +45,18 @@ const RoadmapSection = () => {
     useUpdateFeedbackMutation();
   const { dispatchShowFlash } = useFlash();
 
-  const [selectedIndex, setSelectedIndex] = useState(0);
+  const tabletAndAbove = useMediaQuery({
+    query: "(min-width: 768px)",
+  });
 
+  const [selectedIndex, setSelectedIndex] = useState(0);
   const [beforeDropped, setBeforeDropped] = useState();
   const isActive = useRef(false);
   const prev = useRef();
-  // const
 
   const { isLoading, items, setItems, counts, setCounts } =
     useContext(RoadmapContext);
-
   const { updateOneFeedback } = useContext(FeedbackContext);
-
-  useEffect(() => {
-    console.log(beforeDropped);
-  }, [beforeDropped]);
 
   const updatePlanned = (id, newLikeCount, userLiked) => {
     let planned = items["planned"];
@@ -95,7 +92,7 @@ const RoadmapSection = () => {
   const sensors = useSensors(
     useSensor(PointerSensor, {
       activationConstraint: {
-        distance: 8,
+        distance: 1,
       },
     }),
     useSensor(KeyboardSensor, {
@@ -236,7 +233,7 @@ const RoadmapSection = () => {
     }
 
     // Handle when item is dropped to a new container
-    const activeFeedback = items[overContainer][overIndex];
+    const activeFeedback = items[activeContainer][activeIndex];
     if (isActive.current && prev.current !== overContainer) {
       const { data: updatedFeedback, error } = await updateFeedbackStatus({
         id: activeFeedback.id,
@@ -270,113 +267,7 @@ const RoadmapSection = () => {
         <div className="mt-5">
           <Spinner />
         </div>
-      ) : (
-        // <Tab.Group selectedIndex={selectedIndex} onChange={setSelectedIndex}>
-        //   <Tab.List
-        //     className={`relative flex border-b-[rgba(140,146,179)] border-b-[1px] text-blue-800 text-[13px] font-bold text-center before:content-[""] before:absolute before:bottom-[-1px] before:left-0 before:right-0 before:h-1 before:w-1/3
-        //   ${
-        //     selectedIndex === 0
-        //       ? "before:translate-x-0"
-        //       : selectedIndex === 1
-        //       ? "before:translate-x-full"
-        //       : "before:translate-x-[200%]"
-        //   }
-        //   before:bg-purple-700 before:transition-transform before:ease-in-out`}
-        //   >
-        //     <Tab as={React.Fragment}>
-        //       {({ selected }) => (
-        //         <button
-        //           className={`relative flex-1 py-5 ${
-        //             selected ? "opacity-100" : "opacity-50"
-        //           }`}
-        //         >
-        //           {`Planned (${counts?.planned})`}
-        //         </button>
-        //       )}
-        //     </Tab>
-        //     <Tab as={React.Fragment}>
-        //       {({ selected }) => (
-        //         <button
-        //           className={`flex-1 py-5 ${
-        //             selected ? "opacity-100" : "opacity-50"
-        //           }`}
-        //         >
-        //           {`In-Progress (${counts?.inProgress})`}
-        //         </button>
-        //       )}
-        //     </Tab>
-        //     <Tab as={React.Fragment}>
-        //       {({ selected }) => (
-        //         <button
-        //           className={`flex-1 py-5 ${
-        //             selected ? "opacity-100" : "opacity-50"
-        //           }`}
-        //         >
-        //           {`Live (${counts?.live})`}
-        //         </button>
-        //       )}
-        //     </Tab>
-        //   </Tab.List>
-        //   <Tab.Panels className="p-6">
-        //     <Tab.Panel>
-        // <h3 className="text-blue-900 text-[18px]">{`Planned (${counts?.planned})`}</h3>
-        // <p className="text-blue-400 text-[14px]">
-        //   Ideas prioritized for research
-        // </p>
-        //       <ul className="mt-6 space-y-5">
-        //         {items?.["planned"].map((feedback) => (
-        //           <li key={feedback.id}>
-        //             <RoadmapFeedback
-        //               TYPE="ROADMAP"
-        //               COLOR="border-t-peach-orange"
-        //               feedback={feedback}
-        //               likeHandler={updatePlanned}
-        //               hover
-        //             />
-        //           </li>
-        //         ))}
-        //       </ul>
-        //     </Tab.Panel>
-        //     <Tab.Panel>
-        // <h3 className="text-blue-900 text-[18px]">{`In-Progress (${counts?.inProgress})`}</h3>
-        // <p className="text-blue-400 text-[14px]">
-        //   Currently being developed
-        // </p>
-        //       <ul className="mt-6 space-y-5">
-        //         {items?.["inProgress"].map((feedback) => (
-        //           <li key={feedback.id}>
-        //             <RoadmapFeedback
-        //               TYPE="ROADMAP"
-        //               COLOR="border-t-purple-700"
-        //               feedback={feedback}
-        //               likeHandler={updateInProgress}
-        //               hover
-        //             />
-        //           </li>
-        //         ))}
-        //       </ul>
-        //     </Tab.Panel>
-        //     <Tab.Panel>
-        //       <h3 className="text-blue-900 text-[18px]">
-        //         {`Live (${counts?.live})`}
-        //       </h3>
-        //       <p className="text-blue-400 text-[14px]">Released features</p>
-        //       <ul className="mt-6 space-y-5">
-        //         {items?.["live"].map((feedback) => (
-        //           <li key={feedback.id}>
-        //             <RoadmapFeedback
-        //               TYPE="ROADMAP"
-        //               COLOR="border-t-sky-blue"
-        //               feedback={feedback}
-        //               likeHandler={updateLive}
-        //               hover
-        //             />
-        //           </li>
-        //         ))}
-        //       </ul>
-        //     </Tab.Panel>
-        //   </Tab.Panels>
-        // </Tab.Group>
+      ) : tabletAndAbove ? (
         items && (
           <div className="flex flex-col">
             <div className="grid grid-flow-col grid-cols-[1fr_1fr_1fr] gap-x-4 mt-6 lg:gap-x-8">
@@ -428,6 +319,113 @@ const RoadmapSection = () => {
             </div>
           </div>
         )
+      ) : (
+        <Tab.Group selectedIndex={selectedIndex} onChange={setSelectedIndex}>
+          <Tab.List
+            className={`relative flex border-b-[rgba(140,146,179)] border-b-[1px] text-blue-800 text-[13px] font-bold text-center before:content-[""] before:absolute before:bottom-[-1px] before:left-0 before:right-0 before:h-1 before:w-1/3
+          ${
+            selectedIndex === 0
+              ? "before:translate-x-0"
+              : selectedIndex === 1
+              ? "before:translate-x-full"
+              : "before:translate-x-[200%]"
+          }
+          before:bg-purple-700 before:transition-transform before:ease-in-out`}
+          >
+            <Tab as={React.Fragment}>
+              {({ selected }) => (
+                <button
+                  className={`relative flex-1 py-5 ${
+                    selected ? "opacity-100" : "opacity-50"
+                  }`}
+                >
+                  {`Planned (${counts?.planned})`}
+                </button>
+              )}
+            </Tab>
+            <Tab as={React.Fragment}>
+              {({ selected }) => (
+                <button
+                  className={`flex-1 py-5 ${
+                    selected ? "opacity-100" : "opacity-50"
+                  }`}
+                >
+                  {`In-Progress (${counts?.inProgress})`}
+                </button>
+              )}
+            </Tab>
+            <Tab as={React.Fragment}>
+              {({ selected }) => (
+                <button
+                  className={`flex-1 py-5 ${
+                    selected ? "opacity-100" : "opacity-50"
+                  }`}
+                >
+                  {`Live (${counts?.live})`}
+                </button>
+              )}
+            </Tab>
+          </Tab.List>
+          <Tab.Panels className="p-6">
+            <Tab.Panel>
+              <h3 className="text-blue-900 text-[18px]">{`Planned (${counts?.planned})`}</h3>
+              <p className="text-blue-400 text-[14px]">
+                Ideas prioritized for research
+              </p>
+              <ul className="mt-6 space-y-5">
+                {items?.["planned"].map((feedback) => (
+                  <li key={feedback.id}>
+                    <RoadmapFeedback
+                      TYPE="ROADMAP"
+                      COLOR="border-t-peach-orange"
+                      feedback={feedback}
+                      likeHandler={updatePlanned}
+                      linkActive
+                    />
+                  </li>
+                ))}
+              </ul>
+            </Tab.Panel>
+            <Tab.Panel>
+              <h3 className="text-blue-900 text-[18px]">{`In-Progress (${counts?.inProgress})`}</h3>
+              <p className="text-blue-400 text-[14px]">
+                Currently being developed
+              </p>
+              <ul className="mt-6 space-y-5">
+                {items?.["inProgress"].map((feedback) => (
+                  <li key={feedback.id}>
+                    <RoadmapFeedback
+                      TYPE="ROADMAP"
+                      COLOR="border-t-purple-700"
+                      feedback={feedback}
+                      likeHandler={updateInProgress}
+                      linkActive
+                    />
+                  </li>
+                ))}
+              </ul>
+            </Tab.Panel>
+            <Tab.Panel>
+              <h3 className="text-blue-900 text-[18px]">
+                {`Live (${counts?.live})`}
+              </h3>
+              <p className="text-blue-400 text-[14px]">Released features</p>
+              <ul className="mt-6 space-y-5">
+                {items?.["live"].map((feedback) => (
+                  <li key={feedback.id}>
+                    <RoadmapFeedback
+                      TYPE="ROADMAP"
+                      COLOR="border-t-sky-blue"
+                      feedback={feedback}
+                      likeHandler={updateLive}
+                      linkActive
+                    />
+                  </li>
+                ))}
+              </ul>
+            </Tab.Panel>
+          </Tab.Panels>
+        </Tab.Group>
       )}
     </div>
   );
@@ -439,7 +437,7 @@ const SortableContainer = (props) => {
   const { setNodeRef } = useDroppable({
     id,
   });
-  const user = useAuth();
+  // const user = useAuth();
 
   return (
     <SortableContext
@@ -450,44 +448,49 @@ const SortableContainer = (props) => {
       <div className="relative space-y-4 w-full" ref={setNodeRef}>
         {items.map((feedback) => (
           <SortableItem
-            disabled={user.id !== feedback.user.id}
             key={feedback.id}
-            id={feedback.id}
-          >
-            <RoadmapFeedback
-              TYPE="ROADMAP"
-              COLOR={COLOR}
-              feedback={feedback}
-              likeHandler={likeHandler}
-              hover
-            />
-          </SortableItem>
+            COLOR={COLOR}
+            likeHandler={likeHandler}
+            feedback={feedback}
+          />
         ))}
       </div>
     </SortableContext>
   );
 };
 
-const SortableItem = (props) => {
-  const sortableProps = useSortable({ id: props.id, disabled: props.disabled });
+const SortableItem = ({ COLOR, likeHandler, feedback }) => {
+  const user = useAuth();
+  const { id: feedback_id } = feedback;
+
+  const sortableProps = useSortable({
+    id: feedback_id,
+    disabled: user?.id === feedback_id,
+  });
   const { active, attributes, listeners, setNodeRef, transform, transition } =
     sortableProps;
 
-  const isActive = active?.id === props.id;
+  const isActive = active?.id === feedback_id;
 
   const style = {
     position: "relative",
-    pointerEvents: isActive ? "none" : "",
-    zIndex: isActive ? 10000 : 0,
     transform: transform
       ? `translate3d(${transform.x}px, ${transform.y}px, 0)`
       : "",
     transition,
+    cursor: isActive ? "grabbing" : "grab",
+    zIndex: isActive ? 10000 : 0,
   };
 
   return (
     <div ref={setNodeRef} style={style} {...attributes} {...listeners}>
-      {props.children}
+      <RoadmapFeedback
+        TYPE="ROADMAP"
+        COLOR={COLOR}
+        feedback={feedback}
+        likeHandler={likeHandler}
+        linkActive={!isActive}
+      />
     </div>
   );
 };

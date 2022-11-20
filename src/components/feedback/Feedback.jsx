@@ -17,7 +17,7 @@ const Feedback = ({
   infiniteScroll,
   patchResult,
   likeOptimisticUpdate,
-  hover,
+  hoverable,
   TYPE,
   COLOR,
 }) => {
@@ -113,7 +113,7 @@ const Feedback = ({
         to={`/feedbacks/${feedback.id}`}
         className={`col-span-full space-y-4 
         ${TYPE === "ROADMAP" ? "" : "md:row-span-full md:col-[2_/_3]"}  ${
-          !hover ? "pointer-events-none" : ""
+          !hoverable ? "pointer-events-none" : ""
         }`}
       >
         {TYPE === "ROADMAP" ? (
