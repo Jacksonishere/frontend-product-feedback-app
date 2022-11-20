@@ -5,8 +5,8 @@ const initialState = {
   loaded: false,
 };
 
-const UserSlice = createSlice({
-  name: "UserSlice",
+const userSlice = createSlice({
+  name: "userSlice",
   initialState,
   reducers: {
     setLoaded: (state) => {
@@ -21,8 +21,8 @@ const UserSlice = createSlice({
   },
 });
 
-export default UserSlice.reducer;
+export default userSlice.reducer;
 
-export const { setLoaded, setUser, resetUser } = UserSlice.actions;
+export const { setLoaded, setUser, resetUser } = userSlice.actions;
 export const currentUserSelector = (state) => state.user.user;
 export const loadedSelector = (state) => state.user.loaded;

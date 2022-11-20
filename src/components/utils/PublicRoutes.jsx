@@ -3,7 +3,7 @@ import { useSelector } from "react-redux";
 import { Navigate, Outlet } from "react-router-dom";
 
 const PublicRoutes = () => {
-  const { user, loaded } = useSelector((state) => state.UserSlice);
+  const { user, loaded } = useSelector((state) => state.userSlice);
 
   if (!loaded) return;
   return user ? <Navigate to="/" replace /> : <Outlet />;

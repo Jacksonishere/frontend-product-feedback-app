@@ -8,7 +8,7 @@ import React, {
 } from "react";
 import { useDispatch } from "react-redux";
 
-import { setNextPage } from "../../features/feedbacks/HomeFeedConfigSlice";
+import { setNextPage } from "../../features/feedbacks/homeFeedConfigSlice";
 
 import FeedbackContext from "../../context/FeedbacksContext";
 import useInfiniteScroll from "../..//hooks/useInfiniteScroll.js";

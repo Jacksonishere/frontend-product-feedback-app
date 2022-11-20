@@ -9,7 +9,7 @@ import DropdownSelect from "../utils/DropdownSelect";
 import {
   setSort,
   selectedSortSelector,
-} from "../../features/feedbacks/HomeFeedConfigSlice";
+} from "../../features/feedbacks/homeFeedConfigSlice";
 
 // import useFetchFeedbacks from "./useFetchFeedbacks";
 import FeedbackContext from "../../context/FeedbacksContext";

@@ -1,17 +1,17 @@
 import { configureStore } from "@reduxjs/toolkit";
 import authApi from "../api/userApiSlice";
 import feedbackApi from "../api/feedbackApiSlice";
-import UserSlice from "./users/UserSlice";
-import FlashSlice from "./modals/FlashSlice";
-import HomeFeedConfigSlice from "./feedbacks/HomeFeedConfigSlice";
+import userSlice from "./users/userSlice";
+import flashSlice from "./modals/flashSlice";
+import homeFeedConfigSlice from "./feedbacks/homeFeedConfigSlice";
 
 const store = configureStore({
   reducer: {
     [authApi.reducerPath]: authApi.reducer,
     [feedbackApi.reducerPath]: feedbackApi.reducer,
-    user: UserSlice,
-    flash: FlashSlice,
-    homeFeed: HomeFeedConfigSlice,
+    user: userSlice,
+    flash: flashSlice,
+    homeFeed: homeFeedConfigSlice,
   },
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({

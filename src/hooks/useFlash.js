@@ -2,7 +2,7 @@ import React, { useCallback } from "react";
 import { useDispatch } from "react-redux";
 import { uniqueId } from "lodash";
 
-import { showFlash, hideFlash } from "../features/modals/FlashSlice";
+import { showFlash, hideFlash } from "../features/modals/flashSlice";
 
 const useFlash = () => {
   const dispatch = useDispatch();

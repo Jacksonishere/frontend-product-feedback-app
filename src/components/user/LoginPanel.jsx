@@ -3,9 +3,9 @@ import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { motion, AnimatePresence } from "framer-motion";
 
-import { loadedSelector, resetUser } from "../../features/users/UserSlice";
+import { loadedSelector, resetUser } from "../../features/users/userSlice";
 import { useSignOutUserMutation } from "../../api/userApiSlice";
-import { showFlash } from "../../features/modals/FlashSlice";
+import { showFlash } from "../../features/modals/flashSlice";
 
 import useAuth from "../../hooks/useAuth";
 import useFlash from "../../hooks/useFlash";
