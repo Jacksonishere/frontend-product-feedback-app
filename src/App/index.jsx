@@ -7,8 +7,8 @@ import HomePage from "../pages/HomePage";
 import NewFeedbackPage from "../pages/NewFeedbackPage";
 import FeedbackPage from "../pages/FeedbackPage";
 import EditFeedbackPage from "../pages/EditFeedbackPage";
+import NotFoundPage from "../pages/NotFoundPage";
 import Auth from "../pages/Auth";
-import NotFound404 from "../pages/NotFound404";
 
 // Components
 import Flash from "../components/flash/Flash";
@@ -45,8 +45,8 @@ const App = () => {
             <Route path="signup" element={<SignUpForm />} />
           </Route>
 
+          <Route path="*" element={<NotFoundPage />} />
           <Route path="roadmap" element={<RoadmapPage />} />
-          <Route path="*" element={<NotFound404 />} />
         </Routes>
       </FeedbackContextProvider>
     </div>

@@ -4,8 +4,8 @@ const ArrowLeft = ({ color = "inherit" }) => {
   return (
     <svg
       color={color}
-      width=".8125em"
-      height=".8125em"
+      width=".9375em"
+      height=".9375em"
       viewBox="0 0 5 10"
       fill="none"
       className="text-alternate"
