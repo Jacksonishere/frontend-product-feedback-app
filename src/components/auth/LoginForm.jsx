@@ -8,7 +8,7 @@ import { ValidateEmail } from "../../utils/Utils";
 
 import useFlash from "../../hooks/useFlash";
 
-import { setUser } from "../../features/users/userSlice";
+import { setUser } from "../../features/users/UserSlice";
 import { useSignInUserMutation } from "../../api/userApiSlice";
 
 const LoginForm = () => {

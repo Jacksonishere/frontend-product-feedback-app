@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, batch } from "react-redux";
 
 import { useIsLoggedInQuery } from "../api/userApiSlice";
-import { setUser, setLoaded } from "../features/users/userSlice";
+import { setUser, setLoaded } from "../features/users/UserSlice";
 
 const useLoginCheck = () => {
   const dispatch = useDispatch();

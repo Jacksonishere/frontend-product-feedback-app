@@ -3,7 +3,7 @@ import { useDispatch } from "react-redux";
 import { useOutletContext, useNavigate, useLocation } from "react-router-dom";
 
 import { useSignUpUserMutation } from "../../api/userApiSlice";
-import { setUser } from "../../features/users/userSlice";
+import { setUser } from "../../features/users/UserSlice";
 import useFlash from "../../hooks/useFlash";
 
 import InputErrorMsg from "../utils/InputErrorMsg";

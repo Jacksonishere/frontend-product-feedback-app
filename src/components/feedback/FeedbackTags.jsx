@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setCategory,
   selectedCategorySelector,
-} from "../../features/feedbacks/homeFeedConfigSlice";
+} from "../../features/feedbacks/HomeFeedConfigSlice";
 
 import FeedbackContext from "../../context/FeedbacksContext";
 
