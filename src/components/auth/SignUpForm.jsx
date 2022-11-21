@@ -139,7 +139,6 @@ const SignUpForm = () => {
           }
           name="password"
           type="password"
-          placeholder="johndoe@email.com"
         />
         <InputErrorMsg msg={passwordErrorMsg} />
       </div>
