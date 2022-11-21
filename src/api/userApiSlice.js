@@ -4,9 +4,10 @@ export const authApi = createApi({
   reducerPath: "userApi",
   baseQuery: fetchBaseQuery({
     baseUrl: process.env.REACT_APP_API_URL ?? "http://localhost:3111/api/v1",
-    sameSite: "None",
+    sameSite: "none",
     secure: true,
     credentials: "include",
+    mode: "cors",
   }),
   endpoints: (builder) => ({
     signInUser: builder.mutation({

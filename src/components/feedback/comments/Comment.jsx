@@ -143,7 +143,7 @@ const Comment = ({
         />
       ))}
       {isFetching && <Spinner />}
-      {canFetchMore && (
+      {canFetchMore && !isFetching && (
         <div>
           <button
             type="button"

@@ -70,7 +70,7 @@ const CommentThread = ({ feedback }) => {
             )
           )}
           {isFetching && (
-            <div className="mt-6">
+            <div className="my-6">
               <Spinner />
             </div>
           )}
