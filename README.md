@@ -39,7 +39,7 @@ Users should be able to:
 ### Links
 
 ** Note - Might take a minute for server to respond since it shuts down every 15 minutes of inactivity on host (render) deployed on.
-** Cookies are not mobile-friendly unless you specific toggle setting on your device to allow for third-party cookies
+** Cookies - are not mobile-friendly unless you specific toggle setting on your device to allow for third-party cookies
 
 - Live Site URL: https://frontend-product-feedback-app.vercel.app/
 
@@ -59,4 +59,4 @@ Users should be able to:
 
 ## Author
 
-- Frontend Mentor - [@frontendtony](https://www.frontendmentor.io/profile/Jacksonishere)
+- Frontend Mentor - [@Jacksonishere](https://www.frontendmentor.io/profile/Jacksonishere)
