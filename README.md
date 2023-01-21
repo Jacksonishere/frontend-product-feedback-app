@@ -1,70 +1,62 @@
-# Getting Started with Create React App
+# Frontend Mentor - Product feedback app solution
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This is a solution to the [Product feedback app challenge on Frontend Mentor](https://www.frontendmentor.io/challenges/product-feedback-app-wbvUYqjR6). Frontend Mentor challenges help you improve your frontend skills by providing professional designs and wireframes for you to bring to life.
 
-## Available Scripts
+## Table of contents
 
-In the project directory, you can run:
+- [Overview](#overview)
+  - [The challenge](#the-challenge)
+  - [Screenshot](#screenshot)
+  - [Links](#links)
+- [My process](#my-process)
+  - [Built with](#built-with)
+  - [What I learned](#what-i-learned)
+  - [Useful resources](#useful-resources)
+- [Author](#author)
 
-### `npm start`
+Users should be able to:
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+- View the optimal layout for the app depending on their device's screen size
+- CRUD operations on feedback posts/requests
+- See hover states for all interactive elements on the page
+- Receive form validations when trying to create/edit feedback requests
+- Sort suggestions by most/least upvotes and most/least comments
+- Filter suggestions by category
+- Add comments and replies to a product feedback request
+- Upvote product feedback requests
+- Create new user account with email and password
+- Pagination with infinite scroll for homefeed
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Screenshot
 
-### `npm test`
+<img width="525" alt="image" src="https://user-images.githubusercontent.com/44249712/213886918-e27fda50-0b6e-432e-a7c7-f1606f9721d8.png">
+<img width="770" alt="image" src="https://user-images.githubusercontent.com/44249712/213886927-c30c1671-4eb7-4abe-9711-8a856300475a.png">
+<img width="1707" alt="image" src="https://user-images.githubusercontent.com/44249712/213887115-b3662422-e1cc-4ae0-8187-6164bb64cea9.png">
+<img width="681" alt="image" src="https://user-images.githubusercontent.com/44249712/213887125-35bd375f-4606-4926-8855-6332f11f6de4.png">
+<img width="626" alt="image" src="https://user-images.githubusercontent.com/44249712/213887151-e0850525-5fef-47dc-9b91-a18f30aa4eb1.png">
+<img width="789" alt="image" src="https://user-images.githubusercontent.com/44249712/213887185-0eaad1d4-4783-4fca-9753-ca841917c824.png">
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Links
 
-### `npm run build`
+** Note - Might take a minute for server to respond since it shuts down every 15 minutes of inactivity on host (render) deployed on.
+** Cookies are not mobile-friendly unless you specific toggle setting on your device to allow for third-party cookies
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+- Live Site URL: https://frontend-product-feedback-app.vercel.app/
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+### Things to improve on
+- Real time updates
+- Use JWT for auth
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Built with
 
-### `npm run eject`
+- [Create React App](https://create-react-app.dev/) (Build Tool)
+- [React](https://reactjs.org/) (UI Library)
+- [Tailwindcss](http://tailwindcss.com/) (Utility CSS generator)
+- [Ruby on Rails](https://guides.rubyonrails.org/api_app.html) (Rails API mode)
+- [Typescript](https://www.typescriptlang.org/) (JavaScript, without the headache)
+- [React Router](https://reactrouter.com/web/guides/quick-start) (Client-side routing for React)
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+## Author
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
-
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
-
-### Code Splitting
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
-
-### Analyzing the Bundle Size
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+- Frontend Mentor - [@frontendtony](https://www.frontendmentor.io/profile/Jacksonishere)
