@@ -29,12 +29,12 @@ Users should be able to:
 
 ### Screenshot
 
-<img width="525" alt="image" src="https://user-images.githubusercontent.com/44249712/213886918-e27fda50-0b6e-432e-a7c7-f1606f9721d8.png">
-<img width="770" alt="image" src="https://user-images.githubusercontent.com/44249712/213886927-c30c1671-4eb7-4abe-9711-8a856300475a.png">
-<img width="1707" alt="image" src="https://user-images.githubusercontent.com/44249712/213887115-b3662422-e1cc-4ae0-8187-6164bb64cea9.png">
-<img width="681" alt="image" src="https://user-images.githubusercontent.com/44249712/213887125-35bd375f-4606-4926-8855-6332f11f6de4.png">
-<img width="626" alt="image" src="https://user-images.githubusercontent.com/44249712/213887151-e0850525-5fef-47dc-9b91-a18f30aa4eb1.png">
-<img width="789" alt="image" src="https://user-images.githubusercontent.com/44249712/213887185-0eaad1d4-4783-4fca-9753-ca841917c824.png">
+<img width="200" alt="preview" src="https://user-images.githubusercontent.com/44249712/213886918-e27fda50-0b6e-432e-a7c7-f1606f9721d8.png">
+<img width="200" alt="preview" src="https://user-images.githubusercontent.com/44249712/213886927-c30c1671-4eb7-4abe-9711-8a856300475a.png">
+<img width="200" alt="preview" src="https://user-images.githubusercontent.com/44249712/213887115-b3662422-e1cc-4ae0-8187-6164bb64cea9.png">
+<img width="200" alt="preview" src="https://user-images.githubusercontent.com/44249712/213887125-35bd375f-4606-4926-8855-6332f11f6de4.png">
+<img width="200" alt="preview" src="https://user-images.githubusercontent.com/44249712/213887151-e0850525-5fef-47dc-9b91-a18f30aa4eb1.png">
+<img width="200" alt="preview" src="https://user-images.githubusercontent.com/44249712/213887185-0eaad1d4-4783-4fca-9753-ca841917c824.png">
 
 ### Links
 
